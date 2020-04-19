@@ -1,0 +1,48 @@
+---
+# tasks file for coredns
+- name: Create coredns data directory
+  file: 
+    name: '{{ item }}'
+    state: directory
+    mode: '0755'
+  with_items:
+    - '{{ kubernetes.addon.location }}/coredns'
+  when: inventory_hostname in groups['master']
+
+- name: Stat coredns yaml file
+  stat: 
+    path: '{{ kubernetes.addon.location }}/coredns/coredns.yaml'
+  register: coredns_yaml_file
+  run_once: true
+
+- name: Clean old deployment
+  shell: 'kubectl delete -f {{ kubernetes.addon.location }}/coredns/coredns.yaml'
+  run_once: true
+  when: coredns_yaml_file.stat.exists
+
+- name: Waiting deployment delete
+  shell: kubectl get svc -n kube-system kube-dns
+  register: waiting_for_delete_deployment_done
+  until: waiting_for_delete_deployment_done.rc != 0
+  retries: 15
+  delay: 1
+  changed_when: false
+  when: coredns_yaml_file.stat.exists
+  run_once: true
+  ignore_errors: True
+
+- name: Deployment coredns --- part.1
+  template: 
+    src: '{{ item.src }}'
+    dest: '{{ kubernetes.addon.location }}/{{ item.dest }}'
+  with_items:
+    - { src: 'coredns/coredns.yaml.j2', dest: 'coredns/coredns.yaml' }
+  when: inventory_hostname in groups['master']
+
+- name: Deployment coredns --- part.2
+  shell: |
+    kubectl apply -f {{ kubernetes.addon.location }}/{{ item }}
+  with_items:
+    - coredns/coredns.yaml
+  run_once: true
+  when: inventory_hostname in groups['master']
