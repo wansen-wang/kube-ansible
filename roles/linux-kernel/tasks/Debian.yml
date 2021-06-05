@@ -1,5 +1,0 @@
-# - name: Install some applications
-#   apt:
-#     name: "{{ package }}"
-#     state: present
-#     update_cache: yes
