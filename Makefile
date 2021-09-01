@@ -7,7 +7,7 @@ DOWNLOAD_WAY:=official
 # binary version
 KUBE_VERSION:=1.22.1
 ETCD_VERSION:=3.5.0
-CNI_VERSION:=0.9.1
+CNI_VERSION:=1.0.0
 
 # container runtime. containerd or docker
 RUNTIME:=docker
@@ -15,7 +15,7 @@ DOCKER_VERSION:=20.10.8
 
 CONTAINERD_VERSION:=1.5.5
 CRICTL_VERSION:=1.22.0
-RUNC_VERSION:=1.0.1
+RUNC_VERSION:=1.0.2
 
 # nexus information
 NEXUS_DOMAIN_NAME:=
