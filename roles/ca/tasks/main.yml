@@ -5,9 +5,3 @@
 
 - name: Etcd ca
   include: etcd.yml
-
-# - name: Create openssl template
-#   template:
-#     src: "openssl.cnf.j2"
-#     dest: "/etc/kubernetes/pki/openssl.cnf"
-#   register: openssl_conf
