@@ -1,6 +1,6 @@
 # OSX files
-**/.DS_Store
-!.gitignore
+.DS_Store
+__pycache__
 
 scripts/binaries
 roles/apps/files/*.yaml

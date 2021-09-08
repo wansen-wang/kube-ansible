@@ -101,9 +101,9 @@
       - "DNS:kubernetes.default.svc"
       - "DNS:kubernetes.default.svc.{{ networking.dnsDomain | default(cluster.local) | split('.') | first }}"
       - "DNS:kubernetes.default.svc.{{ networking.dnsDomain | default(cluster.local) }}"
+      - "{% if ha is defined %}IP:{{ ha.vip }}{% else %}DNS:local{% endif %}"
       - "IP:127.0.0.1"
       - "IP:{{ networking.SvcIP }}"
-      - "IP:{{ ha.vip }}"
       - "IP:{{ ansible_default_ipv4.address }}"
   notify: Clean kube-apiserver csr
 
@@ -290,7 +290,7 @@
     validate_certs: no
     return_content: yes
   register: this
-  until: 
+  until:
     - "'ok' in this.content"
     - this.status == 200
   retries: 120
