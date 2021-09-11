@@ -94,14 +94,16 @@
     extended_key_usage:
       - serverAuth
       - clientAuth
-    subject_alt_name: 
+    subject_alt_name: "{{ item.value | union(apiServer.certSANs) }}"
+  with_dict:
+    subject_alt_name:
       - "DNS:localhost"
       - "DNS:kubernetes"
       - "DNS:kubernetes.default"
       - "DNS:kubernetes.default.svc"
       - "DNS:kubernetes.default.svc.{{ networking.dnsDomain | default(cluster.local) | split('.') | first }}"
       - "DNS:kubernetes.default.svc.{{ networking.dnsDomain | default(cluster.local) }}"
-      - "{% if ha is defined %}IP:{{ ha.vip }}{% else %}DNS:local{% endif %}"
+      - "{% if ha is defined %}IP:{{ ha.vip }}{% else %}DNS:localhost{% endif %}"
       - "IP:127.0.0.1"
       - "IP:{{ networking.SvcIP }}"
       - "IP:{{ ansible_default_ipv4.address }}"
