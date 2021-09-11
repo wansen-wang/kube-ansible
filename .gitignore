@@ -21,3 +21,6 @@ group_vars/kubernetes.yml
 test/terraform/*/.terraform
 test/terraform/*/*.tfstate
 test/terraform/*/*.backup
+
+# vagrant
+.vagrant
