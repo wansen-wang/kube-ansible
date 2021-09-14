@@ -18,21 +18,23 @@ defaults
   timeout http-keep-alive 15s
 
 frontend monitor-in
-  bind *:33305
+  bind *:8081
   mode http
   option httplog
   monitor-uri /monitor
 
 listen stats
-  bind    *:8006
+  bind    *:8080
   mode    http
   stats   enable
   stats   hide-version
-  stats   uri       /stats
+  stats   uri       /
   stats   refresh   30s
   stats   realm     Haproxy\ Statistics
   stats   auth      admin:admin
 
+{% if ha is defined %}
+{% if ha.type == "slb" %}
 frontend k8s-apiserver
   bind 0.0.0.0:8443
   mode tcp
@@ -50,7 +52,8 @@ backend k8s-apiserver
 {% for host in groups['master'] %}
   server {{ hostvars[host].ansible_hostname }} {{ hostvars[host].inventory_hostname }}:6443 check check-ssl verify none
 {% endfor %}
-
+{% endif %}
+{% endif %}
 
 {% if loadBalancing.http is defined %}
 frontend k8s-ingress-http

@@ -12,6 +12,9 @@
         url: "{{ item.url }}"
         dest: '{{ apps.location | default("/etc/kubernetes/apps") }}/{{ item.name }}'
       with_items: "{{ apps.files }}"
+      register: manifests
+      until: manifests is succeeded
+      retries: 10
 
     - name: Deployment application
       shell: "/usr/local/bin/kubectl apply -f {{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"

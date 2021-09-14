@@ -26,10 +26,10 @@
 
     - name: Wait for haproxy
       wait_for:
-        port: 8443
+        port: "{% if ha is defined and ha.type == 'slb' %}8443{% else %}8080{% endif %}"
         delay: 15
         state: started
         host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
       connection: local
       when: haproxy_pkg.changed or haproxy_cfg.changed
-  when: ha is defined and ha.type == "slb"
+  when: (ha is defined and ha.type == "slb") or (loadBalancing.http is defined or loadBalancing.https is defined)
