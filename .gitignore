@@ -10,8 +10,8 @@ group_vars/all.yml
 group_vars/kubernetes.yml
 
 # temp file
-.etcd 
-.docker 
+.etcd
+.docker
 .kubernetes
 .containerd
 .crictl
