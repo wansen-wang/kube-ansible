@@ -158,7 +158,7 @@ scheduler:
 kubelet:
   bindAddress: "0.0.0.0"
   extraArgs:
-    - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.2"
+    - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.5"
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--allowed-unsafe-sysctls=net.*"
   log:
@@ -199,4 +199,8 @@ apps:
     # - {
     #     url: "https://docs.projectcalico.org/manifests/calico.yaml",
     #     name: calico.yaml,
+    #   }
+    # - {
+    #     url: "https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml",
+    #     name: cert-manager.yaml,
     #   }
