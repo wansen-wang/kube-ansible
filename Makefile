@@ -88,6 +88,14 @@ uninstall:
 fix:
 	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
+local:
+	@mkdir -p .ssh
+	@ssh-keygen -t rsa -P "" -f ./.ssh/id_rsa
+	@vagrant up
+	@vagrant ssh ansible -c 'cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa'
+	@vagrant ssh ansible -c 'cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub'
+	@vagrant ssh ansible -c 'cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys'
+
 version: 
 	@command -v jq > /dev/null 2>&1 || ( echo -e "\033[32mPlease install jq\033[0m" &&  exit 1)
 	@echo "etcd" > .etcd
