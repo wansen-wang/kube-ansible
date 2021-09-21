@@ -89,12 +89,21 @@ fix:
 	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
 local:
-	@mkdir -p .ssh
+	@command -v ansible &>/dev/null || echo "Please install ansible." && exit 1
+	@rm -rf .ssh && mkdir -p .ssh
+	@cp -f ./inventory/template/virtualbox.template ./inventory/hosts
 	@ssh-keygen -t rsa -P "" -f ./.ssh/id_rsa
 	@vagrant up
-	@vagrant ssh ansible -c 'cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa'
-	@vagrant ssh ansible -c 'cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub'
-	@vagrant ssh ansible -c 'cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys'
+	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa'
+	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub'
+	# @vagrant ssh ansible -c 'sudo cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys'
+	# @vagrant ssh ansible -c 'sudo apt install git make -y'
+	# @vagrant ssh ansible -c 'cd /vagrant && sudo make runtime'
+	# @vagrant ssh ansible -c 'cd /vagrant/group_vars && sudo make'
+	# @vagrant ssh ansible -c 'yq e -i \'.ha.type="slb"\' /vagrant/group_vars/kubernetes.yml'
+	# @vagrant ssh ansible -c 'yq e -i \'.ha.vip="192.168.22.9"\' /vagrant/group_vars/kubernetes.yml'
+	# @vagrant ssh ansible -c 'yq e -i \'.ha.mask="24"\' /vagrant/group_vars/kubernetes.yml'
+	# @vagrant ssh ansible -c 'cd /vagrant && sudo make install'
 
 version: 
 	@command -v jq > /dev/null 2>&1 || ( echo -e "\033[32mPlease install jq\033[0m" &&  exit 1)
