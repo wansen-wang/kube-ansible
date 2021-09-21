@@ -30,8 +30,6 @@ Vagrant.configure("2") do |config|
         sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa
 	      sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub
 	      sudo cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
-        sudo wget https://github.com/mikefarah/yq/releases/download/v4.13.2/yq_linux_amd64 -O /usr/local/bin/yq
-        sudo chmod +x /usr/local/bin/yq
       SHELL
     end
   end
