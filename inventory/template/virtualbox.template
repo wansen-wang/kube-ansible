@@ -1,0 +1,11 @@
+[master]
+192.168.22.11
+192.168.22.12
+192.168.22.13
+
+[worker]
+192.168.22.14
+
+[kubernetes:children]
+master
+worker
