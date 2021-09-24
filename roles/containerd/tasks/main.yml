@@ -77,11 +77,25 @@
 
 - name: Create Configuration directory
   file:
-    name: "{{ item }}"
+    name: /etc/containerd
     state: directory
     mode: "0755"
-  with_items:
-    - /etc/containerd
+
+- name: Create a containerd primary partition
+  community.general.filesystem:
+    fstype: xfs
+    dev: "{{ containerd.device }}"
+    state: present
+  when: containerd.device is defined
+
+- name: Mount containerd root dir
+  ansible.posix.mount:
+    src: "{{ containerd.device }}"
+    path: /var/lib/containerd
+    fstype: xfs
+    opts: defaults,pquota
+    state: mounted
+  when: containerd.device is defined
 
 - name: Configuration Containerd
   template:

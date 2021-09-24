@@ -29,6 +29,15 @@
   delegate_to: localhost
   run_once: true
 
+# - name: Valid the etcd ca certificate(4 weeks)
+#   community.crypto.x509_certificate_info:
+#     path: /etc/ssl/kubernetes/etcd/ca.crt
+#     valid_at:
+#       week: "+4w"
+#   delegate_to: localhost
+#   run_once: true
+#   ignore_errors: True
+
 - name: Sign etcd ca certificate
   community.crypto.x509_certificate:
     path: /etc/ssl/kubernetes/etcd/ca.crt
@@ -38,3 +47,6 @@
     mode: 0644
   run_once: true
   delegate_to: localhost
+  # when:
+  #   - result.expired | default(true) | bool
+  #   - result.failed
