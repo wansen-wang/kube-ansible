@@ -89,18 +89,19 @@ fix:
 	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
 local:
-	@command -v ansible &>/dev/null || echo "Please install ansible." && exit 1
+	@command -v yq &>/dev/null || (echo "Please install yq." && exit 1) && exit 0
 	@rm -rf .ssh && mkdir -p .ssh
 	@cp -f ./inventory/template/virtualbox.template ./inventory/hosts
 	@ssh-keygen -t rsa -P "" -f ./.ssh/id_rsa
 	@vagrant up
+	@yq e -i '.ha.type="slb"' ./group_vars/kubernetes.yml
 	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa'
 	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub'
 	# @vagrant ssh ansible -c 'sudo cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys'
 	# @vagrant ssh ansible -c 'sudo apt install git make -y'
 	# @vagrant ssh ansible -c 'cd /vagrant && sudo make runtime'
 	# @vagrant ssh ansible -c 'cd /vagrant/group_vars && sudo make'
-	# @vagrant ssh ansible -c 'yq e -i \'.ha.type="slb"\' /vagrant/group_vars/kubernetes.yml'
+	# @vagrant ssh ansible -c ''
 	# @vagrant ssh ansible -c 'yq e -i \'.ha.vip="192.168.22.9"\' /vagrant/group_vars/kubernetes.yml'
 	# @vagrant ssh ansible -c 'yq e -i \'.ha.mask="24"\' /vagrant/group_vars/kubernetes.yml'
 	# @vagrant ssh ansible -c 'cd /vagrant && sudo make install'
@@ -119,5 +120,7 @@ version:
 	@curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .crictl
 	@echo "runc" > .runc
 	@curl -s https://api.github.com/repos/opencontainers/runc/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .runc
-	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc | column -t -s '|'
-	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc
+	@echo "cni" > .cni
+	@curl -s https://api.github.com/repos/containernetworking/plugins/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .cni
+	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc .cni | column -t -s '|'
+	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
