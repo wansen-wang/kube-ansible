@@ -28,9 +28,17 @@ runtime:
 	@scripts/runtime.sh
 
 install:
-	@echo -e "\033[32mDeploy kubernetes...\033[0m"
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
+	@DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
+		RUNTIME=$(RUNTIME) \
+		KUBE_VERSION=$(KUBE_VERSION) \
+		ETCD_VERSION=$(ETCD_VERSION) \
+		CONTAINERD_VERSION=$(CONTAINERD_VERSION) \
+		RUNC_VERSION=$(RUNC_VERSION) \
+		CRICTL_VERSION=$(CRICTL_VERSION) \
+		DOCKER_VERSION=$(DOCKER_VERSION) \
+		CNI_VERSION=$(CNI_VERSION) ./scripts/info.sh
 	@ansible-playbook -i ./inventory/hosts install.yml \
 		-e DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
 		-e RUNTIME=$(RUNTIME) \
@@ -124,3 +132,6 @@ version:
 	@curl -s https://api.github.com/repos/containernetworking/plugins/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .cni
 	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc .cni | column -t -s '|'
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
+
+help:
+	@./scripts/help.sh
