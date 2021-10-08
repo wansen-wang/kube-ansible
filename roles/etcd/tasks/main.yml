@@ -78,6 +78,7 @@
     state: directory
     owner: etcd
     group: etcd
+    mode: 0700
 
 - name: Create certificate directory
   file:

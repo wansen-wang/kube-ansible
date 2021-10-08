@@ -50,7 +50,7 @@
     mode: "0755"
   with_items:
     - /etc/docker
-    - "{{ docker.datadir }}"
+    - "{{ docker.datadir | default('/var/lib/docker') }}"
 
 - name: Configuration daemon
   template:
