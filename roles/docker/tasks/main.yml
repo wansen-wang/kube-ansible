@@ -57,6 +57,7 @@
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   register: docker_conf
+  when: docker.daemon is defined
 
 - name: Create a docker primary partition
   community.general.filesystem:

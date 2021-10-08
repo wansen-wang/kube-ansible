@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
       machine.vm.box_check_update = false
       machine.ssh.insert_key = false
       machine.vm.hostname = name
-      machine.vm.synced_folder "./.ssh", "/root/.ssh"
+      # machine.vm.synced_folder "./.ssh", "/root/.ssh"
       machine.vm.network :private_network, ip: ip
       machine.vm.provider "virtualbox" do |v|
           v.name = name
@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
       machine.vm.provision "shell", inline: <<-SHELL
         sudo apt-get update
         sudo apt-get upgrade -y
+        sudo apt-get install git make -y
         sudo apt-get dist-upgrade -y
         sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa
 	      sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub

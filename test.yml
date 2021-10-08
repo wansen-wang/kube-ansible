@@ -1,33 +1,93 @@
 - name: test my new module
-  hosts: all
+  hosts: localhost
   tasks:
-  - name: Insert/Update "Match User" configuration block in /etc/ssh/sshd_config
-    blockinfile:
-      path: "/etc/kubernetes/{{ item.path }}"
-      block: |
-        {{ item.configuration | to_nice_yaml(indent=2) }}
-    with_items: "{{ apiServer.admissionControlConfigFile }}"
-    when:
-      - apiServer.admissionControlConfigFile is defined
-      - apiServer.admissionControlConfigFile | length >= 1
+    - name: Generate an etcd ca private key
+      community.crypto.openssl_privatekey:
+        path: /tmp/ca.key
+        size: 2048
+        mode: 0600
 
-  # - name: Generate an Kubernetes CA private key
-  #   community.crypto.openssl_privatekey:
-  #     path: /etc/ssl/kubernetes/ca.key
-  #     size: 2048
-  #   run_once: true
+    - name: Generate an etcd ca csr
+      community.crypto.openssl_csr:
+        path: /tmp/ca.csr
+        privatekey_path: /tmp/ca.key
+        common_name: etcd-ca
+        basic_constraints: "CA:TRUE"
+        basic_constraints_critical: true
+        key_usage_critical: true
+        key_usage:
+          - digitalSignature
+          - keyEncipherment
+          - keyCertSign
 
-  # - name: Generate an Kubernetes CA CSR
-  #   community.crypto.openssl_csr:
-  #     path: /etc/ssl/kubernetes/ca.csr
-  #     privatekey_path: /etc/ssl/kubernetes/ca.key
-  #     common_name: "kubernetes-ca"
-  #   run_once: true
+    - name: Get certificate information
+      community.crypto.x509_certificate_info:
+        path: /tmp/ca.crt
+        valid_at:
+          week: "+4w"
+      register: result
+      ignore_errors: True
 
-  # - name: Sign Kubernetes CA CSR
-  #   community.crypto.x509_certificate:
-  #     path: /etc/ssl/kubernetes/ca.crt
-  #     csr_path: /etc/ssl/kubernetes/ca.csr
-  #     privatekey_path: /etc/ssl/kubernetes/ca.key
-  #     provider: selfsigned
-  #   run_once: true
+    - name: Dump information
+      ansible.builtin.debug:
+        var: result
+
+    - name: Sign etcd ca certificate
+      community.crypto.x509_certificate:
+        path: /tmp/ca.crt
+        csr_path: /tmp/ca.csr
+        privatekey_path: /tmp/ca.key
+        provider: selfsigned
+        mode: 0644
+      when:
+        - result.expired | default(true) | bool
+        - result.failed
+
+    - name: Generate etcd server private key
+      community.crypto.openssl_privatekey:
+        path: /tmp/server.key
+        size: 2048
+        mode: 0600
+
+    # server
+    - name: Generate etcd server csr
+      community.crypto.openssl_csr:
+        path: /tmp/server.csr
+        privatekey_path: /tmp/server.key
+        common_name: "{{ ansible_hostname | lower }}"
+        basic_constraints_critical: yes
+        basic_constraints:
+          - "CA:FALSE"
+        key_usage_critical: yes
+        key_usage:
+          - digitalSignature
+          - keyEncipherment
+        extended_key_usage:
+          - serverAuth
+          - clientAuth
+        subject_alt_name:
+          - "DNS:localhost"
+          - "DNS:{{ ansible_hostname | lower }}"
+          - "IP:127.0.0.1"
+          - "IP:{{ ansible_default_ipv4.address }}"
+          - "IP:0:0:0:0:0:0:0:1"
+
+    - name: Get certificate information
+      community.crypto.x509_certificate_info:
+        path: /tmp/server.crt
+        valid_at:
+          week: "+4w"
+      register: result
+      ignore_errors: True
+
+    - name: Generate etcd server certificate
+      community.crypto.x509_certificate:
+        path: /tmp/server.crt
+        csr_path: /tmp/server.csr
+        ownca_path: /tmp/ca.crt
+        ownca_privatekey_path: /tmp/ca.key
+        provider: ownca
+        mode: 0644
+        force: "{% if not result.valid_at.week %}true{% else %}false{% endif %}"
+      when:
+        - not result.expired | default(true) | bool or result.failed
