@@ -33,9 +33,9 @@ containerd:
   datadir: /var/lib/containerd
   # auto create containerd primary partition
   # device: /dev/sdb
-  daemon: |
+  daemon: -|
     version = 2
-    root = "{{ containerd.datadir | default(/var/lib/containerd) }}"
+    root = "{{ containerd.datadir | default('/var/lib/containerd') }}"
     state = "/run/containerd"
     disabled_plugins = []
     imports = []
@@ -255,7 +255,9 @@ containerd:
 
 # etcd config
 etcd:
-  dataDir: /var/lib/etcd
+  datadir: /var/lib/etcd
+  # auto create etcd primary partition
+  # device: /dev/sdc
   backupDir: /tmp
   extraArgs:
     - "--auto-compaction-retention=1h"

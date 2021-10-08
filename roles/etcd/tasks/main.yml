@@ -50,11 +50,27 @@
 
 - name: Create data directory
   file:
-    name: "{{ etcd.dataDir }}"
+    name: "{{ etcd.datadir | default('/var/lib/etcd') }}"
     state: directory
     mode: 0700
     owner: etcd
     group: etcd
+
+- name: Create a etcd primary partition
+  community.general.filesystem:
+    fstype: xfs
+    dev: "{{ etcd.device }}"
+    state: present
+  when: etcd.device is defined
+
+- name: Mount etcd root dir
+  ansible.posix.mount:
+    src: "{{ etcd.device }}"
+    path: "{{ etcd.datadir | default('/var/lib/etcd') }}"
+    fstype: xfs
+    opts: defaults
+    state: mounted
+  when: etcd.device is defined
 
 - name: Create certificate directory
   file:
