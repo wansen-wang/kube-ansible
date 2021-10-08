@@ -12,5 +12,6 @@
 172.16.4.17
 
 [kubernetes:children]
+etcd
 master
 worker
