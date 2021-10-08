@@ -9,7 +9,7 @@
 - name: Add the user 'etcd'
   user:
     name: etcd
-    home: "{{ etcd.dataDir }}"
+    home: "{{ etcd.datadir | default('/var/lib/etcd') }}"
     comment: etcd service account
     create_home: False
     shell: /sbin/nologin
