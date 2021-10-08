@@ -286,7 +286,7 @@
 
 - name: Health check
   uri:
-    url: 'https://{% if apiServer.bindAddress != "0.0.0.0" %}127.0.0.1{% else %}{{ ansible_default_ipv4.address }}{% endif %}:6443/healthz'
+    url: 'https://{% if apiServer.bindAddress | default("0.0.0.0") != "0.0.0.0" %}127.0.0.1{% else %}{{ ansible_default_ipv4.address }}{% endif %}:6443/healthz'
     client_cert: "/etc/kubernetes/pki/admin.crt"
     client_key: "/etc/kubernetes/pki/admin.key"
     validate_certs: no
