@@ -19,8 +19,12 @@
 
 - name: Create certificate directory
   file:
-    name: /etc/kubernetes/pki
+    name: "{{ item }}"
     state: directory
+    mode: "0755"
+  with_items:
+    - /etc/kubernetes/pki
+    - /etc/kubernetes/pki/etcd
 
 - name: Distribution certificate
   copy:
