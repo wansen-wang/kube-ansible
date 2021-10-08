@@ -72,6 +72,13 @@
     state: mounted
   when: etcd.device is defined
 
+- name: change ownership
+  file:
+    name: "{{ etcd.datadir | default('/var/lib/etcd') }}"
+    state: directory
+    owner: etcd
+    group: etcd
+
 - name: Create certificate directory
   file:
     name: "/etc/kubernetes/pki/etcd"
