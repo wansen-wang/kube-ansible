@@ -7,5 +7,5 @@ resources:
       - aescbc:
           keys:
             - name: key1
-              secret: {{ apiServer.encryption }}
+              secret: {{ apiServer.encryption | default('Tsg7sO4Ki/W3s9bfwGfTi8ECcp+/3uDedQMq6rLQTIY=') }}
       - identity: {}
