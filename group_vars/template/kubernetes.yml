@@ -289,8 +289,8 @@ networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12
   podSubnet: 10.244.0.0/16
-  SvcIP: 10.96.0.1
-  DNSIP: 10.96.0.2
+  # SvcIP: 10.96.0.1
+  # DNSIP: 10.96.0.2
 
 # kubernetes cloud provider config
 # cloudProvider:

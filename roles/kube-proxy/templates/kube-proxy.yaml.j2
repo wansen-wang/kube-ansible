@@ -7,7 +7,7 @@ clientConnection:
   contentType: application/vnd.kubernetes.protobuf
   kubeconfig: /etc/kubernetes/kube-proxy.kubeconfig
   qps: 5
-clusterCIDR: "{{ networking.serviceSubnet }}"
+clusterCIDR: "{{ networking.serviceSubnet | default('10.96.0.0/12') }}"
 configSyncPeriod: 15m0s
 conntrack:
   max: null

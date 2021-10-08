@@ -20,4 +20,6 @@ package:
   - python3-pip
   - python-setuptools
   - python3-setuptools
+  - python3-netaddr
+  - python-netaddr
   - jq
