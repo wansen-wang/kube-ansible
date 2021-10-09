@@ -19,5 +19,7 @@ package:
   - bind-utils
   - python3-pip
   - python2-pip
+  - python-netaddr
+  - python36-netaddr # need epel
   - python3-setuptools
   - jq
