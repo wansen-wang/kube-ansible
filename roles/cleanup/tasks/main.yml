@@ -1,7 +1,7 @@
 ---
 # tasks file for done
 - name: Master not scheduling
-  shell: |
+  ansible.builtin.shell: |
     {% if nodename is defined %}
       /usr/local/bin/kubectl taint node {{ nodename | lower}} node-role.kubernetes.io/master="":NoSchedule --overwrite
     {% else %}
@@ -11,7 +11,7 @@
     - not kubernetes.settings.master_run_pod | default(false) | bool and inventory_hostname in groups['master']
 
 - name: Update node roles
-  shell: |
+  ansible.builtin.shell: |
     {% if nodename is defined %}
       /usr/local/bin/kubectl label node {{ nodename | lower }} {% if inventory_hostname in groups['master'] %} node-role.kubernetes.io/master=""{% else %} node-role.kubernetes.io/worker=""{% endif %} --overwrite
     {% else %}

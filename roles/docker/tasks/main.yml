@@ -1,13 +1,13 @@
 ---
 # tasks file for docker
 - name: Add the group 'docker'
-  group:
+  ansible.builtin.group:
     name: docker
     state: present
     system: True
 
 - name: Add the user 'docker'
-  user:
+  ansible.builtin.user:
     name: docker
     comment: docker service account
     shell: /sbin/nologin
@@ -33,7 +33,7 @@
   retries: 10
 
 - name: Extract docker
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/usr/local/src/docker-{{ DOCKER_VERSION }}.tgz"
     dest: /usr/local/bin
     remote_src: yes
@@ -44,7 +44,7 @@
   register: docker_pkg2
 
 - name: Create data directory
-  file:
+  ansible.builtin.file:
     name: "{{ item }}"
     state: directory
     mode: "0755"
@@ -53,7 +53,7 @@
     - "{{ docker.datadir | default('/var/lib/docker') }}"
 
 - name: Configuration daemon
-  template:
+  ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
   register: docker_conf
@@ -76,13 +76,13 @@
   when: docker.device is defined
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: docker.service.j2
     dest: /etc/systemd/system/docker.service
   register: docker_systemd
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: docker
     state: restarted
     enabled: yes

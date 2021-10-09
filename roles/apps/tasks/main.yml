@@ -2,7 +2,7 @@
 # tasks file for apps
 - block:
     - name: Create application directory
-      file:
+      ansible.builtin.file:
         name: '{{ apps.location | default("/etc/kubernetes/apps") }}'
         state: directory
         mode: "0755"
@@ -17,7 +17,7 @@
       retries: 10
 
     - name: Deployment application
-      shell: "/usr/local/bin/kubectl apply -f {{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"
+      ansible.builtin.shell: "/usr/local/bin/kubectl apply -f {{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"
       run_once: true
       with_items: "{{ apps.files }}"
   when: apps is defined

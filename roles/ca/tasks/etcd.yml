@@ -1,5 +1,5 @@
 - name: Create etcd certificate directory
-  file:
+  ansible.builtin.file:
     name: "/etc/ssl/kubernetes/etcd"
     state: directory
     mode: 0755

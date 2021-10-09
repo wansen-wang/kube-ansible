@@ -18,12 +18,12 @@
   retries: 10
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: /etc/kubernetes/pki
     state: directory
 
 - name: Distribution certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -94,18 +94,18 @@
     mode: 0644
 
 - name: Create kubeconfig
-  template:
+  ansible.builtin.template:
     src: kube-controller-manager.kubeconfig.j2
     dest: /etc/kubernetes/kube-controller-manager.kubeconfig
     mode: 0600
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: kube-controller-manager.service.j2
     dest: /etc/systemd/system/kube-controller-manager.service
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: kube-controller-manager
     state: restarted
     enabled: yes

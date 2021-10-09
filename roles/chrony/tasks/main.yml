@@ -6,12 +6,12 @@
     - "{{ ansible_os_family }}.yml"
 
 - name: Installation package
-  package:
+  ansible.builtin.package:
     name: "{{ chrony.pkg_name }}"
     state: present
 
 - name: Update configuration file
-  template:
+  ansible.builtin.template:
     src: chrony.conf.j2
     dest: "{{ chrony.config }}"
     backup: yes

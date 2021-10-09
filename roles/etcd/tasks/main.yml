@@ -1,13 +1,13 @@
 ---
 # tasks file for etcd
 - name: Add the group 'etcd'
-  group:
+  ansible.builtin.group:
     name: etcd
     state: present
     system: True
 
 - name: Add the user 'etcd'
-  user:
+  ansible.builtin.user:
     name: etcd
     home: "{{ etcd.datadir | default('/var/lib/etcd') }}"
     comment: etcd service account
@@ -34,7 +34,7 @@
   retries: 10
 
 - name: Extract Etcd
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-linux-amd64.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
@@ -49,7 +49,7 @@
   register: etcd_bin
 
 - name: Create data directory
-  file:
+  ansible.builtin.file:
     name: "{{ etcd.datadir | default('/var/lib/etcd') }}"
     state: directory
     mode: 0700
@@ -73,7 +73,7 @@
   when: etcd.device is defined
 
 - name: change ownership
-  file:
+  ansible.builtin.file:
     name: "{{ etcd.datadir | default('/var/lib/etcd') }}"
     state: directory
     owner: etcd
@@ -81,14 +81,14 @@
     mode: 0700
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: "/etc/kubernetes/pki/etcd"
     state: directory
     owner: etcd
     group: etcd
 
 - name: Distribution CA certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -233,19 +233,19 @@
     group: root
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: etcd.service.j2
     dest: /etc/systemd/system/etcd.service
   register: etcd_systemd
 
 - name: Backup data
-  shell: |
+  ansible.builtin.shell: |
     NAME=$(date +%s)
     ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.db
   ignore_errors: True
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: etcd
     state: restarted
     enabled: yes
@@ -263,30 +263,30 @@
   when: etcd_service.changed
 
 - name: Install health check command
-  template:
+  ansible.builtin.template:
     src: etcd-check.sh.j2
     dest: /usr/local/bin/etcd-check.sh
     mode: 0755
 
 - name: Health check
-  shell: |
+  ansible.builtin.shell: |
     ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
   when: etcd_service.changed
 
 - name: Install Backup command
-  template:
+  ansible.builtin.template:
     src: etcd-backup.sh.j2
     dest: /usr/local/bin/etcd-backup.sh
     mode: 0755
 
 - name: Install Etcdctl command alias
-  template:
+  ansible.builtin.template:
     src: etcd.sh.j2
     dest: /etc/profile.d/etcd.sh
     mode: 0755
 
 - name: Create backup kubernetes etcd data in cron
-  cron:
+  ansible.builtin.cron:
     name: "backup kubernetes etcd data by kube-ansible"
     minute: "0"
     hour: "2"

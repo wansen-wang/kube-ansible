@@ -1,7 +1,7 @@
 ---
 # handlers file for chrony
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: '{{ chrony.svc_name }}'
     state: restarted
     enabled: yes

@@ -1,5 +1,5 @@
 - name: Create kubernetes certificate directory
-  file:
+  ansible.builtin.file:
     name: /etc/ssl/kubernetes
     state: directory
     mode: 0755

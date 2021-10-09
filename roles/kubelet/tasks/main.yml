@@ -22,12 +22,12 @@
   retries: 10
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: /etc/kubernetes/pki
     state: directory
 
 - name: Create data directory
-  file:
+  ansible.builtin.file:
     name: "{{ item }}"
     state: directory
     mode: "0755"
@@ -37,12 +37,12 @@
     - /var/lib/kubelet/pki
 
 - name: Install config file
-  template:
+  ansible.builtin.template:
     src: kubelet.yaml.j2
     dest: /etc/kubernetes/kubelet.yaml
 
 - name: Distribution certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -92,18 +92,18 @@
     mode: 0644
 
 - name: Create kubeconfig
-  template:
+  ansible.builtin.template:
     src: kubelet.kubeconfig.j2
     dest: /etc/kubernetes/kubelet.kubeconfig
     mode: 0600
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: kubelet.service.j2
     dest: /etc/systemd/system/kubelet.service
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: kubelet
     state: restarted
     enabled: yes
@@ -123,7 +123,7 @@
   delay: 1
 
 - name: Waiting node on-line
-  shell: /usr/local/bin/kubectl get node {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %}
+  ansible.builtin.shell: /usr/local/bin/kubectl get node {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %}
   register: waiting_for_node
   until: waiting_for_node.rc == 0 and (waiting_for_node.stdout.find("NotReady") != -1 or waiting_for_node.stdout.find("Ready") != -1)
   retries: 15
@@ -131,13 +131,13 @@
   changed_when: false
 
 - name: Install Check command
-  template:
+  ansible.builtin.template:
     src: check-node.sh.j2
     dest: /usr/local/bin/check-node.sh
     mode: 755
 
 - name: Create check kubernetes node status in cron
-  cron:
+  ansible.builtin.cron:
     name: "check kubernetes node status by kube-ansible"
     minute: "0"
     hour: "0"

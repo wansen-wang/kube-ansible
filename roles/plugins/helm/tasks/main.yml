@@ -8,7 +8,7 @@
   when: helm.enabled | bool
 
 - name: Install the helm binary
-  unarchive:
+  ansible.builtin.unarchive:
     src: /usr/local/src/helm-v{{ helm.version }}-linux-amd64.tar.gz
     dest: /usr/local/bin
     mode: 0755
@@ -18,7 +18,7 @@
   when: helm.enabled | bool
 
 - name: Install kubectl completion
-  copy:
+  ansible.builtin.copy:
     src: helm.sh
     dest: /etc/bash_completion.d/helm
     owner: root

@@ -2,7 +2,7 @@
 # tasks file for keepalived
 - block:
     - name: Install applications
-      package:
+      ansible.builtin.package:
         name: "{{ item }}"
         state: present
       with_items:
@@ -10,7 +10,7 @@
       register: keepalived_pkg
 
     - name: Create applications configure files
-      template:
+      ansible.builtin.template:
         src: "{{ item.src }}"
         dest: "{{ item.dest }}"
       with_items:
@@ -25,7 +25,7 @@
       register: keepalived_cfg
 
     - name: Start the service
-      systemd:
+      ansible.builtin.systemd:
         name: keepalived
         enabled: yes
         state: restarted

@@ -19,12 +19,12 @@
   retries: 10
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: /etc/kubernetes/pki
     state: directory
 
 - name: Distribution certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -79,33 +79,33 @@
   notify: Clean admin crt
 
 - name: Create admin kubeconfig
-  template:
+  ansible.builtin.template:
     src: admin.kubeconfig.j2
     dest: /etc/kubernetes/admin.kubeconfig
     mode: 0600
   notify: Clean admin kubeconfig
 
 - name: Delete user kube directory
-  file:
+  ansible.builtin.file:
     name: ~/.kube
     state: absent
 
 - name: Create user kube directory
-  file:
+  ansible.builtin.file:
     name: ~/.kube
     state: directory
     mode: 0755
   notify: Clean .kube
 
 - name: Create User kubeconfig
-  copy:
+  ansible.builtin.copy:
     src: /etc/kubernetes/admin.kubeconfig
     dest: ~/.kube/config
     mode: "0600"
     remote_src: yes
 
 - name: Install kubectl completion
-  copy:
+  ansible.builtin.copy:
     src: kubectl.sh
     dest: /etc/bash_completion.d/kubectl
     owner: root

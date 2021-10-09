@@ -18,12 +18,12 @@
   retries: 10
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: /etc/kubernetes/pki
     state: directory
 
 - name: Distribution certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -74,23 +74,23 @@
     mode: 0644
 
 - name: Create kubeconfig
-  template:
+  ansible.builtin.template:
     src: kube-proxy.kubeconfig.j2
     dest: /etc/kubernetes/kube-proxy.kubeconfig
     mode: 0600
 
 - name: Install config file
-  template:
+  ansible.builtin.template:
     src: kube-proxy.yaml.j2
     dest: /etc/kubernetes/kube-proxy.yaml
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: kube-proxy.service.j2
     dest: /etc/systemd/system/kube-proxy.service
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: kube-proxy
     state: restarted
     enabled: yes

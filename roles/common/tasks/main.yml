@@ -22,33 +22,33 @@
     extra_args: "-i https://pypi.tuna.tsinghua.edu.cn/simple"
 
 - name: Set the Hostname
-  hostname:
+  ansible.builtin.hostname:
     name: "{{ hostname }}"
   when: hostname is defined
 
 - name: Close firewalld
-  systemd:
+  ansible.builtin.systemd:
     name: "{{ svc_name }}"
     enabled: no
     state: stopped
   ignore_errors: True
 
 - name: Close SeLinux
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/selinux/config
     regexp: "^SELINUX="
     line: "SELINUX=disabled"
   when: ansible_facts['distribution'] == "CentOS"
 
 - name: Load kernel modules
-  modprobe:
+  community.general.modprobe:
     name: "{{ item }}"
     state: present
   with_items: "{{ modprobe.params }}"
   when: modprobe.params is defined
 
 - name: Write kernel modules to file
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "{{ modprobe.filename }}"
     line: "{{ item }}"
     create: yes
@@ -56,7 +56,7 @@
   when: modprobe.params is defined
 
 - name: Manage entries in sysctl.conf
-  sysctl:
+  ansible.posix.sysctl:
     name: "{{ item.0 }}"
     value: "{{ item.1 }}"
     sysctl_file: "{{ sysctl.filename }}"
@@ -66,14 +66,14 @@
   when: sysctl.params is defined
 
 - name: Remove swapfile from /etc/fstab
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: /etc/fstab
     regexp: "(^\\s*[^#].+swap)"
     line: '#\1'
     backrefs: yes
 
 - name: Disable swap
-  command: swapoff -a
+  ansible.builtin.command: swapoff -a
   when: ansible_swaptotal_mb > 0
 
 - name: Settings limits

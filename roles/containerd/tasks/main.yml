@@ -35,7 +35,7 @@
   notify: Start Containerd
 
 - name: Extract Containerd
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/usr/local/src/containerd-{{ CONTAINERD_VERSION }}.linux-amd64.tar.gz"
     dest: /usr/local/bin
     owner: root
@@ -62,7 +62,7 @@
   notify: Start Containerd
 
 - name: Extract Crictl
-  unarchive:
+  ansible.builtin.unarchive:
     src: "/usr/local/src/crictl-v{{ CRICTL_VERSION }}-linux-amd64.tar.gz"
     dest: /usr/local/bin
     mode: 0755
@@ -71,12 +71,12 @@
     remote_src: yes
 
 - name: Configuration Crictl
-  template:
+  ansible.builtin.template:
     src: crictl.yaml.j2
     dest: /etc/crictl.yaml
 
 - name: Create Configuration directory
-  file:
+  ansible.builtin.file:
     name: /etc/containerd
     state: directory
     mode: "0755"
@@ -98,19 +98,19 @@
   when: containerd.device is defined
 
 - name: Configuration Containerd
-  template:
+  ansible.builtin.template:
     src: config.toml.j2
     dest: /etc/containerd/config.toml
   notify: Start Containerd
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: containerd.service.j2
     dest: /etc/systemd/system/containerd.service
   notify: Start Containerd
 
 - name: Install crictl completion
-  copy:
+  ansible.builtin.copy:
     src: crictl.sh
     dest: /etc/bash_completion.d/crictl
     owner: root

@@ -18,7 +18,7 @@
   retries: 10
 
 - name: Create certificate directory
-  file:
+  ansible.builtin.file:
     name: "{{ item }}"
     state: directory
     mode: "0755"
@@ -27,7 +27,7 @@
     - /etc/kubernetes/pki/etcd
 
 - name: Distribution certificate
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
     owner: root
@@ -221,21 +221,21 @@
     mode: 0644
 
 - name: Install encryption config
-  template:
+  ansible.builtin.template:
     src: encryption-config.yaml.j2
     dest: /etc/kubernetes/encryption-config.yaml
     mode: "0644"
   register: apiserver_encryption_config_cfg
 
 - name: Install audit policy
-  template:
+  ansible.builtin.template:
     src: audit-policy-minimal.yaml.j2
     dest: /etc/kubernetes/audit-policy-minimal.yaml
     mode: "0644"
   register: apiserver_audit_policy_cfg
 
 - name: Install admission control config
-  template:
+  ansible.builtin.template:
     src: admission-control-config.yaml.j2
     dest: /etc/kubernetes/admission-control-config.yaml
     mode: "0644"
@@ -264,19 +264,19 @@
     - apiServer.admissionControlConfigFile | length >= 1
 
 - name: Configuration cloud provider
-  template:
+  ansible.builtin.template:
     src: cloud.conf.j2
     dest: /etc/kubernetes/cloud.conf
   when: cloudProvider is defined
 
 - name: Install systemd file
-  template:
+  ansible.builtin.template:
     src: kube-apiserver.service.j2
     dest: /etc/systemd/system/kube-apiserver.service
   register: apiserver_systemd
 
 - name: Start the service
-  systemd:
+  ansible.builtin.systemd:
     name: kube-apiserver
     state: restarted
     enabled: yes
@@ -303,7 +303,7 @@
   delay: 1
 
 - name: Distribution renewals for nodes rbac file
-  template:
+  ansible.builtin.template:
     src: auto-approve-renewals-for-nodes.yaml.j2
     dest: /tmp/auto-approve-renewals-for-nodes.yaml
 
