@@ -53,7 +53,7 @@ install:
 		-e NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		-e NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		-e NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) $(ANSIBLE_OPT)
-	@@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
+	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
 	@echo -e "\033[32mScale kubernetes node...\033[0m"
