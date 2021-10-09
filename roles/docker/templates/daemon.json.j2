@@ -1,1 +1,1 @@
-{{ docker.daemon | to_nice_json }}
+{{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | to_nice_json }}
