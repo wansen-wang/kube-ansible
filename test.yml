@@ -1,6 +1,16 @@
 - name: test my new module
   hosts: localhost
+  vars: 
+    docker:
+      datadir: /var/lib/docker
+      daemon:
+        exec-opts:
+          - "native.cgroupdriver=systemd"
   tasks:
+    - name: test
+      ansible.builtin.debug:
+        msg: "{{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) }}"
+
     - name: test
       ansible.builtin.debug:
         msg: "{{ '192.168.122.1/24' | ansible.netcommon.next_nth_usable(2) }}"
