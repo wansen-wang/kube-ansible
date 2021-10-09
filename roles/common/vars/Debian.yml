@@ -17,9 +17,9 @@ package:
   - bash-completion
   - nfs-common
   - dnsutils
-  - python3-pip
-  - python-setuptools
-  - python3-setuptools
-  - python3-netaddr
   - python-netaddr
+  - python-setuptools
+  - python3-pip
+  - python3-netaddr
+  - python3-setuptools
   - jq
