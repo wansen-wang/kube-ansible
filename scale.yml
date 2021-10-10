@@ -27,7 +27,6 @@
     - kubectl
     - kubelet
     - kube-proxy
-    - cni-plugins
   tags:
     - kube-worker
 
