@@ -122,7 +122,7 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
-    register: apiserver_tls_apiserver_crt
+  register: apiserver_tls_apiserver_crt
 
 # front-proxy-client
 - name: Generate front-proxy-client private key
@@ -130,7 +130,7 @@
     path: /etc/kubernetes/pki/front-proxy-client.key
     size: 2048
     mode: 0600
-    register: apiserver_tls_frontproxyclient_key
+  register: apiserver_tls_frontproxyclient_key
 
 - name: Generate front-proxy-client csr
   community.crypto.openssl_csr:
@@ -156,7 +156,7 @@
     ownca_privatekey_path: /etc/kubernetes/pki/front-proxy-ca.key
     provider: ownca
     mode: 0644
-    register: apiserver_tls_frontproxyclient_crt
+  register: apiserver_tls_frontproxyclient_crt
 
 # apiserver kubelet client
 - name: Generate apiserver-kubelet-client private key
@@ -164,7 +164,7 @@
     path: /etc/kubernetes/pki/apiserver-kubelet-client.key
     size: 2048
     mode: 0600
-    register: apiserver_tls_apiserverkubeletclient_key
+  register: apiserver_tls_apiserverkubeletclient_key
 
 - name: Generate apiserver-kubelet-client csr
   community.crypto.openssl_csr:
@@ -191,14 +191,14 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
-    register: apiserver_tls_apiserverkubeletclient_crt
+  register: apiserver_tls_apiserverkubeletclient_crt
 
 - name: Generate apiserver-etcd-client private key
   community.crypto.openssl_privatekey:
     path: /etc/kubernetes/pki/apiserver-etcd-client.key
     size: 2048
     mode: 0600
-    register: apiserver_tls_apiserveretcdclient_key
+  register: apiserver_tls_apiserveretcdclient_key
 
 - name: Generate apiserver-etcd-client csr
   community.crypto.openssl_csr:
@@ -226,7 +226,7 @@
     ownca_privatekey_path: /etc/kubernetes/pki/etcd/ca.key
     provider: ownca
     mode: 0644
-    register: apiserver_tls_apiserveretcdclient_crt
+  register: apiserver_tls_apiserveretcdclient_crt
 
 - name: Install encryption config
   ansible.builtin.template:
