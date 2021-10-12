@@ -277,8 +277,6 @@
     dest: /usr/local/bin/etcd-check.sh
     mode: 0755
 
-
-
 - name: Install Backup command
   ansible.builtin.template:
     src: etcd-backup.sh.j2

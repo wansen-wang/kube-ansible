@@ -101,7 +101,7 @@
     enabled: yes
     daemon_reload: yes
   register: proxy_systemd
-  when: proxy_pkg.changed or proxy_tls_key.changed or proxy_tls_crt.changed or proxy_service_cfg.changed or proxy_systemd_cfg.changed or proxy_systemd.changed
+  when: proxy_pkg.changed or proxy_tls_key.changed or proxy_tls_crt.changed or proxy_service_cfg.changed or proxy_systemd_cfg.changed
 
 - name: Waiting for the service
   wait_for:
