@@ -13,8 +13,8 @@
     url_password: "{{ NEXUS_HTTP_USERNAME }}"
     url_username: "{{ NEXUS_HTTP_PASSWORD }}"
     timeout: 3
-  register: kube_proxy_pkg
-  until: kube_proxy_pkg is succeeded
+  register: proxy_pkg
+  until: proxy_pkg is succeeded
   retries: 10
 
 - name: Create certificate directory
@@ -46,6 +46,7 @@
     path: /etc/kubernetes/pki/kube-proxy.key
     size: 2048
     mode: 0600
+  register: proxy_tls_key
 
 - name: Generate kube-proxy csr
   community.crypto.openssl_csr:
@@ -72,22 +73,26 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
+  register: proxy_tls_crt
 
 - name: Create kubeconfig
   ansible.builtin.template:
     src: kube-proxy.kubeconfig.j2
     dest: /etc/kubernetes/kube-proxy.kubeconfig
     mode: 0600
+  register: proxy_kubeconfig_cfg
 
 - name: Install config file
   ansible.builtin.template:
     src: kube-proxy.yaml.j2
     dest: /etc/kubernetes/kube-proxy.yaml
+  register: proxy_service_cfg
 
 - name: Install systemd file
   ansible.builtin.template:
     src: kube-proxy.service.j2
     dest: /etc/systemd/system/kube-proxy.service
+  register: proxy_systemd_cfg
 
 - name: Start the service
   ansible.builtin.systemd:
@@ -95,7 +100,15 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  register: kube_proxy_service
+  register: proxy_systemd
+  when: proxy_pkg.changed or proxy_tls_key.changed or proxy_tls_crt.changed or proxy_service_cfg.changed or proxy_systemd_cfg.changed or proxy_systemd.changed
+
+- name: Waiting for the service
+  wait_for:
+    port: 10256
+    delay: 30
+    state: started
+  when: proxy_systemd.changed
 
 - name: Health check
   uri:
@@ -105,3 +118,4 @@
   until: this.status == 200
   retries: 120
   delay: 1
+  when: proxy_systemd.changed

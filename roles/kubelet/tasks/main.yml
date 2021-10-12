@@ -36,11 +36,6 @@
     - /var/lib/kubelet
     - /var/lib/kubelet/pki
 
-- name: Install config file
-  ansible.builtin.template:
-    src: kubelet.yaml.j2
-    dest: /etc/kubernetes/kubelet.yaml
-
 - name: Distribution certificate
   ansible.builtin.copy:
     src: "{{ item.src }}"
@@ -60,6 +55,7 @@
     path: /etc/kubernetes/pki/kubelet.key
     size: 2048
     mode: 0600
+  register: kubelet_tls_key
 
 - name: Generate kubelet csr
   community.crypto.openssl_csr:
@@ -90,17 +86,26 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
+  register: kubelet_tls_crt
+
+- name: Install config file
+  ansible.builtin.template:
+    src: kubelet.yaml.j2
+    dest: /etc/kubernetes/kubelet.yaml
+  register: kubelet_service_cfg
 
 - name: Create kubeconfig
   ansible.builtin.template:
     src: kubelet.kubeconfig.j2
     dest: /etc/kubernetes/kubelet.kubeconfig
     mode: 0600
+  register: kubelet_kubeconfig_cfg
 
 - name: Install systemd file
   ansible.builtin.template:
     src: kubelet.service.j2
     dest: /etc/systemd/system/kubelet.service
+  register: kubelet_systemd_cfg
 
 - name: Start the service
   ansible.builtin.systemd:
@@ -108,7 +113,15 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  register: kubelet_service
+  register: kubelet_systemd
+  when: kubelet_pkg.changed or kubelet_tls_key.changed or kubelet_tls_crt.changed or kubelet_service_cfg.changed or kubelet_kubeconfig_cfg.changed or kubelet_systemd_cfg.changed
+
+- name: Waiting for the service
+  wait_for:
+    port: 10248
+    delay: 30
+    state: started
+  when: kubelet_systemd.changed
 
 - name: Health check
   uri:
@@ -121,6 +134,7 @@
     - this.status == 200
   retries: 120
   delay: 1
+  when: kubelet_systemd.changed
 
 - name: Waiting node on-line
   ansible.builtin.shell: /usr/local/bin/kubectl get node {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %}
