@@ -13,8 +13,8 @@
     url_password: "{{ NEXUS_HTTP_USERNAME }}"
     url_username: "{{ NEXUS_HTTP_PASSWORD }}"
     timeout: 3
-  register: kube_scheduler_pkg
-  until: kube_scheduler_pkg is succeeded
+  register: scheduler_pkg
+  until: scheduler_pkg is succeeded
   retries: 10
 
 - name: Create certificate directory
@@ -46,6 +46,7 @@
     path: /etc/kubernetes/pki/kube-scheduler.key
     size: 2048
     mode: 0600
+  register: scheduler_tls_key
 
 - name: Generate kube-scheduler csr
   community.crypto.openssl_csr:
@@ -72,17 +73,20 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
+  register: scheduler_tls_crt
 
 - name: Create kubeconfig
   ansible.builtin.template:
     src: kube-scheduler.kubeconfig.j2
     dest: /etc/kubernetes/kube-scheduler.kubeconfig
     mode: 0600
+  register: scheduler_kubeconfig_cfg
 
 - name: Install systemd file
   ansible.builtin.template:
     src: kube-scheduler.service.j2
     dest: /etc/systemd/system/kube-scheduler.service
+  register: scheduler_systemd_cfg
 
 - name: Start the service
   ansible.builtin.systemd:
@@ -90,12 +94,15 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+  register: scheduler_systemd
+  when: scheduler_pkg.changed or scheduler_tls_key.changed or scheduler_tls_crt.changed or scheduler_kubeconfig_cfg.changed or scheduler_systemd_cfg.changed
 
 - name: Waiting for the service
   wait_for:
     port: 10259
     delay: 30
     state: started
+  when: scheduler_systemd.changed
 
 - name: Health check
   uri:
@@ -110,3 +117,4 @@
     - this.status == 200
   retries: 120
   delay: 1
+  when: scheduler_systemd.changed

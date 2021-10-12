@@ -13,8 +13,8 @@
     url_password: "{{ NEXUS_HTTP_USERNAME }}"
     url_username: "{{ NEXUS_HTTP_PASSWORD }}"
     timeout: 3
-  register: controllermanager_pkg
-  until: controllermanager_pkg is succeeded
+  register: controller_pkg
+  until: controller_pkg is succeeded
   retries: 10
 
 - name: Create certificate directory
@@ -66,6 +66,7 @@
     path: /etc/kubernetes/pki/kube-controller-manager.key
     size: 2048
     mode: 0600
+  register: controller_tls_key
 
 - name: Generate kube-controller-manager csr
   community.crypto.openssl_csr:
@@ -92,17 +93,20 @@
     ownca_privatekey_path: /etc/kubernetes/pki/ca.key
     provider: ownca
     mode: 0644
+  register: controller_tls_crt
 
 - name: Create kubeconfig
   ansible.builtin.template:
     src: kube-controller-manager.kubeconfig.j2
     dest: /etc/kubernetes/kube-controller-manager.kubeconfig
     mode: 0600
+  register: controller_kubeconfig_cfg
 
 - name: Install systemd file
   ansible.builtin.template:
     src: kube-controller-manager.service.j2
     dest: /etc/systemd/system/kube-controller-manager.service
+  register: controller_systemd_cfg
 
 - name: Start the service
   ansible.builtin.systemd:
@@ -110,12 +114,15 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+  register: controller_systemd
+  when: controller_pkg.changed or controller_tls_key.changed or controller_tls_crt.changed or controller_kubeconfig_cfg.changed or controller_systemd_cfg.changed
 
 - name: Waiting for the service
   wait_for:
     port: 10257
     delay: 30
     state: started
+  when: controller_systemd.changed
 
 - name: Health check
   uri:
@@ -130,3 +137,4 @@
     - this.status == 200
   retries: 120
   delay: 1
+  when: controller_systemd.changed
