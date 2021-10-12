@@ -28,8 +28,8 @@
     url_password: "{{ NEXUS_HTTP_USERNAME }}"
     url_username: "{{ NEXUS_HTTP_PASSWORD }}"
     timeout: 3
-  register: docker_pkg1
-  until: docker_pkg1 is succeeded
+  register: docker_pkg
+  until: docker_pkg is succeeded
   retries: 10
 
 - name: Extract docker
@@ -41,7 +41,6 @@
       - --strip-components=1
     owner: root
     group: root
-  register: docker_pkg2
 
 - name: Create data directory
   ansible.builtin.file:
@@ -56,7 +55,7 @@
   ansible.builtin.template:
     src: daemon.json.j2
     dest: /etc/docker/daemon.json
-  register: docker_conf
+  register: docker_cfg
   when: docker.daemon is defined
 
 - name: Create a docker primary partition
@@ -87,7 +86,7 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  when: docker_pkg1.changed or docker_pkg2.changed or docker_conf.changed or docker_systemd.changed
+  when: docker_pkg.changed or docker_cfg.changed or docker_systemd.changed
 
 - name: Install docker completion
   get_url:
