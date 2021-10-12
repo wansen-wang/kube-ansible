@@ -266,16 +266,18 @@
   connection: local
   when: etcd_systemd.changed
 
+- name: Health check
+  ansible.builtin.shell: |
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
+  when: etcd_systemd.changed
+
 - name: Install health check command
   ansible.builtin.template:
     src: etcd-check.sh.j2
     dest: /usr/local/bin/etcd-check.sh
     mode: 0755
 
-- name: Health check
-  ansible.builtin.shell: |
-    ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
-  when: etcd_service.changed
+
 
 - name: Install Backup command
   ansible.builtin.template:
