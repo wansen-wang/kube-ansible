@@ -105,9 +105,10 @@
 
 - name: Waiting for the service
   wait_for:
+    host: 0.0.0.0
     port: 10256
     delay: 30
-    state: started
+    state: drained
   when: proxy_systemd.changed
 
 - name: Health check
