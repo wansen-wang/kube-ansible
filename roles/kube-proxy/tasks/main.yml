@@ -63,6 +63,7 @@
       - keyEncipherment
     extended_key_usage:
       - clientAuth
+  changed_when: True
   notify: Clean kube-proxy csr
 
 - name: Generate kube-proxy certificate

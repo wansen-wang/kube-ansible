@@ -83,6 +83,7 @@
       - keyEncipherment
     extended_key_usage:
       - clientAuth
+  changed_when: True
   notify: Clean kube-controller-manager csr
 
 - name: Generate kube-controller-manager certificate

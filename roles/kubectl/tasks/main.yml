@@ -66,6 +66,7 @@
     extended_key_usage:
       - serverAuth
       - clientAuth
+  changed_when: True
   notify: Clean admin csr
 
 - name: Generate kubectl certificate

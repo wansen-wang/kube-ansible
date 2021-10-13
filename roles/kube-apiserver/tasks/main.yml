@@ -112,6 +112,7 @@
       - "IP:127.0.0.1"
       - "IP:{{ networking.serviceSubnet | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(1) }}"
       - "IP:{{ ansible_default_ipv4.address }}"
+  changed_when: True
   notify: Clean kube-apiserver csr
 
 - name: Generate kube-apiserver certificate
@@ -146,6 +147,7 @@
       - keyEncipherment
     extended_key_usage:
       - clientAuth
+  changed_when: True
   notify: Clean front-proxy-client csr
 
 - name: Generate front-proxy-client crt
@@ -181,6 +183,7 @@
       - keyEncipherment
     extended_key_usage:
       - clientAuth
+  changed_when: True
   notify: Clean apiserver-kubelet-client csr
 
 - name: Generate apiserver-kubelet-client certificate
@@ -216,6 +219,7 @@
     extended_key_usage:
       - serverAuth
       - clientAuth
+  changed_when: True
   notify: Clean apiserver-etcd-client csr
 
 - name: Generate apiserver-etcd-client certificate

@@ -63,6 +63,7 @@
       - keyEncipherment
     extended_key_usage:
       - clientAuth
+  changed_when: True
   notify: Clean kube-scheduler csr
 
 - name: Generate kube-scheduler certificate
