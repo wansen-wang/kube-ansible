@@ -231,6 +231,8 @@ openssl ec -in sa.key -outform PEM -pubout -out sa.pub
 openssl req -new -sha256 -key sa.key -subj "/CN=system:kube-controller-manager" -out sa.csr
 openssl x509 -req -in sa.csr -CA ca.crt -CAkey ca.key -CAcreateserial -days 10000 -extensions v3_req_client -extfile openssl.cnf -out sa.crt
 
+kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}{":\t"}{.status.allocatable.memory}{":\t"}{.status.capacity.memory}{"\n"}{end}'
+
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
 --embed-certs=false \

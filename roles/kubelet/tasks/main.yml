@@ -74,10 +74,6 @@
       - clientAuth
   changed_when: True
   notify: Clean kubelet csr
-    # subject_alt_name: 
-    #   - "DNS:{{ ansible_hostname | lower }}"
-    #   - "IP:{{ ansible_default_ipv4.address }}"
-    #   - "IP:127.0.0.1"
 
 - name: Generate kubelet certificate
   community.crypto.x509_certificate:
