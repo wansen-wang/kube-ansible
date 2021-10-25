@@ -34,7 +34,7 @@ containerd:
   # auto create containerd primary partition
   # device: /dev/sdb
   daemon:
-    sandbox_image: registry.aliyuncs.com/google_containers/pause:3.5
+    sandbox_image: "registry.aliyuncs.com/google_containers/pause:3.5"
     endpoint: 
       - "https://registry-1.docker.io"
       - "https://i3jtbyvy.mirror.aliyuncs.com"
@@ -76,8 +76,6 @@ networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12
   podSubnet: 10.244.0.0/16
-  # SvcIP: 10.96.0.1
-  # DNSIP: 10.96.0.2
 
 # kubernetes cloud provider config
 # cloudProvider:
