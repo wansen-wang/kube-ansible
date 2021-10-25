@@ -244,8 +244,8 @@
 
 - name: Backup data
   ansible.builtin.shell: |
-    NAME=$(date +%s)
-    ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.db
+    NAME=$(date +%Y-%m-%d)
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
   ignore_errors: True
 
 - name: Start the service

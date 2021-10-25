@@ -9,6 +9,7 @@
         {{ etcdnode.append(host) }}
     {%- endfor%}
 {%- endif %}
+mkdir -p {{ etcd.backupDir | default("/etc/kubernetes/tmp") }}
 
 command -v jq > /dev/null 2>&1 || exit 1
 FILENAME=$(date +%Y-%m-%d)
@@ -21,6 +22,7 @@ ETCDCTL_API=3 /usr/local/bin/etcdctl \
 --endpoints ${ENDPOINT} \
 --cacert /etc/kubernetes/pki/etcd/ca.crt \
 --cert /etc/kubernetes/pki/etcd/server.crt \
---key /etc/kubernetes/pki/etcd/server.key snapshot save {{ etcd.backupDir | default("/tmp") }}/kubernetes-etcd.${FILENAME}.snapshot.db
+--key /etc/kubernetes/pki/etcd/server.key \
+snapshot save {{ etcd.backupDir | default("/etc/kubernetes/tmp") }}/etcd.${FILENAME}.snapshot.db
 
-find {{ etcd.backupDir | default("/tmp") }}/kubernetes-etcd.*.snapshot.db -mtime +30 -exec rm -r {} \;
+find {{ etcd.backupDir | default("/etc/kubernetes/tmp") }}/etcd.${FILENAME}.snapshot.db -mtime +30 -exec rm -r {} \;

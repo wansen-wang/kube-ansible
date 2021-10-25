@@ -44,7 +44,7 @@ etcd:
   datadir: /var/lib/etcd
   # auto create etcd primary partition
   # device: /dev/sdc
-  backupDir: /tmp
+  backupDir: /etc/kubernetes/tmp
   extraArgs:
     - "--auto-compaction-retention=1h"
     - "--max-request-bytes=33554432"
