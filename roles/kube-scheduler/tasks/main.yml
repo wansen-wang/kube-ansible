@@ -100,7 +100,7 @@
 
 - name: Waiting for the service
   wait_for:
-    host: 0.0.0.0
+    host: '{% if scheduler.bindAddress | default("0.0.0.0") != "0.0.0.0" %}127.0.0.1{% else %}{{ ansible_default_ipv4.address }}{% endif %}'
     port: 10259
     delay: 30
     state: started
@@ -108,7 +108,7 @@
 
 - name: Health check
   uri:
-    url: 'https://127.0.0.1:10259/healthz'
+    url: 'https://{% if scheduler.bindAddress | default("0.0.0.0") != "0.0.0.0" %}127.0.0.1{% else %}{{ ansible_default_ipv4.address }}{% endif %}:10259/healthz'
     validate_certs: no
     return_content: yes
     client_cert: "/etc/kubernetes/pki/kube-scheduler.crt"

@@ -115,7 +115,7 @@
 
 - name: Waiting for the service
   wait_for:
-    host: 0.0.0.0
+    host: '{% if kubelet.bindAddress | default("0.0.0.0") != "0.0.0.0" %}127.0.0.1{% else %}{{ ansible_default_ipv4.address }}{% endif %}'
     port: 10248
     delay: 30
     state: started
