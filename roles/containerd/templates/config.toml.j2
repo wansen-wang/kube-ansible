@@ -1,5 +1,5 @@
 version = 2
-root = "/var/lib/containerd"
+root = "{{ containerd.datadir | default('/var/lib/containerd') }}"
 state = "/run/containerd"
 disabled_plugins = []
 imports = []
@@ -38,7 +38,6 @@ required_plugins = ["io.containerd.grpc.v1.cri"]
   "io.containerd.timeout.task.state" = "2s"
 
 [plugins]
-
   [plugins."io.containerd.gc.v1.scheduler"]
     deletion_threshold = 0
     mutation_threshold = 100
@@ -59,7 +58,7 @@ required_plugins = ["io.containerd.grpc.v1.cri"]
     max_container_log_line_size = 16384
     netns_mounts_under_state_dir = false
     restrict_oom_score_adj = false
-    sandbox_image = "registry.aliyuncs.com/google_containers/pause:3.5"
+    sandbox_image = "{{ containerd.daemon.sandbox_image | default('registry.aliyuncs.com/google_containers/pause:3.5') }}"
     selinux_category_range = 1024
     stats_collect_period = 10
     stream_idle_timeout = "4h0m0s"
