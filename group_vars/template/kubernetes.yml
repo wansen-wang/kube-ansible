@@ -223,6 +223,7 @@ etcd:
     - "--quota-backend-bytes=8589934592"
     - "--enable-v2=false"
     - "--snapshot-count=10000"
+    - "--cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384"
 
 # ha config
 # none not use lb for apiserver
