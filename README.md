@@ -75,9 +75,13 @@ Github: https://github.com/buxiaomo/kube-ansible.git
 
 ```
 # ubuntu
-apt install git make -y
+apt-get update
+apt-get install git make -y
+
 # centos
 yum install git make vim -y
+
+# clone code
 git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
 cd /usr/local/src/kube-ansible
 ```
