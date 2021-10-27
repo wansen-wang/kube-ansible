@@ -72,10 +72,14 @@ sysctl:
     net.core.rmem_max: 2500000
 
 limits:
-  - { domain: "*", limit_type: "soft", limit_item: "nproc", value: 655360 }
-  - { domain: "*", limit_type: "hard", limit_item: "nproc", value: 655360 }
-  - { domain: "*", limit_type: "soft", limit_item: "nofile", value: 655360 }
-  - { domain: "*", limit_type: "hard", limit_item: "nofile", value: 655360 }
+  - { domain: "*", limit_type: "soft", limit_item: "nproc", value: 65535 }
+  - { domain: "*", limit_type: "hard", limit_item: "nproc", value: 65535 }
+  - { domain: "*", limit_type: "soft", limit_item: "nofile", value: 65535 }
+  - { domain: "*", limit_type: "hard", limit_item: "nofile", value: 65535 }
+  - { domain: "root", limit_type: "soft", limit_item: "nofile", value: 65535 }
+  - { domain: "root", limit_type: "hard", limit_item: "nofile", value: 65535 }
+  - { domain: "root", limit_type: "soft", limit_item: "nproc", value: "unlimited" }
+  - { domain: "root", limit_type: "hard", limit_item: "nproc", value: "unlimited" }
 
 helm:
   enabled: false
