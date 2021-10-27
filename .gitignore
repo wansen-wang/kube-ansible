@@ -1,6 +1,7 @@
 # OSX files
 .DS_Store
 __pycache__
+.tmp
 
 scripts/binaries
 roles/apps/files/*.yaml

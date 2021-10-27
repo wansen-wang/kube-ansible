@@ -98,8 +98,8 @@ make runtime
 
 * nexus
 
-	if you don't have internet, you can run `scripts/upload-nexus.py` script on internet virtual machine and upload to nexus.
-  
+	if you don't have internet, you can run `make nexus NEXUS_DOMAIN_NAME=http://<url> NEXUS_REPOSITORY=<repository name> NEXUS_HTTP_USERNAME=<username> NEXUS_HTTP_PASSWORD=<password>` script on internet virtual machine and upload to nexus.
+
 * official
 
   It will be download from Github or Google
@@ -143,7 +143,7 @@ make install DOWNLOAD_WAY=qiniu
 
 ```
 make install DOWNLOAD_WAY=nexus \
-NEXUS_DOMAIN_NAME=172.16.0.206:8081 \
+NEXUS_DOMAIN_NAME=http://172.16.4.11:8081 \
 NEXUS_REPOSITORY=kube-ansible \
 NEXUS_HTTP_USERNAME=admin \
 NEXUS_HTTP_PASSWORD=admin

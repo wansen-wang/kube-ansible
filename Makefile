@@ -133,5 +133,18 @@ version:
 	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc .cni | column -t -s '|'
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
 
+nexus:
+	@./scripts/upload-nexus.py --url=$(NEXUS_DOMAIN_NAME) \
+		--repository=$(NEXUS_REPOSITORY) \
+		--username=$(NEXUS_HTTP_USERNAME) \
+		--password=$(NEXUS_HTTP_PASSWORD) \
+		--docker=$(DOCKER_VERSION) \
+		--etcd=$(ETCD_VERSION) \
+		--kubernetes=$(KUBE_VERSION) \
+		--cni=$(CNI_VERSION) \
+		--containerd=$(CONTAINERD_VERSION) \
+		--runc=$(RUNC_VERSION) \
+		--crictl=$(CRICTL_VERSION)
+
 help:
 	@./scripts/help.sh
