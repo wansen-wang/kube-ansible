@@ -10,6 +10,11 @@ Refer to the `README.md` and `group_vars/template.yml` files for project configu
 * [x] Aws(Apiserver HA use the CLB)
 * [x] GCP(Apiserver HA use the TCP Load balancing)
 
+## Architecture Support
+
+* [x] aarch64
+* [x] x86_64
+
 ## OS Support
 
 All node please install python3.
