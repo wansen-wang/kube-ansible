@@ -22,7 +22,7 @@
 - name: Download binary
   get_url:
     url: "{{ download_url }}"
-    dest: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-linux-amd64.tar.gz"
+    dest: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
     group: root
@@ -32,10 +32,11 @@
   register: etcd_pkg
   until: etcd_pkg is succeeded
   retries: 10
+  environment: "{{ proxy_env }}"
 
 - name: Extract Etcd
   ansible.builtin.unarchive:
-    src: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-linux-amd64.tar.gz"
+    src: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
     exclude:

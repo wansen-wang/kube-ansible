@@ -1,1 +1,31 @@
-download_url: https://github.com/coreos/etcd/releases/download/v{{ ETCD_VERSION }}/etcd-v{{ ETCD_VERSION }}-linux-amd64.tar.gz
+download_url: https://github.com/coreos/etcd/releases/download/v{{ ETCD_VERSION }}/etcd-v{{ ETCD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz
+
+# {% if  == '' %}{%  == '' %}{%endif%}
+# ansible_architecture
+# ARM 64
+# "ansible_system": "Linux"
+# "ansible_architecture": "aarch64"
+# "ansible_os_family": "Debian"
+# "ansible_machine": "aarch64"
+# "ansible_machine_id": "6de28a2854d04d7d96b18bf1a477260c"
+# "ansible_distribution": "Ubuntu",
+# "ansible_distribution_file_parsed": true,
+# "ansible_distribution_file_path": "/etc/os-release",
+# "ansible_distribution_file_variety": "Debian",
+# "ansible_distribution_major_version": "20",
+# "ansible_distribution_release": "focal",
+# "ansible_distribution_version": "20.04",
+
+# x86_64
+# "ansible_system": "Linux",
+# "ansible_architecture": ""
+# "ansible_os_family": "Debian"
+# "ansible_machine": "x86_64"
+# "ansible_machine_id": "7979fc4140ef433daab3a115d1b1c8d6"
+# "ansible_distribution": "Ubuntu",
+# "ansible_distribution_file_parsed": true,
+# "ansible_distribution_file_path": "/etc/os-release",
+# "ansible_distribution_file_variety": "Debian",
+# "ansible_distribution_major_version": "20",
+# "ansible_distribution_release": "focal",
+# "ansible_distribution_version": "20.04",

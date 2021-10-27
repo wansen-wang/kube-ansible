@@ -16,6 +16,7 @@
   register: apiserver_pkg
   until: apiserver_pkg is succeeded
   retries: 10
+  environment: "{{ proxy_env }}"
 
 - name: Create certificate directory
   ansible.builtin.file:

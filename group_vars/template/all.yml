@@ -8,6 +8,11 @@ ansible_ssh_user: "vagrant"
 ansible_become: "{% if ansible_ssh_user != 'root' %}yes{% else %}no{% endif %}"
 ansible_python_interpreter: "/usr/bin/python3"
 
+# Porxy Setting
+proxy_env:
+  http_proxy: ""
+  https_proxy: ""
+
 # timezone settings, default is Asia/Shanghai
 timezone: "Asia/Shanghai"
 

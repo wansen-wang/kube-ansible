@@ -31,6 +31,7 @@
   register: docker_pkg
   until: docker_pkg is succeeded
   retries: 10
+  environment: "{{ proxy_env }}"
 
 - name: Extract docker
   ansible.builtin.unarchive:
@@ -94,4 +95,5 @@
     dest: /etc/bash_completion.d/docker
     mode: 0755
     timeout: 3
+  environment: "{{ proxy_env }}"
   ignore_errors: True
