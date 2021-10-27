@@ -112,3 +112,4 @@
     dest: /etc/bash_completion.d/kubectl
     owner: root
     group: root
+  environment: "{{ proxy_env }}"
