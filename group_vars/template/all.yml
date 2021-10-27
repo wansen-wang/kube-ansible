@@ -12,6 +12,7 @@ ansible_python_interpreter: "/usr/bin/python3"
 proxy_env:
   http_proxy: ""
   https_proxy: ""
+  no_proxy: ""
 
 # timezone settings, default is Asia/Shanghai
 timezone: "Asia/Shanghai"
