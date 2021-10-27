@@ -113,3 +113,4 @@
     owner: root
     group: root
   environment: "{{ proxy_env }}"
+  ignore_errors: True
