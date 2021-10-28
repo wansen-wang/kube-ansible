@@ -6,6 +6,12 @@ echo '|    <|  |  / \_\ \  ___/  /_____/  / __ \|   |  \\___ \|  || \_\ \  |_\  
 echo '|__|_ \____/|___  /\___  >         (____  /___|  /____  >__||___  /____/\___  >'
 echo '     \/         \/     \/               \/     \/     \/        \/          \/ '
 echo '-------------------------------------------------------------------------------'
+ARCH=$(uname -m)
+if [ ${ARCH} != "aarch64" ] || [ ${ARCH} != "x86_64" ]
+    echo -e "${ARCH} architecture is not supported!"
+    exit 0
+fi
+
 echo -e "Binary download mode: \t\t${DOWNLOAD_WAY}"
 echo -e "Kubernetes runtime mode: \t${RUNTIME}"
 echo -e "Kubernetes version: \t\t${KUBE_VERSION}"
