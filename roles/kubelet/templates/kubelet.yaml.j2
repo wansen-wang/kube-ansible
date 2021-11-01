@@ -16,9 +16,11 @@ authorization:
 cgroupDriver: systemd
 cgroupsPerQOS: true
 clusterDNS:
+{% if serviceSubnet.split(',') | length == 2 %}
+- {{ networking.serviceSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(1) }}
+- {{ networking.serviceSubnet.split(',')[1] | default('2001:db8:42:1::/112') | ansible.netcommon.next_nth_usable(1) }}
+{% else %}
 - {{ networking.serviceSubnet | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) }}
-{% if networking.serviceSubnetIpv6 is defined %}
-- {{ networking.serviceSubnetIpv6 | default('2001:db8:42:1::/112') | ansible.netcommon.next_nth_usable(2) }}
 {% endif %}
 clusterDomain: {{ networking.dnsDomain | default('cluster.local') }}
 configMapAndSecretChangeDetectionStrategy: Watch
