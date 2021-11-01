@@ -196,6 +196,7 @@ proxy:
     level: 1
 
 # app not support all kubernetes version, please confirm apiVersion on manifests.
+# app not support IPv4/IPv6 dual-stack, please confirm yourslef.
 apps:
   location: /etc/kubernetes/apps
   files:
