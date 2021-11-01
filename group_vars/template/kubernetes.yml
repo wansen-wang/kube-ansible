@@ -22,7 +22,6 @@ docker:
     experimental: false
     icc: false
     debug: false
-    ipv6: true
     default-ulimits:
       nofile:
         Name: nofile
