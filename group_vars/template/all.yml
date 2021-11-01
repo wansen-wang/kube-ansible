@@ -21,6 +21,8 @@ modprobe:
   filename: /etc/modules
   params:
     - nf_conntrack
+    - nf_conntrack_ipv4
+    - nf_conntrack_ipv6
     - br_netfilter
     - overlay
 
@@ -38,9 +40,10 @@ sysctl:
     net.ipv4.tcp_keepalive_time: 600
     net.ipv4.tcp_keepalive_intvl: 30
     net.ipv4.tcp_keepalive_probes: 10
-    net.ipv6.conf.all.disable_ipv6: 1
-    net.ipv6.conf.default.disable_ipv6: 1
-    net.ipv6.conf.lo.disable_ipv6: 1
+    net.ipv6.conf.all.forwarding: 1
+    net.ipv6.conf.all.disable_ipv6: 0
+    net.ipv6.conf.default.disable_ipv6: 0
+    net.ipv6.conf.lo.disable_ipv6: 0
     net.ipv4.neigh.default.gc_stale_time: 120
     net.ipv4.conf.all.rp_filter: 0
     net.ipv4.conf.default.rp_filter: 0
