@@ -1,3 +1,10 @@
+clusterDNS
+{{ myvar | ansible.netcommon.ipv4 }}
+{{ myvar | ansible.netcommon.ipv6 }}
+
+{{ test_list | ansible.netcommon.ipv4 }}
+
+
 address: {{ ansible_default_ipv4.address }}
 apiVersion: kubelet.config.k8s.io/v1beta1
 authentication:
@@ -17,6 +24,9 @@ cgroupDriver: systemd
 cgroupsPerQOS: true
 clusterDNS:
 - {{ networking.serviceSubnet | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) }}
+{% if networking.serviceSubnetIpv6 is defined %}
+- {{ networking.serviceSubnetIpv6 | default('2001:db8:42:1::/112') | ansible.netcommon.next_nth_usable(2) }}
+{% endif %}
 clusterDomain: {{ networking.dnsDomain | default('cluster.local') }}
 configMapAndSecretChangeDetectionStrategy: Watch
 containerLogMaxFiles: 5
