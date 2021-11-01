@@ -130,12 +130,15 @@
     extended_key_usage:
       - serverAuth
       - clientAuth
-    subject_alt_name: 
+    subject_alt_name: "{{ item.value | unique }}"
+  with_dict:
+    subject_alt_name:
       - "DNS:localhost"
       - "DNS:{{ ansible_hostname | lower }}"
       - "IP:127.0.0.1"
       - "IP:{{ ansible_default_ipv4.address }}"
-      - "IP:0:0:0:0:0:0:0:1"
+      - "IP:::1"
+      - "{% if ansible_default_ipv6.address is defined %}IP:{{ ansible_default_ipv6.address }}{% else %}IP:::1{% endif %}"
   notify: Clean etcd server csr
 
 - name: Generate etcd server certificate
