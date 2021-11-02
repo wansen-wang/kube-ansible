@@ -228,6 +228,8 @@ component attributes of directory format:
 * [coredns on k8s](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md)
 * [certificates](https://kubernetes.io/zh/docs/setup/best-practices/certificates/)
 * [k8s_the_hard_way](https://github.com/pythops/k8s_the_hard_way)
+* [IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/concepts/services-networking/dual-stack/)
+* [validate IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/tasks/network/validate-dual-stack/)
 
 
 
