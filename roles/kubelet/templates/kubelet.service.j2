@@ -13,7 +13,6 @@ Requires=docker.service
 ExecStart=/usr/local/bin/kubelet \
   --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
   --config=/etc/kubernetes/kubelet.yaml \
-  --network-plugin=cni \
 {% if nodename is defined %}
   --hostname-override={{ nodename | lower }} \
 {% endif %}
