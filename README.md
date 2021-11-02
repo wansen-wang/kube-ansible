@@ -7,12 +7,13 @@ Refer to the `README.md` and `group_vars/template.yml` files for project configu
 ## Cloud Support
 
 * [x] Azure
-* [x] Aws(Apiserver HA use the CLB)
-* [x] GCP(Apiserver HA use the TCP Load balancing)
+* [ ] Aliyun
+* [x] Aws (Apiserver HA use the CLB)
+* [x] GCP (Apiserver HA use the TCP Load balancing)
 
 ## Architecture Support
 
-* [x] aarch64(only download from official)
+* [x] aarch64 (only download from official)
 * [x] x86_64
 
 ## OS Support
