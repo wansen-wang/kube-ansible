@@ -12,7 +12,7 @@ Refer to the `README.md` and `group_vars/template.yml` files for project configu
 
 ## Architecture Support
 
-* [x] aarch64
+* [x] aarch64(only download from official)
 * [x] x86_64
 
 ## OS Support
