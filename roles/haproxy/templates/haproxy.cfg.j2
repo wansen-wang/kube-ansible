@@ -17,12 +17,14 @@ defaults
 
 frontend monitor-in
   bind *:8081
+  bind :::8081
   mode http
   option httplog
   monitor-uri /monitor
 
 listen stats
   bind    *:8080
+  bind    :::8080
   mode    http
   stats   enable
   stats   hide-version
