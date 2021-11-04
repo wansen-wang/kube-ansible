@@ -8,6 +8,8 @@
       {% else %}
         /usr/local/bin/kubectl taint node {{ hostvars[inventory_hostname].ansible_hostname | lower }} node-role.kubernetes.io/master="":NoSchedule --overwrite
       {% endif %}
+    {% else %}
+      exit 0
     {% endif %}
   when:
     - inventory_hostname in groups['master']
