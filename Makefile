@@ -11,7 +11,7 @@ CNI_VERSION:=1.0.1
 
 # container runtime. containerd or docker
 RUNTIME:=docker
-DOCKER_VERSION:=20.10.9
+DOCKER_VERSION:=20.10.10
 
 CONTAINERD_VERSION:=1.5.7
 CRICTL_VERSION:=1.22.0
