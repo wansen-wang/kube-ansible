@@ -183,6 +183,7 @@ kubelet:
   extraArgs:
     - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.5"
     - "--allowed-unsafe-sysctls=net.*"
+    - "--logging-format=json"
   log:
     level: 1
 
