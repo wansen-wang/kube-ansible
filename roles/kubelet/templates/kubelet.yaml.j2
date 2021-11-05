@@ -57,6 +57,8 @@ systemReserved:
   memory: 1Gi
   cpu: 500m
   ephemeral-storage: 2Gi
+kubeReservedCgroup: /kube.slice
+systemReservedCgroup: /system.slice
 failSwapOn: true
 fileCheckFrequency: 10s
 hairpinMode: promiscuous-bridge
@@ -73,15 +75,7 @@ kubeAPIBurst: 10
 kubeAPIQPS: 50
 makeIPTablesUtilChains: true
 maxOpenFiles: 1000000
-{% if groups['worker'] | length == 1 %}
-maxPods: 253
-{% elif groups['worker'] | length < 3 %}
-maxPods: 200
-{% elif groups['worker'] | length >= 3 and groups['worker'] | length <=6 %}
-maxPods: 150
-{% else %}
 maxPods: 110
-{% endif %}
 nodeLeaseDurationSeconds: 40
 nodeStatusReportFrequency: 1m0s
 nodeStatusUpdateFrequency: 10s
