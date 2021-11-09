@@ -15,7 +15,8 @@ Container Runtime: {{ RUNTIME }}
 The Roles of this node are:
 {%- if inventory_hostname in groups['master'] %} 
   - kube-master
-{%- else %}
+{%- endif %}
+{%- if inventory_hostname in groups['worker'] %} 
   - kube-worker
 {%- endif %}
 
