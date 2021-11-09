@@ -5,7 +5,7 @@ Machine ID:    {{ ansible_machine_id }}
 HOSTNAME:      {{ ansible_hostname }}
 IP:            {{ ansible_default_ipv4.address }}
 
-OS:            {{ ansible_lsb }}
+OS:            {{ ansible_lsb.description }}
 Kernel:        {{ ansible_kernel }}
 Memory:        {{ ansible_memtotal_mb }} MB
 CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
