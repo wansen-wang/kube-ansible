@@ -13,10 +13,10 @@ CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
 Container Runtime: {{ RUNTIME }}
 
 The Roles of this node are:
-{% if inventory_hostname in groups['master'] %} 
+{%- if inventory_hostname in groups['master'] %} 
   - kube-master
-{% else %}
+{%- else %}
   - kube-worker
-{% endif %}
+{%- endif %}
 
 ------------------------------------------------------------------------------
