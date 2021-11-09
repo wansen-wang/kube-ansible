@@ -9,7 +9,7 @@
     {% endif %}
   when:
     - inventory_hostname in groups['master']
-    - groups['master'] | unique | length > 3
+    - groups['master'] | unique | length >= 3
 
 - name: Update node roles
   ansible.builtin.shell: |
