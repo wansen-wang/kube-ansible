@@ -18,8 +18,15 @@ package:
   - nfs-utils
   - bind-utils
   - python3-pip
-  - python2-pip
-  - python-netaddr
   - python36-netaddr # need epel
+  - python3-netaddr
   - python3-setuptools
   - jq
+
+# "ansible_distribution": "CentOS",
+# "ansible_distribution_file_parsed": true,
+# "ansible_distribution_file_path": "/etc/redhat-release",
+# "ansible_distribution_file_variety": "RedHat",
+# "ansible_distribution_major_version": "8",
+# "ansible_distribution_release": "NA",
+# "ansible_distribution_version": "8.5",
