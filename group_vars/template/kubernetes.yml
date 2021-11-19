@@ -22,6 +22,12 @@ docker:
     experimental: false
     icc: false
     debug: false
+    features:
+      buildkit: true
+    builder:
+      gc:
+        enabled: true
+        defaultKeepStorage: "20GB"
     default-ulimits:
       nofile:
         Name: nofile
@@ -43,7 +49,7 @@ containerd:
   # device: /dev/sdb
   daemon:
     sandbox_image: "registry.aliyuncs.com/google_containers/pause:3.5"
-    endpoint: 
+    endpoint:
       - "https://registry-1.docker.io"
       - "https://i3jtbyvy.mirror.aliyuncs.com"
 

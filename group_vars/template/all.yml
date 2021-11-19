@@ -82,14 +82,6 @@ limits:
   - { domain: "root", limit_type: "soft", limit_item: "nproc", value: "unlimited" }
   - { domain: "root", limit_type: "hard", limit_item: "nproc", value: "unlimited" }
 
-helm:
+# OS firewalld
+firewall:
   enabled: false
-  version: 3.3.4
-
-istio:
-  enabled: false
-  version: 1.7.2
-
-fluxcd:
-  enabled: false
-  version: 0.5.7
