@@ -1,0 +1,23 @@
+svc_name: firewalld
+
+package:
+  - conntrack
+  - net-tools
+  - sysstat
+  - tar
+  - unzip
+  - tcpdump
+  - telnet
+  - lsof
+  - strace
+  - wget
+  - psmisc
+  - ipset
+  - socat
+  - bash-completion
+  - nfs-utils
+  - bind-utils
+  - python3-pip
+  - python36-netaddr
+  - python3-setuptools
+  - jq
