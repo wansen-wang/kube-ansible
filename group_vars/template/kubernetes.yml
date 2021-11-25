@@ -190,6 +190,7 @@ kubelet:
     - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.5"
     - "--allowed-unsafe-sysctls=net.*"
     - "--logging-format=json"
+    - "--network-plugin=cni"
   log:
     level: 1
 
