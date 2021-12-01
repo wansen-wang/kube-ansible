@@ -1,3 +1,9 @@
+- name: Update all packages to their latest version
+  apt:
+    name: "*"
+    state: latest
+    autoremove: yes
+
 - name: Install some applications
   apt:
     name: "{{ package }}"
