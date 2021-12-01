@@ -8,7 +8,7 @@
     - chrony
     - kernel
   tags:
-    - common
+    - init
 
 - name: Certificate of the cluster
   hosts: all

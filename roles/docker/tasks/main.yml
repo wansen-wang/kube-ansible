@@ -91,6 +91,7 @@
   ansible.builtin.template:
     src: proxy.conf.j2
     dest: /etc/systemd/system/docker.service.d/proxy.conf
+  register: docker_systemd_d
 
 - name: Start the service
   ansible.builtin.systemd:
@@ -98,7 +99,7 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
-  when: docker_pkg.changed or docker_cfg.changed or docker_systemd.changed
+  when: docker_pkg.changed or docker_cfg.changed or docker_systemd.changed or docker_systemd_d.changed
 
 - name: Install docker completion
   get_url:
