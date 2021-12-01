@@ -81,6 +81,17 @@
     dest: /etc/systemd/system/docker.service
   register: docker_systemd
 
+- name: Create systemd service.d
+  ansible.builtin.file:
+    name: /etc/systemd/system/docker.service.d
+    state: directory
+    mode: "0755"
+
+- name: Install systemd file proxy.conf
+  ansible.builtin.template:
+    src: proxy.conf.j2
+    dest: /etc/systemd/system/docker.service.d/proxy.conf
+
 - name: Start the service
   ansible.builtin.systemd:
     name: docker
