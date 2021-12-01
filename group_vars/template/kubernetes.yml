@@ -232,6 +232,10 @@ apps:
     #     name: "calico.yaml",
     #   }
     # - {
+    #     url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/main/canal.yaml",
+    #     name: "canal.yaml",
+    #   }
+    # - {
     #     url: "https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml",
     #     name: "cert-manager.yaml",
     #   }
