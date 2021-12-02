@@ -32,6 +32,7 @@
     enabled: no
     state: stopped
   ignore_errors: True
+  when: svc_name is defined
 
 - name: Close SeLinux
   ansible.builtin.lineinfile:

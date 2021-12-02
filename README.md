@@ -22,9 +22,10 @@ All node please install python3.
 
 * [x] CentOS 7.*
 * [x] CentOS 8.*
-* [x] Ubuntu 16.04.*
-* [x] Ubuntu 18.04.*
-* [x] Ubuntu 20.04.*
+* [x] Ubuntu 16.*
+* [x] Ubuntu 18.*
+* [x] Ubuntu 20.*
+* [x] Debian 10.*
 
 ## Kubernetes Support
 
@@ -478,4 +479,23 @@ curl -vsk --cacert /etc/pki/trust/anchors/DevOps_CA.crt \
 --cert /etc/pki/kube-scheduler.crt \
 --key /etc/pki/kube-scheduler.key \
 https://127.0.0.1:6443/apis/coordination.k8s.io/v1/namespaces/kube-system/leases/kube-scheduler?timeout=10s
+
+# CentOS 8
+"ansible_distribution": "CentOS",
+"ansible_distribution_file_parsed": true,
+"ansible_distribution_file_path": "/etc/redhat-release",
+"ansible_distribution_file_variety": "RedHat",
+"ansible_distribution_major_version": "8",
+"ansible_distribution_release": "NA",
+"ansible_distribution_version": "8.5",
+
+# Debian 1.43
+"ansible_distribution": "Debian",
+"ansible_distribution_file_parsed": true,
+"ansible_distribution_file_path": "/etc/os-release",
+"ansible_distribution_file_variety": "Debian",
+"ansible_distribution_major_version": "1",
+"ansible_distribution_release": "buster",
+"ansible_distribution_version": "1.43",
+
 -->
