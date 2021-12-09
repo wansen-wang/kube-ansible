@@ -1,7 +1,7 @@
 ---
 # tasks file for ca
 - name: Kubernetes ca
-  include: kubernetes.yml
+  include_tasks: kubernetes.yml
 
 - name: Etcd ca
-  include: etcd.yml
+  include_tasks: etcd.yml

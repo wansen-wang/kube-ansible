@@ -14,6 +14,7 @@
   {% endif %}
 {% endif %}
 
+creationTimestamp=$(curl -s --cacert /etc/kubernetes/pki/ca.crt --cert /etc/kubernetes/pki/kubelet.crt --key /etc/kubernetes/pki/kubelet.key https://{{ KUBE_APISERVER_ADDR }}:{{ KUBE_APISERVER_PORT }}/api/v1/nodes/{{ ansible_hostname | lower }} | jq -r '.metadata.creationTimestamp')
 retry=0
 for ((i = 1; i <= 5; i++)); do
   nodeStats=$(curl -s --cacert /etc/kubernetes/pki/ca.crt --cert /etc/kubernetes/pki/kubelet.crt --key /etc/kubernetes/pki/kubelet.key https://{{ KUBE_APISERVER_ADDR }}:{{ KUBE_APISERVER_PORT }}/api/v1/nodes/{{ ansible_hostname | lower }} | jq -r '.status.conditions[] | select(.type=="Ready")| .status')
