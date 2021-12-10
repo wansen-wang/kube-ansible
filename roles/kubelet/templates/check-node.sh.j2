@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 {% set KUBE_APISERVER_ADDR, KUBE_APISERVER_PORT = ansible_default_ipv4.address, 6443 %}
 {% if inventory_hostname in groups['master'] %}
   {% set KUBE_APISERVER_ADDR, KUBE_APISERVER_PORT = ansible_default_ipv4.address, 6443 %}
@@ -13,7 +14,7 @@
     {% endif %}
   {% endif %}
 {% endif %}
-
+/usr/bin/chronyc -n makestep
 creationTimestamp=$(curl -s --cacert /etc/kubernetes/pki/ca.crt --cert /etc/kubernetes/pki/kubelet.crt --key /etc/kubernetes/pki/kubelet.key https://{{ KUBE_APISERVER_ADDR }}:{{ KUBE_APISERVER_PORT }}/api/v1/nodes/{{ ansible_hostname | lower }} | jq -r '.metadata.creationTimestamp')
 difference=$(($(date +%s) - $(date -d "${creationTimestamp}" +%s)))
 if [ $((difference / 60)) -gt 15 ];then
