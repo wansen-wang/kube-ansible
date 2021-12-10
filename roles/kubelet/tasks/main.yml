@@ -17,7 +17,7 @@
   register: kubelet_pkg
   until: kubelet_pkg is succeeded
   retries: 10
-  environment: "{{ proxy_env }}"
+  environment: "{{ proxy_env | default('') }}"
 
 - name: Create certificate directory
   ansible.builtin.file:

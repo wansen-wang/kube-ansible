@@ -32,7 +32,7 @@
   register: etcd_pkg
   until: etcd_pkg is succeeded
   retries: 10
-  environment: "{{ proxy_env }}"
+  environment: "{{ proxy_env | default('') }}"
 
 - name: Extract Etcd
   ansible.builtin.unarchive:

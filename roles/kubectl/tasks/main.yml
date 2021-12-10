@@ -17,7 +17,7 @@
   register: kubectl_pkg
   until: kubectl_pkg is succeeded
   retries: 10
-  environment: "{{ proxy_env }}"
+  environment: "{{ proxy_env | default('') }}"
 
 - name: Create certificate directory
   ansible.builtin.file:
@@ -112,5 +112,5 @@
     dest: /etc/bash_completion.d/kubectl
     owner: root
     group: root
-  environment: "{{ proxy_env }}"
+  environment: "{{ proxy_env | default('') }}"
   ignore_errors: True

@@ -22,7 +22,7 @@
   register: cni_pkg
   until: cni_pkg is succeeded
   retries: 10
-  environment: "{{ proxy_env }}"
+  environment: "{{ proxy_env | default('') }}"
 
 - name: Extract CNI
   ansible.builtin.unarchive:
