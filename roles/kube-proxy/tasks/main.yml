@@ -10,8 +10,8 @@
     mode: 0755
     owner: root
     group: root
-    url_password: "{{ NEXUS_HTTP_USERNAME }}"
-    url_username: "{{ NEXUS_HTTP_PASSWORD }}"
+    url_password: "{{ NEXUS_HTTP_USERNAME | default('') }}"
+    url_username: "{{ NEXUS_HTTP_PASSWORD | default('') }}"
     timeout: 3
   register: proxy_pkg
   until: proxy_pkg is succeeded
