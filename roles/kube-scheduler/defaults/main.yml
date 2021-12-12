@@ -1,2 +1,11 @@
 ---
 # defaults file for kube-scheduler
+scheduler:
+  bindAddress: "0.0.0.0"
+  extraArgs:
+    - "--profiling=false"
+    - "--port=0"
+    - "--feature-gates=TTLAfterFinished=true"
+    - "--logging-format=json"
+  log:
+    level: 1

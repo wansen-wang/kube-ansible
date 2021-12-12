@@ -1,2 +1,16 @@
 ---
 # defaults file for kube-controller-manager
+controllerManager:
+  bindAddress: "0.0.0.0"
+  extraArgs:
+    - "--experimental-cluster-signing-duration=8760h"
+    - "--terminated-pod-gc-threshold=12500"
+    - "--node-monitor-period=5s"
+    - "--node-monitor-grace-period=40s"
+    - "--pod-eviction-timeout=5m0s"
+    - "--profiling=false"
+    - "--port=0"
+    - "--feature-gates=TTLAfterFinished=true"
+    - "--logging-format=json"
+  log:
+    level: 1
