@@ -158,7 +158,7 @@ apiServer:
 
 # kube-controller-manager config
 controllerManager:
-  bindAddress: "0.0.0.0"
+  bindAddress: "127.0.0.1"
   extraArgs:
     - "--experimental-cluster-signing-duration=8760h"
     - "--terminated-pod-gc-threshold=12500"
@@ -174,7 +174,7 @@ controllerManager:
 
 # kube-scheduler config
 scheduler:
-  bindAddress: "0.0.0.0"
+  bindAddress: "127.0.0.1"
   extraArgs:
     - "--profiling=false"
     - "--port=0"

@@ -103,7 +103,7 @@
   ansible.builtin.copy:
     src: /etc/kubernetes/admin.kubeconfig
     dest: ~/.kube/config
-    mode: "0600"
+    mode: "0644"
     remote_src: yes
 
 - name: Install kubectl completion

@@ -1,7 +1,7 @@
 ---
 # defaults file for kube-scheduler
 scheduler:
-  bindAddress: "0.0.0.0"
+  bindAddress: "127.0.0.1"
   extraArgs:
     - "--profiling=false"
     - "--port=0"
