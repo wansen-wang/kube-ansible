@@ -7,7 +7,7 @@
   ansible.builtin.file:
     name: /opt/cni/bin
     state: directory
-    mode: 0755
+    mode: 0644
 
 - name: Download binary
   get_url:
