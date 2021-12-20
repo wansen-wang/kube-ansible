@@ -8,6 +8,7 @@
   ansible.builtin.package:
     name: epel-release
     state: present
+  when: ansible_distribution != "Amazon"
 
 - name: Install some applications
   ansible.builtin.package:
