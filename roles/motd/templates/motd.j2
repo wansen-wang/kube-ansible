@@ -7,8 +7,8 @@ IP:            {{ ansible_default_ipv4.address }}
 
 OS:            {{ ansible_distribution }}-{{ ansible_distribution_version }}
 Kernel:        {{ ansible_kernel }}
-Memory:        {{ ansible_memtotal_mb }} MB
 CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
+Memory:        {{ ansible_memtotal_mb }} MB
 
 Container Runtime: {{ RUNTIME }}
 
