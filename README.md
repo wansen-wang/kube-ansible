@@ -37,6 +37,8 @@ All node please install python3.
 * [x] 1.19.x
 * [x] 1.20.x
 * [x] 1.21.x
+* [x] 1.22.x
+* [x] 1.23.x
 
 ## Runtime Support
 
@@ -248,14 +250,14 @@ kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}
 
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
---embed-certs=false \
---server=https://172.16.18.10:8443 \
+--embed-certs=true \
+--server=https://172.16.5.10:6443 \
 --kubeconfig=/etc/kubernetes/tmp.kubeconfig
 
 kubectl config set-credentials admin \
 --client-certificate=/etc/kubernetes/pki/admin.crt \
 --client-key=/etc/kubernetes/pki/admin.key \
---embed-certs=false \
+--embed-certs=true \
 --kubeconfig=/etc/kubernetes/tmp.kubeconfig
 
 kubectl config set-context default \
@@ -498,4 +500,19 @@ https://127.0.0.1:6443/apis/coordination.k8s.io/v1/namespaces/kube-system/leases
 "ansible_distribution_release": "buster",
 "ansible_distribution_version": "1.43",
 
+
+# master
+firewall-cmd --permanent --add-port=6443/tcp
+firewall-cmd --permanent --add-port=2379-2380/tcp
+firewall-cmd --permanent --add-port=10250/tcp
+firewall-cmd --permanent --add-port=10251/tcp
+firewall-cmd --permanent --add-port=10252/tcp
+firewall-cmd --permanent --add-port=10255/tcp
+firewall-cmd --permanent --add-port=8472/udp
+
+# worker
+firewall-cmd --permanent --add-port=10250/tcp
+firewall-cmd --permanent --add-port=10255/tcp
+firewall-cmd --permanent --add-port=8472/udp
+firewall-cmd --permanent --add-port=30000-32767/tcp
 -->

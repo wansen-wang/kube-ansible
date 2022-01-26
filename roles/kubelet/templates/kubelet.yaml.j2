@@ -47,7 +47,7 @@ evictionPressureTransitionPeriod: 5m0s
 kubeReserved:
 {% if inventory_hostname in groups['master'] %}
   cpu: 400m
-  memory: 896Mi
+  memory: 512Mi
 {% else %}
   cpu: 100m
   memory: 256Mi
