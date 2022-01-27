@@ -221,7 +221,8 @@ component attributes of directory format:
 
 # knowledge
 
-* [kubernetes](https://github.com/kubernetes/kubernetes) 
+* [kubernetes](https://github.com/kubernetes/kubernetes)
+* [kubernetes changelog](https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG)
 * [kubernetes command line tools reference](https://kubernetes.io/zh/docs/reference/command-line-tools-reference/feature-gates/)
 * [calico](https://docs.projectcalico.org/getting-started/kubernetes/quickstart)
 * [canal](https://docs.projectcalico.org/getting-started/kubernetes/flannel/flannel) 
