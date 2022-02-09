@@ -27,7 +27,7 @@
     - /etc/kubernetes/pki
     - /etc/kubernetes/pki/etcd
 
-- name: Distribution certificate
+- name: Distribution certificate by local
   ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -75,6 +75,59 @@
         dest: "/etc/kubernetes/pki/sa.pub",
         mode: 600,
       }
+  when: PKI_URL is not defined
+
+- name: Distribution CA certificate by pki server
+  get_url:
+    url: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    mode: "{{ item.mode }}"
+    owner: root
+    group: root
+    timeout: 3
+  retries: 10
+  with_items:
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/etcd.crt",
+        dest: "/etc/kubernetes/pki/etcd/ca.crt",
+        mode: 644
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/etcd.key",
+        dest: "/etc/kubernetes/pki/etcd/ca.key",
+        mode: 600
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.crt",
+        dest: "/etc/kubernetes/pki/ca.crt",
+        mode: 644,
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.key",
+        dest: "/etc/kubernetes/pki/ca.key",
+        mode: 600,
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/front-proxy-ca.crt",
+        dest: "/etc/kubernetes/pki/front-proxy-ca.crt",
+        mode: 644,
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/front-proxy-ca.key",
+        dest: "/etc/kubernetes/pki/front-proxy-ca.key",
+        mode: 600,
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/sa.key",
+        dest: "/etc/kubernetes/pki/sa.key",
+        mode: 644,
+      }
+    - {
+        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/sa.pub",
+        dest: "/etc/kubernetes/pki/sa.pub",
+        mode: 600,
+      }
+  when: PKI_URL is defined
 
 # apiserver
 - name: Generate kube-apiserver private key
