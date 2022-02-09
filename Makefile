@@ -30,7 +30,7 @@ runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
 
-install:
+deploy:
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
 	@DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
@@ -55,8 +55,8 @@ install:
 		-e NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
 		-e NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		-e NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
-		-e NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) $(ANSIBLE_OPT) \
-		-e PKI_URL=$(PKI_URL)
+		-e NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		-e PKI_URL=$(PKI_URL) $(ANSIBLE_OPT)
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
