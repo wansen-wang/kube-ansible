@@ -48,4 +48,4 @@
       force: "{{ result.expired | default(false) }}"
     run_once: true
     delegate_to: localhost
-  when: PKI_URL is defined
+  when: not PKI_URL is defined

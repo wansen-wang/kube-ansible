@@ -91,4 +91,4 @@
       privatekey_path: /etc/ssl/kubernetes/sa.key
     delegate_to: localhost
     run_once: true
-  when: PKI_URL is defined
+  when: not PKI_URL is defined
