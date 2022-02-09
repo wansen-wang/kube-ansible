@@ -41,7 +41,7 @@
         dest: "/etc/kubernetes/pki/ca.key",
         mode: 600,
       }
-  when: not PKI_URL is defined
+  when: PKI_URL is not defined
 
 - name: Distribution certificate by pki server
   get_url:

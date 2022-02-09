@@ -102,7 +102,7 @@
         src: "/etc/ssl/kubernetes/etcd/ca.key",
         dest: "/etc/kubernetes/pki/etcd/ca.key"
       }
-  when: not PKI_URL is defined
+  when: PKI_URL is not defined
 
 - name: Distribution CA certificate by pki server
   get_url:
