@@ -47,7 +47,7 @@
         dest: "/etc/kubernetes/pki/ca.crt",
         mode: 644,
       }
-  when: PKI_URL is not defined
+  when: not PKI_URL is defined
 
 - name: Distribution certificate by pki server
   get_url:
