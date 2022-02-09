@@ -61,7 +61,7 @@
         dest: "/etc/kubernetes/pki/sa.pub",
         mode: 600,
       }
-  when: PKI_URL is not defined
+  when: not PKI_URL is defined
 
 - name: Distribution certificate by pki server
   get_url:
