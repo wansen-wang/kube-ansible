@@ -54,12 +54,12 @@
   retries: 10
   with_items:
     - {
-        url: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.crt",
+        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt",
         dest: "/etc/kubernetes/pki/ca.crt",
         mode: 644,
       }
     - {
-        url: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.key",
+        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key",
         dest: "/etc/kubernetes/pki/ca.key",
         mode: 600,
       }

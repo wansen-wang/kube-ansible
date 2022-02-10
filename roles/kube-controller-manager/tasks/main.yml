@@ -74,32 +74,32 @@
   retries: 10
   with_items:
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.crt",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt",
         dest: "/etc/kubernetes/pki/ca.crt",
         mode: 644,
       }
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/ca.key",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key",
         dest: "/etc/kubernetes/pki/ca.key",
         mode: 600,
       }
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/front-proxy-ca.crt",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/front-proxy-ca.crt",
         dest: "/etc/kubernetes/pki/front-proxy-ca.crt",
         mode: 644,
       }
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/front-proxy-ca.key",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/front-proxy-ca.key",
         dest: "/etc/kubernetes/pki/front-proxy-ca.key",
         mode: 600,
       }
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/sa.key",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/sa.key",
         dest: "/etc/kubernetes/pki/sa.key",
         mode: 644,
       }
     - {
-        src: "{{ PKI_URL }}/{{ project }}/{{ env }}/sa.pub",
+        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/sa.pub",
         dest: "/etc/kubernetes/pki/sa.pub",
         mode: 600,
       }
