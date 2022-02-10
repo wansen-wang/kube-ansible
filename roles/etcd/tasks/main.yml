@@ -102,7 +102,7 @@
         src: "/etc/ssl/kubernetes/etcd/ca.key",
         dest: "/etc/kubernetes/pki/etcd/ca.key"
       }
-  when: PKI_URL is defined
+  when: not PKI_URL is defined
 
 - name: Distribution CA certificate by pki server
   get_url:
@@ -124,7 +124,7 @@
         dest: "/etc/kubernetes/pki/etcd/ca.key",
         mode: 600
       }
-  when: PKI_URL is not defined
+  when: PKI_URL is defined
 
 - name: Generate etcd server private key
   community.crypto.openssl_privatekey:
