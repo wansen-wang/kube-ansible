@@ -104,10 +104,6 @@
       }
   when: not PKI_URL is defined
 
-- name: Distribution CA certificate by pki server(debug)
-  debug:
-    msg: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/etcd.crt"
-
 - name: Distribution CA certificate by pki server
   get_url:
     url: "{{ item.src }}"

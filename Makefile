@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 PROJECT_NAME:=kube-ansible
-PROJECT_NEV:=dev
+PROJECT_ENV:=dev
 
 # binary file download way, official nexus qiniu
 DOWNLOAD_WAY:=official
