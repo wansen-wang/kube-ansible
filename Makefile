@@ -29,6 +29,7 @@ NEXUS_HTTP_PASSWORD:=
 PKI_URL:=http://127.0.0.1:8080/v1/pki/kubernetes
 
 ANSIBLE_OPT:=
+
 runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
@@ -46,8 +47,8 @@ deploy:
 		DOCKER_VERSION=$(DOCKER_VERSION) \
 		CNI_VERSION=$(CNI_VERSION) ./scripts/info.sh
 	@ansible-playbook -i ./inventory/hosts install.yml \
-		-e PROJECT_NAME=$(PROJECT_NAME)
-		-e PROJECT_ENV=$(PROJECT_ENV)
+		-e PROJECT_NAME=$(PROJECT_NAME) \
+		-e PROJECT_ENV=$(PROJECT_ENV) \
 		-e DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
 		-e RUNTIME=$(RUNTIME) \
 		-e KUBE_VERSION=$(KUBE_VERSION) \
