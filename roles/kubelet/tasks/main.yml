@@ -51,18 +51,26 @@
 
 - name: Distribution certificate by pki server
   get_url:
-    url: "{{ item.src }}"
+    url: "{{ item.url }}"
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
+    checksum: "{{ item.checksum }}"
     owner: root
     group: root
     timeout: 3
-  retries: 10
+  retries: 3
   with_items:
     - {
-        src: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt",
+        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt",
         dest: "/etc/kubernetes/pki/ca.crt",
+        checksum: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt.sha256sum",
         mode: 644,
+      }
+    - {
+        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key",
+        dest: "/etc/kubernetes/pki/ca.key",
+        checksum: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key.sha256sum",
+        mode: 600,
       }
   when: PKI_URL is defined
 
