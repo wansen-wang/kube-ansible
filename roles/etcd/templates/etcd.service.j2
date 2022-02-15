@@ -24,7 +24,7 @@ TimeoutStartSec=0
 ExecStart=/usr/local/bin/etcd \
   --name=etcd-{{ ansible_play_hosts.index(inventory_hostname) }} \
   --data-dir={{ etcd.datadir | default('/var/lib/etcd') }} \
-{% if IP_STACK == "ipv6" %}
+{% if IP_STACK | default("ipv4") == "ipv6" %}
   --listen-client-urls=https://127.0.0.1:2379,https://[{{ ansible_default_ipv6.address }}]:2379 \
   --advertise-client-urls=https://[{{ ansible_default_ipv6.address }}]:2379 \
   --listen-peer-urls=https://[{{ ansible_default_ipv6.address }}]:2380 \
