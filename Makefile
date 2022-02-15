@@ -29,7 +29,7 @@ NEXUS_HTTP_PASSWORD:=
 PKI_URL:=http://127.0.0.1:8080/v1/pki/kubernetes
 
 # IPv4/IPv6 dual-stack ipv4, ipv6, both
-IP_STACK:=ipv4
+IP_STACK:=ipv6
 
 ANSIBLE_OPT:=
 
@@ -65,7 +65,8 @@ deploy:
 		-e NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		-e NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		-e NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
-		-e PKI_URL=$(PKI_URL) $(ANSIBLE_OPT)
+		-e PKI_URL=$(PKI_URL) \
+		-e IP_STACK=$(IP_STACK) $(ANSIBLE_OPT)
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
