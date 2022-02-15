@@ -1,19 +1,11 @@
 {%- set etcdnode=[] -%}
 {%- if groups['etcd'] is not defined %}
     {%- for host in groups['master'] -%}
-      {%- if IP_STACK == "ipv6" %}
-        {{ etcdnode.append("[" + host + "]") }}
-      {%- else %}
         {{ etcdnode.append(host) }}
-      {%- endif %}
     {%- endfor%}
-{%- else %}
+{%- else%}
     {%- for host in groups['etcd'] -%}
-      {%- if IP_STACK == "ipv6" %}
-        {{ etcdnode.append("[" + host + "]") }}
-      {%- else %}
         {{ etcdnode.append(host) }}
-      {%- endif %}
     {%- endfor%}
 {%- endif %}
 [Unit]
