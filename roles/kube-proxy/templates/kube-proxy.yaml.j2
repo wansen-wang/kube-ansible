@@ -1,12 +1,7 @@
 apiVersion: kubeproxy.config.k8s.io/v1alpha1
 kind: KubeProxyConfiguration
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-bindAddress: "[{{ ansible_default_ipv6.address }}]"
-metricsBindAddress: "[{{ ansible_default_ipv6.address }}]:10249"
-{% else %}
-bindAddress: {{ ansible_default_ipv4.address }}
-metricsBindAddress: {{ ansible_default_ipv4.address }}:10249
-{% endif %}
+bindAddress: "0.0.0.0"
+metricsBindAddress: "0.0.0.0:10249"
 clientConnection:
   acceptContentTypes: ""
   burst: 10
