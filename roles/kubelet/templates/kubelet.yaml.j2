@@ -1,7 +1,7 @@
 
 {% if IP_STACK | default("ipv4") == "ipv6" %}
-address: {{ ansible_default_ipv6.address }}
-healthzBindAddress: {{ ansible_default_ipv6.address }}
+address: [{{ ansible_default_ipv6.address }}]
+healthzBindAddress: [{{ ansible_default_ipv6.address }}]
 {% else %}
 address: {{ ansible_default_ipv4.address }}
 healthzBindAddress: {{ ansible_default_ipv4.address }}
