@@ -9,7 +9,42 @@
         {{ etcdnode.append(host) }}
     {%- endfor%}
 {%- endif %}
+{% if IP_STACK | default("ipv4") == "ipv6" %}
+echo -e "\033[32m=> member list <=\033[0m"
+ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
+--key /etc/kubernetes/pki/etcd/healthcheck-client.key \
+member list --write-out=table
 
+echo -e "\033[32m=> endpoint health <=\033[0m"
+ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
+--key /etc/kubernetes/pki/etcd/healthcheck-client.key \
+endpoint health --write-out=table
+
+echo -e "\033[32m=> endpoint status <=\033[0m"
+ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
+--key /etc/kubernetes/pki/etcd/healthcheck-client.key \
+endpoint status --write-out=table
+
+echo -e "\033[32m=> endpoint hashkv <=\033[0m"
+ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+--cacert /etc/kubernetes/pki/etcd/ca.crt \
+--cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
+--key /etc/kubernetes/pki/etcd/healthcheck-client.key \
+endpoint hashkv --write-out=table
+
+# echo -e "\033[32m=> defrag <=\033[0m"
+# ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+# --cacert /etc/kubernetes/pki/etcd/ca.crt \
+# --cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
+# --key /etc/kubernetes/pki/etcd/healthcheck-client.key \
+# defrag
+{% else %}
 echo -e "\033[32m=> member list <=\033[0m"
 ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}{{ host }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
 --cacert /etc/kubernetes/pki/etcd/ca.crt \
@@ -43,4 +78,4 @@ endpoint hashkv --write-out=table
 # --cacert /etc/kubernetes/pki/etcd/ca.crt \
 # --cert /etc/kubernetes/pki/etcd/healthcheck-client.crt \
 # --key /etc/kubernetes/pki/etcd/healthcheck-client.key \
-# defrag
+{% endif %}
