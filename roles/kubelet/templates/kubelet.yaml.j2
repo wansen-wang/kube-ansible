@@ -1,11 +1,10 @@
-
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-address: "[{{ ansible_default_ipv6.address }}]"
-healthzBindAddress: "[{{ ansible_default_ipv6.address }}]"
-{% else %}
-address: {{ ansible_default_ipv4.address }}
-healthzBindAddress: {{ ansible_default_ipv4.address }}
-{% endif %}
+# {% if IP_STACK | default("ipv4") == "ipv6" %}
+# address: "[{{ ansible_default_ipv6.address }}]"
+# healthzBindAddress: "[{{ ansible_default_ipv6.address }}]"
+# {% else %}
+# address: {{ ansible_default_ipv4.address }}
+# healthzBindAddress: {{ ansible_default_ipv4.address }}
+# {% endif %}
 apiVersion: kubelet.config.k8s.io/v1beta1
 authentication:
   anonymous:
