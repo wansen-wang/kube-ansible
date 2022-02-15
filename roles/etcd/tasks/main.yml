@@ -301,7 +301,11 @@
 
 - name: Health check
   ansible.builtin.shell: |
-    ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
+    {% if IP_STACK == "ipv6" %}
+      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv6.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
+    {% else %}
+      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
+    {% endif %}
   when: etcd_systemd.changed
 
 - name: Install health check command
