@@ -9,6 +9,7 @@
         {{ etcdnode.append(host) }}
     {%- endfor%}
 {%- endif %}
+
 {% if IP_STACK | default("ipv4") == "ipv6" %}
 echo -e "\033[32m=> member list <=\033[0m"
 ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {% for host in etcdnode %}[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
