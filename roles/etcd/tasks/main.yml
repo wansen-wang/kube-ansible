@@ -295,7 +295,7 @@
     port: 2379
     delay: 15
     state: started
-    host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
+    host: "{{ ansible_play_hosts.index(inventory_hostname) }}"
   connection: local
   when: etcd_systemd.changed
 
