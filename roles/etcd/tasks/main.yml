@@ -292,13 +292,12 @@
 
 - name: Wait for etcd
   wait_for:
-    connect_timeout: 10
-    delay: 5
-    host: 127.0.0.1
     port: 2379
-    timeout: 60
-    sleep: 5
-    state: drained
+    delay: 15
+    state: started
+    connect_timeout: 10
+    active_connection_states: ['ESTABLISHED', 'FIN_WAIT1', 'FIN_WAIT2', 'SYN_RECV', 'SYN_SENT', 'TIME_WAIT']
+    host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
   connection: local
   when: etcd_systemd.changed
 
