@@ -47,11 +47,11 @@ fi
 
 sleep 3
 
-echo ansible-playbook -i ../inventory/hosts ../install.yml \
-  -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
-  -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-  -e RUNTIME=${RUNTIME} \
-  -e KUBE_VERSION=${KUBE_VERSION} \
-  -e ETCD_VERSION=${ETCD_VERSION} \
-  -e CNI_VERSION=${CNI_VERSION} \
-  -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+ansible-playbook -i ../inventory/hosts ../install.yml \
+-e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+-e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+-e RUNTIME=${RUNTIME} \
+-e KUBE_VERSION=${KUBE_VERSION} \
+-e ETCD_VERSION=${ETCD_VERSION} \
+-e CNI_VERSION=${CNI_VERSION} \
+-e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
