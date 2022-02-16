@@ -91,6 +91,9 @@ networking:
   ## IPv4 stack
   serviceSubnet: 10.96.0.0/12
   podSubnet: 10.244.0.0/16
+  ## IPv6 stack
+  # serviceSubnet: fd74:ca9b:0172:0019::/110
+  # podSubnet: fd74:ca9b:0172:0018::/64
   ## IPv4/IPv6 dual-stack
   # serviceSubnet: 10.96.0.0/12,fd74:ca9b:0172:0019::/110
   # podSubnet: 10.244.0.0/16,fd74:ca9b:0172:0018::/64
@@ -207,7 +210,20 @@ proxy:
     level: 1
 
 # app not support all kubernetes version, please confirm apiVersion on manifests.
-# app not support IPv4/IPv6 dual-stack, please confirm yourslef.
+# app default is ipv4, if you want to deployment for ipv6, please change to ipv6 branch
+# IPV4 app list:
+## calico
+## canal
+## cilium
+## coredns
+## kube-flannel
+## metrics
+## traefik
+# IPV6 app list:
+## calico
+## coredns
+## metrics
+
 apps:
   location: /etc/kubernetes/apps
   files:

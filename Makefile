@@ -26,10 +26,11 @@ NEXUS_HTTP_USERNAME:=
 NEXUS_HTTP_PASSWORD:=
 
 # PKI server
-PKI_URL:=http://127.0.0.1:8080/v1/pki/kubernetes
+# PKI_URL:=http://127.0.0.1:8080/v1/pki/project
+PKI_URL:=
 
-# IPv4/IPv6 dual-stack ipv4, ipv6, both
-IP_STACK:=ipv6
+# IPv4/IPv6 dual-stack ipv4, ipv6
+IP_STACK:=ipv4
 
 ANSIBLE_OPT:=
 
@@ -40,7 +41,9 @@ runtime:
 deploy:
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
-	@DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
+	@PROJECT_NAME=$(PROJECT_NAME) \
+		PROJECT_ENV=$(PROJECT_ENV) \
+		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
 		RUNTIME=$(RUNTIME) \
 		KUBE_VERSION=$(KUBE_VERSION) \
 		ETCD_VERSION=$(ETCD_VERSION) \
@@ -48,25 +51,13 @@ deploy:
 		RUNC_VERSION=$(RUNC_VERSION) \
 		CRICTL_VERSION=$(CRICTL_VERSION) \
 		DOCKER_VERSION=$(DOCKER_VERSION) \
-		CNI_VERSION=$(CNI_VERSION) ./scripts/info.sh
-	@ansible-playbook -i ./inventory/hosts install.yml \
-		-e PROJECT_NAME=$(PROJECT_NAME) \
-		-e PROJECT_ENV=$(PROJECT_ENV) \
-		-e DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
-		-e RUNTIME=$(RUNTIME) \
-		-e KUBE_VERSION=$(KUBE_VERSION) \
-		-e ETCD_VERSION=$(ETCD_VERSION) \
-		-e CONTAINERD_VERSION=$(CONTAINERD_VERSION) \
-		-e RUNC_VERSION=$(RUNC_VERSION) \
-		-e CRICTL_VERSION=$(CRICTL_VERSION) \
-		-e DOCKER_VERSION=$(DOCKER_VERSION) \
-		-e CNI_VERSION=$(CNI_VERSION) \
-		-e NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
-		-e NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
-		-e NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
-		-e NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
-		-e PKI_URL=$(PKI_URL) \
-		-e IP_STACK=$(IP_STACK) $(ANSIBLE_OPT)
+		CNI_VERSION=$(CNI_VERSION) \
+		NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
+		NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
+		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
+		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		PKI_URL=$(PKI_URL) \
+		IP_STACK=$(IP_STACK) ./scripts/info.sh
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
