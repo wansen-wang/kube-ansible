@@ -292,12 +292,13 @@
 
 - name: Wait for etcd
   wait_for:
+    connect_timeout: 10
+    delay: 5
+    host: 127.0.0.1
     port: 2379
-    delay: 30
     timeout: 60
     sleep: 5
     state: drained
-    host: "{{ ansible_play_hosts.index(inventory_hostname) }}"
   connection: local
   when: etcd_systemd.changed
 
@@ -308,6 +309,9 @@
     {% else %}
       ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
     {% endif %}
+  register: etcd_pkg
+  until: etcd_pkg is succeeded
+  retries: 10
   when: etcd_systemd.changed
 
 - name: Install health check command
