@@ -18,7 +18,7 @@
   until: runc_pkg is succeeded
   retries: 10
   notify: Start Containerd
-  environment: "{{ proxy_env | default('') }}"
+  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
 - name: Download Containerd
   get_url:
@@ -34,7 +34,7 @@
   until: containerd_pkg is succeeded
   retries: 10
   notify: Start Containerd
-  environment: "{{ proxy_env | default('') }}"
+  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
 - name: Extract Containerd
   ansible.builtin.unarchive:
@@ -62,7 +62,7 @@
   until: crictl_pkg is succeeded
   retries: 10
   notify: Start Containerd
-  environment: "{{ proxy_env | default('') }}"
+  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
 - name: Extract Crictl
   ansible.builtin.unarchive:

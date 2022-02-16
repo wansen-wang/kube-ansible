@@ -15,7 +15,7 @@
       register: manifests
       until: manifests is succeeded
       retries: 10
-      environment: "{{ proxy_env | default('') }}"
+      environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
     - name: Deployment application
       ansible.builtin.shell: "/usr/local/bin/kubectl apply -f {{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"

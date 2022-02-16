@@ -92,8 +92,8 @@ networking:
   serviceSubnet: 10.96.0.0/12
   podSubnet: 10.244.0.0/16
   ## IPv4/IPv6 dual-stack
-  # serviceSubnet: 10.96.0.0/12,2001:db8:42:1::/112
-  # podSubnet: 10.244.0.0/16,2001:db8:42:0::/56
+  # serviceSubnet: 10.96.0.0/12,fd74:ca9b:0172:0019::/110
+  # podSubnet: 10.244.0.0/16,fd74:ca9b:0172:0018::/64
 
 # kubernetes cloud provider config
 # cloudProvider:

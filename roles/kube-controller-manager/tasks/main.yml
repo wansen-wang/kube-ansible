@@ -16,7 +16,7 @@
   register: controller_pkg
   until: controller_pkg is succeeded
   retries: 10
-  environment: "{{ proxy_env | default('') }}"
+  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
 - name: Create certificate directory
   ansible.builtin.file:

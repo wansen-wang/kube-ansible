@@ -5,7 +5,7 @@
     url: https://get.helm.sh/helm-v{{ helm.version }}-linux-amd64.tar.gz
     dest: /usr/local/src/helm-v{{ helm.version }}-linux-amd64.tar.gz
     timeout: 3
-  environment: "{{ proxy_env | default('') }}"
+  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
   when: helm.enabled | bool
 
 - name: Install the helm binary
