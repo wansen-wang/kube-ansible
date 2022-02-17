@@ -46,7 +46,6 @@ if [ ! -n ${PKI_URL} ]; then
 fi
 
 sleep 3
-cd ..
 ansible-playbook -i ./inventory/hosts ./install.yml \
 -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
 -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
