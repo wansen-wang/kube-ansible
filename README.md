@@ -190,6 +190,9 @@ ETCD_VERSION=3.4.5
 ```
 
 ##### ca use to PKI server
+
+about pki server, you can reference [here](https://github.com/buxiaomo/pki-server)
+
 ```
 make deploy DOWNLOAD_WAY=qiniu \
 PKI_URL=http://pki.example.com/v1/pki/project
