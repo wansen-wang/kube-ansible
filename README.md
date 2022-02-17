@@ -8,8 +8,8 @@ Refer to the `README.md` and `group_vars/template.yml` files for project configu
 
 * [x] Azure
 * [ ] Aliyun
-* [x] Aws (Apiserver HA use the CLB)
-* [x] GCP (Apiserver HA use the TCP Load balancing)
+* [x] Aws (APIServer HA use the CLB)
+* [x] GCP (APIServer HA use the TCP Load balancing)
 
 ## Architecture Support
 
@@ -112,41 +112,46 @@ make runtime
 
   this is a mirrors on qiniu, you can reference [here](https://github.com/buxiaomo/kube-binaries)
 
-
 about Makefile parameter
 
 | Parameter  | describe  |  Default | option |
 |---|---|---|---|
+| PKI_URL | Nexus repository name | N/A | pki server url |
+| PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
+| PROJECT_ENV | Project Env  | dev  | used by pki server|
+| IP_STACK | Kubernetes IP Stack | ipv4 |ipv4 or ipv6 |
 | DOWNLOAD_WAY | Binary download mode  | official  | official or nexus or qiniu|
 | RUNTIME | container runtime  | docker  | docker or containerd|
-| CONTAINERD_VERSION | containerd binary version | 1.3.0  | N/A|
-| CRICTL_VERSION | crictl binary version | 1.16.1  | N/A|
-| RUNC_VERSION | runc binary version | 1.0.0-rc92  | N/A|
-| KUBE_VERSION | Kubernetes binary version  | 1.20.0 | N/A |
-| DOCKER_VERSION | Docker binary version  | 19.03.9 | N/A |
-| ETCD_VERSION | Etcd binary version  | 3.4.5  | N/A |
-| CNI_VERSION | CNI binary version  | 0.8.5  | N/A |
+| CONTAINERD_VERSION | containerd binary version | latest  | N/A|
+| CRICTL_VERSION | crictl binary version | latest  | N/A|
+| RUNC_VERSION | runc binary version | latest  | N/A|
+| KUBE_VERSION | Kubernetes binary version  | latest | N/A |
+| DOCKER_VERSION | Docker binary version  | latest | N/A |
+| ETCD_VERSION | Etcd binary version  | latest  | N/A |
+| CNI_VERSION | CNI binary version  | latest  | N/A |
 | NEXUS_HTTP_USERNAME | Nexus username  | N/A  | N/A |
 | NEXUS_HTTP_PASSWORD | Nexus password  | N/A  | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
 | NEXUS_REPOSITORY | Nexus repository name | kube-ansible | N/A |
 
+
+
 ##### Download the default version using official
 
 ```
-make install DOWNLOAD_WAY=official
+make deploy DOWNLOAD_WAY=official
 ```
 
 ##### Download the default version using Qiniu
 
 ```
-make install DOWNLOAD_WAY=qiniu
+make deploy DOWNLOAD_WAY=qiniu
 ```
 
 ##### Download the default version using Nexus
 
 ```
-make install DOWNLOAD_WAY=nexus \
+make deploy DOWNLOAD_WAY=nexus \
 NEXUS_DOMAIN_NAME=http://172.16.4.11:8081 \
 NEXUS_REPOSITORY=kube-ansible \
 NEXUS_HTTP_USERNAME=admin \
@@ -156,23 +161,40 @@ NEXUS_HTTP_PASSWORD=admin
 ### Kubernetes management
 
 #### Deploy
+##### ca save to deployment server
 
 [![asciicast](https://asciinema.org/a/421915.svg)](https://asciinema.org/a/421915)
 
 ```
 # default version
 ## docker runtime
-make install DOWNLOAD_WAY=official RUNTIME=docker
+make deploy DOWNLOAD_WAY=official RUNTIME=docker
 
 ## containerd runtime
-make install DOWNLOAD_WAY=official RUNTIME=containerd
+make deploy DOWNLOAD_WAY=official RUNTIME=containerd
 
 # custom version
 ## docker runtime
-make install DOWNLOAD_WAY=official RUNTIME=docker KUBE_VERSION=1.14.4 DOCKER_VERSION=19.03.8 FLANNEL_VERSION=0.12.0 ETCD_VERSION=3.4.5
+make deploy DOWNLOAD_WAY=official \
+RUNTIME=docker \
+KUBE_VERSION=1.14.4 \
+DOCKER_VERSION=19.03.8 \
+ETCD_VERSION=3.4.5
 
 ## containerd runtime
-make install DOWNLOAD_WAY=official RUNTIME=containerd KUBE_VERSION=1.14.4 DOCKER_VERSION=19.03.8 FLANNEL_VERSION=0.12.0 ETCD_VERSION=3.4.5
+make deploy DOWNLOAD_WAY=official \
+RUNTIME=containerd \
+KUBE_VERSION=1.14.4 \
+DOCKER_VERSION=19.03.8 \
+ETCD_VERSION=3.4.5
+```
+
+##### ca use to PKI server
+```
+make deploy DOWNLOAD_WAY=qiniu \
+PKI_URL=http://pki.example.com/v1/pki/project
+PROJECT_NAME=demo
+PROJECT_ENV=dev
 ```
 
 #### Scale
@@ -252,7 +274,7 @@ kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
 --embed-certs=true \
---server=https://172.16.5.10:6443 \
+--server=https://172.16.6.10:6443 \
 --kubeconfig=/etc/kubernetes/tmp.kubeconfig
 
 kubectl config set-credentials admin \
