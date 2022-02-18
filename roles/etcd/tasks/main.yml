@@ -294,16 +294,16 @@
   register: etcd_systemd
   when: etcd_pkg.changed or etcd_tls_server_key.changed or etcd_tls_server_crt.changed or etcd_tls_peer_key.changed or etcd_tls_peer_crt.changed or etcd_cfg.changed
 
-# - name: Wait for etcd
-#   wait_for:
-#     port: 2379
-#     delay: 15
-#     state: started
-#     connect_timeout: 10
-#     active_connection_states: ['ESTABLISHED', 'FIN_WAIT1', 'FIN_WAIT2', 'SYN_RECV', 'SYN_SENT', 'TIME_WAIT']
-#     host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
-#   connection: local
-#   when: etcd_systemd.changed
+- name: Wait for etcd
+  wait_for:
+    port: 2379
+    delay: 15
+    state: started
+    connect_timeout: 10
+    active_connection_states: ['ESTABLISHED', 'FIN_WAIT1', 'FIN_WAIT2', 'SYN_RECV', 'SYN_SENT', 'TIME_WAIT']
+    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}{% else %}{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}{% endif %}"
+  connection: local
+  when: etcd_systemd.changed
 
 - name: Health check
   ansible.builtin.shell: |
