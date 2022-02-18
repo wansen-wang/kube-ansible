@@ -11,9 +11,9 @@
 {%- endif %}
 
 {% if IP_STACK | default("ipv4") == "ipv6" %}
-ENDPOINTS={% for host in etcdnode %}https://[{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}]:2380{% if not loop.last %},{% endif %}{% endfor %}
+ENDPOINTS={% for host in etcdnode %}https://[{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}]:2379{% if not loop.last %},{% endif %}{% endfor %}
 {% else %}
-ENDPOINTS={% for host in etcdnode %}https://{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}:2380{% if not loop.last %},{% endif %}{% endfor %}
+ENDPOINTS={% for host in etcdnode %}https://{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}:2379{% if not loop.last %},{% endif %}{% endfor %}
 {% endif %}
 
 echo -e "\033[32m=> member list <=\033[0m"
