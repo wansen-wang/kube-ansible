@@ -224,7 +224,7 @@ make upgrade KUBE_VERSION=1.18.5
 
 This repo only deploy a kubernetes cluster and core application like 'coredns', 'calico', 'canal', 'flannel', not support extended application, like 'jenkins', 'ingress'...
 
-if you want to deploy extended application, please reference [here](https://github.com/buxiaomo/kubernetes-manifests.git).
+if you want to deploy extended application, please reference [here](https://github.com/buxiaomo/kubernetes-sigs.git).
 
 ## <span id = "nexus">about nexus package</span>
 
