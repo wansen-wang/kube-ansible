@@ -161,7 +161,6 @@
       - keyEncipherment
     extended_key_usage:
       - serverAuth
-      - clientAuth
     subject_alt_name: "{{ item.value | union(apiServer.certSANs | default(['DNS:*.kubernetes.local'])) | unique }}"
   with_dict:
     subject_alt_name:
@@ -284,7 +283,6 @@
       - digitalSignature
       - keyEncipherment
     extended_key_usage:
-      - serverAuth
       - clientAuth
   changed_when: True
   notify: Clean apiserver-etcd-client csr
