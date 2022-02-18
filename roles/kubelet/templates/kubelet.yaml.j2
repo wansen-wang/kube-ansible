@@ -21,7 +21,11 @@ clusterDNS:
 - {{ networking.serviceSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) }}
 - {{ networking.serviceSubnet.split(',')[1] | default('fd74:ca9b:0172:0019::/110') | ansible.netcommon.next_nth_usable(2) }}
 {% else %}
+  {% if IP_STACK | default("ipv4") == "ipv6" %}
+- {{ networking.serviceSubnet | default('fd74:ca9b:0172:0019::/110') | ansible.netcommon.next_nth_usable(2) }}
+  {% else %}
 - {{ networking.serviceSubnet | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) }}
+  {% endif %}
 {% endif %}
 clusterDomain: {{ networking.dnsDomain | default('cluster.local') }}
 configMapAndSecretChangeDetectionStrategy: Watch
