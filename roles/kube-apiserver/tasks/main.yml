@@ -372,7 +372,7 @@
 
 - name: Health check
   uri:
-    url: "https://{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}:6443/healthz"
+    url: "https://{% if IP_STACK | default('ipv4') == 'ipv6' %}[{{ ansible_default_ipv6.address }}]{% else %}{{ ansible_default_ipv4.address }}{% endif %}:6443/healthz"
     client_cert: "/etc/kubernetes/pki/admin.crt"
     client_key: "/etc/kubernetes/pki/admin.key"
     validate_certs: no
