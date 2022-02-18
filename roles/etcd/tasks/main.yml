@@ -301,7 +301,7 @@
     state: started
     connect_timeout: 10
     active_connection_states: ['ESTABLISHED', 'FIN_WAIT1', 'FIN_WAIT2', 'SYN_RECV', 'SYN_SENT', 'TIME_WAIT']
-    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}{% else %}{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}{% endif %}"
+    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
   connection: local
   when: etcd_systemd.changed
 
