@@ -24,10 +24,10 @@ ExecStart=/usr/local/bin/kube-apiserver \
   --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key \
 {% if IP_STACK | default("ipv4") == "ipv6" %}
   --advertise-address={{ ansible_default_ipv6.address }} \
-  --etcd-servers={% for host in etcdnode %}https://[{{ host }}]:2379{% if not loop.last %},{% endif %}{% endfor %} \
+  --etcd-servers={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://[{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}]:2380{% if not loop.last %},{% endif %}{% endfor %} \
 {% else %}
   --advertise-address={{ ansible_default_ipv4.address }} \
-  --etcd-servers={% for host in etcdnode %}https://{{ host }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
+  --etcd-servers={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}:2380{% if not loop.last %},{% endif %}{% endfor %} \
 {% endif %}
   --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt \
   --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key \
