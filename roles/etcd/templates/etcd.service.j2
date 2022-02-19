@@ -31,10 +31,10 @@ ExecStart=/usr/local/bin/etcd \
   --initial-advertise-peer-urls=https://[{{ ansible_default_ipv6.address }}]:2380 \
   --initial-cluster={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://[{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}]:2380{% if not loop.last %},{% endif %}{% endfor %} \
 {% else %}
-  --listen-client-urls=https://127.0.0.1:2379,https://[{{ ansible_default_ipv4.address }}]:2379 \
-  --advertise-client-urls=https://[{{ ansible_default_ipv4.address }}]:2379 \
-  --listen-peer-urls=https://[{{ ansible_default_ipv4.address }}]:2380 \
-  --initial-advertise-peer-urls=https://[{{ ansible_default_ipv4.address }}]:2380 \
+  --listen-client-urls=https://127.0.0.1:2379,https://{{ ansible_default_ipv4.address }}:2379 \
+  --advertise-client-urls=https://{{ ansible_default_ipv4.address }}:2379 \
+  --listen-peer-urls=https://{{ ansible_default_ipv4.address }}:2380 \
+  --initial-advertise-peer-urls=https://{{ ansible_default_ipv4.address }}:2380 \
   --initial-cluster={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}:2380{% if not loop.last %},{% endif %}{% endfor %} \
 {% endif %}
   --initial-cluster-token=kubernetes-etcd-cluster \
