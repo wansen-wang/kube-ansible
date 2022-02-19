@@ -139,7 +139,7 @@
 
 - name: Waiting for the service
   wait_for:
-    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}[{{ ansible_default_ipv6.address }}]{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
+    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
     port: 10248
     delay: 30
     state: started
