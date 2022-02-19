@@ -7,5 +7,9 @@ errorExit() {
 }
 
 if ip addr | grep -q $VIRTUAL_IP ; then
-    curl -s --max-time 2 --insecure https://${VIRTUAL_IP}:8443/healthz  -o /dev/null || errorExit "Error GET https://${VIRTUAL_IP}:8443/healthz"
+{% if IP_STACK | default("ipv4") == "ipv6" %}
+  curl -6 -s --max-time 2 --insecure https://[${VIRTUAL_IP}]:8443/healthz  -o /dev/null || errorExit "Error GET https://[${VIRTUAL_IP}]:8443/healthz"
+{% else %}
+  curl -s --max-time 2 --insecure https://${VIRTUAL_IP}:8443/healthz  -o /dev/null || errorExit "Error GET https://${VIRTUAL_IP}:8443/healthz"
+{% endif %}
 fi
