@@ -116,7 +116,7 @@ about Makefile parameter
 
 | Parameter  | describe  |  Default | option |
 |---|---|---|---|
-| PKI_URL | Nexus repository name | N/A | pki server url |
+| PKI_URL | PKI Server, about pki server, you can reference [here](https://github.com/buxiaomo/pki-server) | N/A | pki server url |
 | PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
 | IP_STACK | Kubernetes IP Stack | ipv4 |ipv4 or ipv6 |
