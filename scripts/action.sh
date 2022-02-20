@@ -7,7 +7,7 @@ function kubernetes() {
   pwd
   grep -E "KUBE_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
-    sed -i "8s/KUBE_VERSION.*/KUBE_VERSION:=${tag_name:1}/" ./Makefile
+    sed -i "10s/KUBE_VERSION.*/KUBE_VERSION:=${tag_name:1}/" ./Makefile
     git config --local user.email "action@github.com"
     git config --local user.name "GitHub Action"
     git add ./Makefile
