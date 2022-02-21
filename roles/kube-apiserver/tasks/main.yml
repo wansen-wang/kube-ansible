@@ -15,7 +15,7 @@
     timeout: 3
   register: apiserver_pkg
   until: apiserver_pkg is succeeded
-  retries: 10
+  retries: 15
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
 - name: Create certificate directory
