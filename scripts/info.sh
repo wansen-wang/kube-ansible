@@ -1,3 +1,4 @@
+#!/bin/bash
 echo '-------------------------------------------------------------------------------'
 echo ' __        ___.                                         ._____.   .__          '
 echo '|  | ____ _\_ |__   ____           _____    ____   _____|__\_ |__ |  |   ____  '
@@ -46,11 +47,42 @@ if [ ${PKI_URL} ]; then
 fi
 
 sleep 3
-ansible-playbook -i ./inventory/hosts ./install.yml \
--e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
--e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
--e RUNTIME=${RUNTIME} \
--e KUBE_VERSION=${KUBE_VERSION} \
--e ETCD_VERSION=${ETCD_VERSION} \
--e CNI_VERSION=${CNI_VERSION} \
--e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+
+case $1 in
+    "deploy")
+      ansible-playbook -i ./inventory/hosts ./deploy.yml \
+      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+      -e RUNTIME=${RUNTIME} \
+      -e KUBE_VERSION=${KUBE_VERSION} \
+      -e ETCD_VERSION=${ETCD_VERSION} \
+      -e CNI_VERSION=${CNI_VERSION} \
+      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+      ;;
+    "scale")
+      read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
+      for host in ${SCALE_HOST_LIST_VER};do
+        sed -i "/\[worker\]/a ${host}" ./inventory/hosts
+      done
+      ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') \
+      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+      -e RUNTIME=${RUNTIME} \
+      -e KUBE_VERSION=${KUBE_VERSION} \
+      -e ETCD_VERSION=${ETCD_VERSION} \
+      -e CNI_VERSION=${CNI_VERSION} \
+      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+      ;;
+    "upgrade")
+      ansible-playbook -i ./inventory/hosts ./upgrade.yml \
+      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+      -e RUNTIME=${RUNTIME} \
+      -e KUBE_VERSION=${KUBE_VERSION} \
+      -e ETCD_VERSION=${ETCD_VERSION} \
+      -e CNI_VERSION=${CNI_VERSION} \
+      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+      ;;
+    *) ;;
+esac
+
