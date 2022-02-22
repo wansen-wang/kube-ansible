@@ -11,8 +11,8 @@
     mode: 0755
     owner: root
     group: root
-    url_password: "{{ NEXUS_HTTP_USERNAME | default('') }}"
-    url_username: "{{ NEXUS_HTTP_PASSWORD | default('') }}"
+    url_username: "{{ NEXUS_USERNAME | default('') }}"
+    url_password: "{{ NEXUS_PASSWORD | default('') }}"
     timeout: 3
   register: runc_pkg
   until: runc_pkg is succeeded
@@ -27,8 +27,8 @@
     mode: 0644
     owner: root
     group: root
-    url_password: "{{ NEXUS_HTTP_USERNAME | default('') }}"
-    url_username: "{{ NEXUS_HTTP_PASSWORD | default('') }}"
+    url_username: "{{ NEXUS_USERNAME | default('') }}"
+    url_password: "{{ NEXUS_PASSWORD | default('') }}"
     timeout: 3
   register: containerd_pkg
   until: containerd_pkg is succeeded
@@ -55,8 +55,8 @@
     mode: 0644
     owner: root
     group: root
-    url_password: "{{ NEXUS_HTTP_USERNAME | default('') }}"
-    url_username: "{{ NEXUS_HTTP_PASSWORD | default('') }}"
+    url_username: "{{ NEXUS_USERNAME | default('') }}"
+    url_password: "{{ NEXUS_PASSWORD | default('') }}"
     timeout: 3
   register: crictl_pkg
   until: crictl_pkg is succeeded

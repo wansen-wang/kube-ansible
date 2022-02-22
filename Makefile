@@ -22,8 +22,8 @@ RUNC_VERSION:=1.1.0
 # nexus information
 NEXUS_DOMAIN_NAME:=
 NEXUS_REPOSITORY:=kube-ansible
-NEXUS_HTTP_USERNAME:=
-NEXUS_HTTP_PASSWORD:=
+NEXUS_USERNAME:=
+NEXUS_PASSWORD:=
 
 # PKI server
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
@@ -52,10 +52,10 @@ deploy:
 		CRICTL_VERSION=$(CRICTL_VERSION) \
 		DOCKER_VERSION=$(DOCKER_VERSION) \
 		CNI_VERSION=$(CNI_VERSION) \
-		NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
-		NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		NEXUS_USERNAME=$(NEXUS_USERNAME) \
+		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
 		PKI_URL=$(PKI_URL) \
 		IP_STACK=$(IP_STACK) ./scripts/info.sh deploy
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
@@ -73,10 +73,10 @@ scale:
 		CRICTL_VERSION=$(CRICTL_VERSION) \
 		DOCKER_VERSION=$(DOCKER_VERSION) \
 		CNI_VERSION=$(CNI_VERSION) \
-		NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
-		NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		NEXUS_USERNAME=$(NEXUS_USERNAME) \
+		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
 		PKI_URL=$(PKI_URL) \
 		IP_STACK=$(IP_STACK) ./scripts/info.sh scale
 
@@ -93,10 +93,10 @@ upgrade:
 		CRICTL_VERSION=$(CRICTL_VERSION) \
 		DOCKER_VERSION=$(DOCKER_VERSION) \
 		CNI_VERSION=$(CNI_VERSION) \
-		NEXUS_HTTP_USERNAME=$(NEXUS_HTTP_USERNAME) \
-		NEXUS_HTTP_PASSWORD=$(NEXUS_HTTP_PASSWORD) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		NEXUS_USERNAME=$(NEXUS_USERNAME) \
+		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
 		PKI_URL=$(PKI_URL) \
 		IP_STACK=$(IP_STACK) ./scripts/info.sh upgrade
 
@@ -141,6 +141,7 @@ version:
 	@curl -s https://api.github.com/repos/opencontainers/runc/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .runc
 	@echo "cni" > .cni
 	@curl -s https://api.github.com/repos/containernetworking/plugins/releases | jq -r '.[].tag_name' | grep -Ev 'rc|beta|alpha' | sed 's/v//g'| head -n 15 | sort -r -V >> .cni
+	@echo "-------------------- Versions are not related! --------------------"
 	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc .cni | column -t -s '|'
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
 
