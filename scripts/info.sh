@@ -14,7 +14,7 @@ if [ ${ARCH} != "aarch64" ] && [ ${ARCH} != "x86_64" ]; then
 fi
 ANSIBLE_ARG=""
 if [ ${DOWNLOAD_WAY} == "nexus" ]; then
-  if [ -n ${NEXUS_HTTP_USERNAME} ] || [ -n ${NEXUS_HTTP_PASSWORD} ] || [ -n ${NEXUS_DOMAIN_NAME} ] || [ -n ${NEXUS_REPOSITORY} ]; then
+  if [ ! -n ${NEXUS_HTTP_USERNAME} ] || [ ! -n ${NEXUS_HTTP_PASSWORD} ] || [ ! -n ${NEXUS_DOMAIN_NAME} ] || [ ! -n ${NEXUS_REPOSITORY} ]; then
     echo -e "\033[31mNexus parameter error, please set NEXUS_HTTP_USERNAME, NEXUS_HTTP_PASSWORD, NEXUS_DOMAIN_NAME, NEXUS_REPOSITORY! \033[0m "
     exit 1
   else

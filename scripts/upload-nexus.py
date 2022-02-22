@@ -62,7 +62,6 @@ if __name__ == "__main__":
                         help='containerd version')
     parser.add_argument('--runc', metavar='runc', help='runc version')
     parser.add_argument('--crictl', metavar='crictl', help='crictl version')
-    parser.add_argument('--flannel', metavar='flannel', help='flannel version')
     options = parser.parse_args()
 
     if options.url == "" or options.repository == "":
@@ -84,13 +83,6 @@ if __name__ == "__main__":
         Download("https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % options.docker,
                  "docker-%s.tgz" % options.docker)
         nexus.Upload(src="./.tmp/docker-%s.tgz" % options.docker, directory="/linux/static/stable/x86_64")
-
-    if options.flannel != "" or options.flannel is not None:
-        print("Download and Upload flannel package...")
-        Download("https://github.com/coreos/flannel/releases/download/v%s/flannel-v%s-linux-amd64.tar.gz" % (
-            options.flannel, options.flannel), "flannel-v%s-linux-amd64.tar.gz" % options.flannel)
-        nexus.Upload(src="./.tmp/flannel-v%s-linux-amd64.tar.gz" % options.flannel,
-                     directory="/coreos/flannel/releases/download/v%s" % options.flannel)
 
     if options.etcd != "" or options.etcd is not None:
         print("Download and Upload etcd package...")
