@@ -232,6 +232,10 @@ apps:
         url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ IP_STACK }}/coredns.yaml",
         name: "coredns.yaml",
       }
+    - {
+        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ IP_STACK }}/calico.yaml",
+        name: "calico.yaml",
+      }
     # - {
     #     url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/main/traefik.yaml",
     #     name: "traefik.yaml",
@@ -247,10 +251,6 @@ apps:
     # - {
     #     url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/main/cilium.yaml",
     #     name: "cilium.yaml",
-    #   }
-    # - {
-    #     url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/main/calico.yaml",
-    #     name: "calico.yaml",
     #   }
     # - {
     #     url: "https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml",
