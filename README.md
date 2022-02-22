@@ -108,9 +108,6 @@ make runtime
 
   It will be download from Github or Google
 
-* qiniu
-
-  this is a mirrors on qiniu, you can reference [here](https://github.com/buxiaomo/kube-binaries)
 
 about Makefile parameter
 
@@ -120,7 +117,7 @@ about Makefile parameter
 | PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
 | IP_STACK | Kubernetes IP Stack | ipv4 |ipv4 or ipv6 |
-| DOWNLOAD_WAY | Binary download mode  | official  | official or nexus or qiniu|
+| DOWNLOAD_WAY | Binary download mode  | official  | official or nexus |
 | RUNTIME | container runtime  | docker  | docker or containerd|
 | CONTAINERD_VERSION | containerd binary version | latest  | N/A|
 | CRICTL_VERSION | crictl binary version | latest  | N/A|
@@ -140,12 +137,6 @@ about Makefile parameter
 
 ```
 make deploy DOWNLOAD_WAY=official
-```
-
-##### Download the default version using Qiniu
-
-```
-make deploy DOWNLOAD_WAY=qiniu
 ```
 
 ##### Download the default version using Nexus
@@ -194,7 +185,7 @@ ETCD_VERSION=3.4.5
 about pki server, you can reference [here](https://github.com/buxiaomo/pki-server)
 
 ```
-make deploy DOWNLOAD_WAY=qiniu \
+make deploy DOWNLOAD_WAY=official \
 PKI_URL=http://pki.example.com/v1/pki/project
 PROJECT_NAME=demo
 PROJECT_ENV=dev

@@ -74,12 +74,12 @@ sysctl:
     vm.max_map_count: 262144
 
 limits:
-  - { domain: "*", limit_type: "soft", limit_item: "nproc", value: 65535 }
-  - { domain: "*", limit_type: "hard", limit_item: "nproc", value: 65535 }
-  - { domain: "*", limit_type: "soft", limit_item: "nofile", value: 65535 }
-  - { domain: "*", limit_type: "hard", limit_item: "nofile", value: 65535 }
-  - { domain: "root", limit_type: "soft", limit_item: "nofile", value: 65535 }
-  - { domain: "root", limit_type: "hard", limit_item: "nofile", value: 65535 }
+  - { domain: "*", limit_type: "soft", limit_item: "nproc", value: 65536 }
+  - { domain: "*", limit_type: "hard", limit_item: "nproc", value: 65536 }
+  - { domain: "*", limit_type: "soft", limit_item: "nofile", value: 65536 }
+  - { domain: "*", limit_type: "hard", limit_item: "nofile", value: 65536 }
+  - { domain: "root", limit_type: "soft", limit_item: "nofile", value: 65536 }
+  - { domain: "root", limit_type: "hard", limit_item: "nofile", value: 65536 }
   - { domain: "root", limit_type: "soft", limit_item: "nproc", value: "unlimited" }
   - { domain: "root", limit_type: "hard", limit_item: "nproc", value: "unlimited" }
 
