@@ -17,7 +17,7 @@
 - name: Set OS dependent variables
   include_vars: "{{ DOWNLOAD_WAY }}.yml"
 
-- name: Download binary
+- name: Download package
   get_url:
     url: "{{ download_url }}"
     dest: "/usr/local/src/docker-{{ DOCKER_VERSION }}.tgz"
@@ -33,7 +33,7 @@
   retries: 10
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
-- name: Extract docker
+- name: Extract package
   ansible.builtin.unarchive:
     src: "/usr/local/src/docker-{{ DOCKER_VERSION }}.tgz"
     dest: /usr/local/bin

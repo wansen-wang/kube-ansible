@@ -2,7 +2,7 @@
 - name: Set OS dependent variables
   include_vars: "{{ DOWNLOAD_WAY }}.yml"
 
-- name: Download binary
+- name: Download package
   get_url:
     url: "{{ download_url }}"
     dest: /usr/local/bin/kubelet

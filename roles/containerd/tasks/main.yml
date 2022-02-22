@@ -3,7 +3,7 @@
 - name: Set OS dependent variables
   include_vars: "{{ DOWNLOAD_WAY }}.yml"
 
-- name: Download RunC
+- name: Download RunC package
   get_url:
     url: "{{ runc_download_url }}"
     dest: /usr/local/bin/runc
@@ -20,7 +20,7 @@
   notify: Start Containerd
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
-- name: Download Containerd
+- name: Download Containerd package
   get_url:
     url: "{{ containerd_download_url }}"
     dest: "/usr/local/src/containerd-{{ CONTAINERD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
@@ -36,7 +36,7 @@
   notify: Start Containerd
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
-- name: Extract Containerd
+- name: Extract Containerd package
   ansible.builtin.unarchive:
     src: "/usr/local/src/containerd-{{ CONTAINERD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
@@ -48,7 +48,7 @@
       - --strip-components=1
   notify: Start Containerd
 
-- name: Download Crictl
+- name: Download Crictl package
   get_url:
     url: "{{ crictl_download_url }}"
     dest: "/usr/local/src/crictl-v{{ CRICTL_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
@@ -64,7 +64,7 @@
   notify: Start Containerd
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
-- name: Extract Crictl
+- name: Extract Crictl package
   ansible.builtin.unarchive:
     src: "/usr/local/src/crictl-v{{ CRICTL_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
