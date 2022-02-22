@@ -126,8 +126,8 @@ about Makefile parameter
 | DOCKER_VERSION | Docker binary version  | latest | N/A |
 | ETCD_VERSION | Etcd binary version  | latest  | N/A |
 | CNI_VERSION | CNI binary version  | latest  | N/A |
-| NEXUS_HTTP_USERNAME | Nexus username  | N/A  | N/A |
-| NEXUS_HTTP_PASSWORD | Nexus password  | N/A  | N/A |
+| NEXUS_USERNAME | Nexus username  | N/A  | N/A |
+| NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
 | NEXUS_REPOSITORY | Nexus repository name | kube-ansible | N/A |
 
@@ -141,12 +141,25 @@ make deploy DOWNLOAD_WAY=official
 
 ##### Download the default version using Nexus
 
+[![asciicast](https://asciinema.org/a/470717.svg)](https://asciinema.org/a/470717)
+
 ```
+pip3 install requests
+./scripts/upload-nexus.py --url http://nexus.example.com \
+--repository kube-ansible --username admin --password admin123 \
+--docker 20.10.12 \
+--etcd 3.5.2 \
+--kubernetes 1.23.4 \
+--cni 1.0.1 \
+--containerd 1.6.0 \
+--runc 1.1.0 \
+--crictl 1.23.0
+
 make deploy DOWNLOAD_WAY=nexus \
-NEXUS_DOMAIN_NAME=http://172.16.4.11:8081 \
+NEXUS_DOMAIN_NAME=http://nexus.example.com \
 NEXUS_REPOSITORY=kube-ansible \
-NEXUS_HTTP_USERNAME=admin \
-NEXUS_HTTP_PASSWORD=admin
+NEXUS_USERNAME=admin \
+NEXUS_PASSWORD=admin123
 ```
 
 ### Kubernetes management
