@@ -167,7 +167,8 @@ NEXUS_PASSWORD=admin123
 #### Deploy
 ##### ca save to deployment server
 
-[![asciicast](https://asciinema.org/a/421915.svg)](https://asciinema.org/a/421915)
+[![asciicast](https://asciinema.org/a/471287.svg)](https://asciinema.org/a/471287)
+
 
 ```
 # default version
@@ -206,7 +207,7 @@ PROJECT_ENV=dev
 
 #### Scale
 
-add node to `hosts` file.
+[![asciicast](https://asciinema.org/a/471288.svg)](https://asciinema.org/a/471288)
 
 ```
 # default version

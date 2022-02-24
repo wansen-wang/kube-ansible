@@ -2,6 +2,7 @@
 .DS_Store
 __pycache__
 .tmp
+test.md
 
 scripts/binaries
 roles/apps/files/*.yaml
@@ -17,6 +18,7 @@ group_vars/kubernetes.yml
 .containerd
 .crictl
 .runc
+
 
 # terraform
 test/terraform/*/.terraform
