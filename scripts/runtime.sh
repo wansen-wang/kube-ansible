@@ -16,7 +16,7 @@ case ${PKG} in
     ;;
 esac
 pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
-pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple "ansible==5.2.0" requests
+pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple "ansible==5.4.0" requests kubernetes
 
 wget --inet4-only https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/local/bin/yq
 chmod +x /usr/local/bin/yq
