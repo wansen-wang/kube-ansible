@@ -64,7 +64,7 @@ function check_new_version() {
     git config --local user.email "action@github.com"
     git config --local user.name "GitHub Action"
     git add ./Makefile
-    git commit -am ${COMMIT_MSG}
+    git commit -am "${COMMIT_MSG}"
     git push
   fi
 }
