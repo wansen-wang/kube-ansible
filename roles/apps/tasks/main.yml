@@ -7,7 +7,7 @@
         state: directory
         mode: "0755"
 
-    - name: Download manifests
+    - name: Download manifest to the cluster
       get_url:
         url: "{{ item.url }}"
         dest: '{{ apps.location | default("/etc/kubernetes/apps") }}/{{ item.name }}'
@@ -17,8 +17,10 @@
       retries: 10
       environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
 
-    - name: Deployment application
-      ansible.builtin.shell: "/usr/local/bin/kubectl apply -f {{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"
+    - name: Apply manifest to the cluster
+      kubernetes.core.k8s:
+        state: present
+        src: "{{ apps.location | default('/etc/kubernetes/apps') }}/{{ item.name }}"
       run_once: true
       with_items: "{{ apps.files }}"
   when: apps is defined
