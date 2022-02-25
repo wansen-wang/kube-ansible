@@ -60,7 +60,7 @@ function check_new_version() {
 
   echo ${COMMIT_MSG}
 
-  if [ ${COMMIT_MSG} != "" ]; then
+  if [ -n "${COMMIT_MSG}" ]; then
     git config --local user.email "action@github.com"
     git config --local user.name "GitHub Action"
     git add ./Makefile
