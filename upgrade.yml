@@ -42,6 +42,7 @@
     - kube-controller-manager
     - kubelet
     - kube-proxy
+    - cleanup
   tags:
     - kube-master
 
@@ -53,12 +54,6 @@
     - kubectl
     - kubelet
     - kube-proxy
+    - cleanup
   tags:
     - kube-worker
-
-- name: Clean up the data
-  hosts: all
-  roles:
-    - cleanup
-  tags:
-    - cleanup
