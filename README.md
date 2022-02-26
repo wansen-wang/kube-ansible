@@ -7,7 +7,7 @@ Refer to the `README.md` and `group_vars/template.yml` files for project configu
 ## Cloud Support
 
 * [x] Azure
-* [ ] Aliyun
+* [ ] Aliyun (no test)
 * [x] Aws (APIServer HA use the CLB)
 * [x] GCP (APIServer HA use the TCP Load balancing)
 
@@ -27,43 +27,29 @@ All node please install python3.
 * [x] Ubuntu 20.*
 * [x] Debian 10.*
 
-## Kubernetes Support
+## Version of the relationship
 
-* [x] 1.14.x
-* [x] 1.15.x
-* [x] 1.16.x
-* [x] 1.17.x
-* [x] 1.18.x
-* [x] 1.19.x
-* [x] 1.20.x
-* [x] 1.21.x
-* [x] 1.22.x
-* [x] 1.23.x
+| Kubernetes | Etcd | Docker | CNI | CoreDNS | Calico | cri-tools | metrics-server | 
+|---|---|---|---|---|---|---|---|
+| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.3.1 | v3.3.1 | v1.12.0 |  v0.3.1 |
+| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.3.1 | v3.3.1 | v1.14.0 |  v0.3.3 |
+| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
+| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
+| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.5 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
+| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.9 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.6 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
+| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md)  | v3.4.13 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.7 | v1.6.7 | v3.8.4 | v1.19.0 |  v0.3.4 |
+| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md)  | v3.4.13 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.7 | v1.6.7 | v3.8.4 | v1.20.0 |  v0.3.4 |
+| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.21.0 |  v0.4.4 |
+| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
+| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
 
-## Runtime Support
+## Version Support
 
-* Docker >= 18.09.0
-* Containerd >= 1.3.0
-
-## Size of master and master components
-
-### GCP
-
-* 1-5 nodes: n1-standard-1
-* 6-10 nodes: n1-standard-2
-* 11-100 nodes: n1-standard-4
-* 101-250 nodes: n1-standard-8
-* 251-500 nodes: n1-standard-16
-* more than 500 nodes: n1-standard-32
-
-### AWS
-
-* 1-5 nodes: m3.medium
-* 6-10 nodes: m3.large
-* 11-100 nodes: m3.xlarge
-* 101-250 nodes: m3.2xlarge
-* 251-500 nodes: c4.4xlarge
-* more than 500 nodes: c4.8xlarge
+* Kubernetes >= v1.18.0(< v1.18.0 some default extraArgs is not support)
+* Docker >= v18.09.0(< v18.09.0 download url is not support)
+* Etcd >= v3.4.3(< v3.4.3 some default extraArgs is not support)
+* CNI >= v0.8.0(< v0.8.0 download url is not support)
+* Containerd >= v1.3.0
 
 ## How to use
 
@@ -546,4 +532,25 @@ firewall-cmd --permanent --add-port=10250/tcp
 firewall-cmd --permanent --add-port=10255/tcp
 firewall-cmd --permanent --add-port=8472/udp
 firewall-cmd --permanent --add-port=30000-32767/tcp
+
+
+## Size of master and master components
+
+### GCP
+
+* 1-5 nodes: n1-standard-1
+* 6-10 nodes: n1-standard-2
+* 11-100 nodes: n1-standard-4
+* 101-250 nodes: n1-standard-8
+* 251-500 nodes: n1-standard-16
+* more than 500 nodes: n1-standard-32
+
+### AWS
+
+* 1-5 nodes: m3.medium
+* 6-10 nodes: m3.large
+* 11-100 nodes: m3.xlarge
+* 101-250 nodes: m3.2xlarge
+* 251-500 nodes: c4.4xlarge
+* more than 500 nodes: c4.8xlarge
 -->
