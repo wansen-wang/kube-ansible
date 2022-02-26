@@ -1,6 +1,7 @@
 [Unit]
 Description=kubelet: The Kubernetes Node Agent
 Documentation=https://kubernetes.io/docs/home/
+Wants=network-online.target
 {% if RUNTIME == "containerd" %}
 After=containerd.service
 Requires=containerd.service

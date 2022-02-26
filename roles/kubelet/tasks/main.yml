@@ -172,9 +172,9 @@
     dest: /usr/local/bin/check-node.sh
     mode: 755
 
-- name: Create check kubernetes node status in cron
-  ansible.builtin.cron:
-    name: "check kubernetes node status by kube-ansible"
-    minute: "*"
-    hour: "*"
-    job: "/usr/local/bin/check-node.sh"
+# - name: Create check kubernetes node status in cron
+#   ansible.builtin.cron:
+#     name: "check kubernetes node status by kube-ansible"
+#     minute: "*"
+#     hour: "*"
+#     job: "/usr/local/bin/check-node.sh"

@@ -14,7 +14,7 @@ if [ ${ARCH} != "aarch64" ] && [ ${ARCH} != "x86_64" ]; then
 fi
 ANSIBLE_ARG=""
 if [ ${DOWNLOAD_WAY} == "nexus" ]; then
-  if [[ ${NEXUS_USERNAME} == ""  || ${NEXUS_PASSWORD} == ""  ||  ${NEXUS_DOMAIN_NAME} == ""  || ${NEXUS_REPOSITORY} == "" ]]; then
+  if [[ ${NEXUS_USERNAME} == "" || ${NEXUS_PASSWORD} == "" || ${NEXUS_DOMAIN_NAME} == "" || ${NEXUS_REPOSITORY} == "" ]]; then
     echo -e "\033[31mNexus parameter error, please set NEXUS_HTTP_USERNAME, NEXUS_HTTP_PASSWORD, NEXUS_DOMAIN_NAME, NEXUS_REPOSITORY! \033[0m "
     exit 1
   else
@@ -49,40 +49,39 @@ fi
 sleep 3
 
 case $1 in
-    "deploy")
-      ansible-playbook -i ./inventory/hosts ./deploy.yml \
-      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
-      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-      -e RUNTIME=${RUNTIME} \
-      -e KUBE_VERSION=${KUBE_VERSION} \
-      -e ETCD_VERSION=${ETCD_VERSION} \
-      -e CNI_VERSION=${CNI_VERSION} \
-      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
-      ;;
-    "scale")
-      read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
-      for host in ${SCALE_HOST_LIST_VER};do
-        sed -i "/\[worker\]/a ${host}" ./inventory/hosts
-      done
-      ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') \
-      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
-      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-      -e RUNTIME=${RUNTIME} \
-      -e KUBE_VERSION=${KUBE_VERSION} \
-      -e ETCD_VERSION=${ETCD_VERSION} \
-      -e CNI_VERSION=${CNI_VERSION} \
-      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
-      ;;
-    "upgrade")
-      ansible-playbook -i ./inventory/hosts ./upgrade.yml \
-      -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
-      -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-      -e RUNTIME=${RUNTIME} \
-      -e KUBE_VERSION=${KUBE_VERSION} \
-      -e ETCD_VERSION=${ETCD_VERSION} \
-      -e CNI_VERSION=${CNI_VERSION} \
-      -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
-      ;;
-    *) ;;
+"deploy")
+  ansible-playbook -i ./inventory/hosts ./deploy.yml \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e RUNTIME=${RUNTIME} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e ETCD_VERSION=${ETCD_VERSION} \
+    -e CNI_VERSION=${CNI_VERSION} \
+    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+  ;;
+"scale")
+  read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
+  for host in ${SCALE_HOST_LIST_VER}; do
+    sed -i "/\[worker\]/a ${host}" ./inventory/hosts
+  done
+  ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e RUNTIME=${RUNTIME} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e ETCD_VERSION=${ETCD_VERSION} \
+    -e CNI_VERSION=${CNI_VERSION} \
+    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+  ;;
+"upgrade")
+  ansible-playbook -i ./inventory/hosts ./upgrade.yml \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e RUNTIME=${RUNTIME} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e ETCD_VERSION=${ETCD_VERSION} \
+    -e CNI_VERSION=${CNI_VERSION} \
+    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+  ;;
+*) ;;
 esac
-
