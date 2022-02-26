@@ -1,4 +1,5 @@
 from ansible import errors
+import operator as py_operator
 from distutils.version import LooseVersion, StrictVersion
 
 
