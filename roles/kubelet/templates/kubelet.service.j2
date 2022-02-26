@@ -33,7 +33,7 @@ ExecStart=/usr/local/bin/kubelet \
 {% endfor %}
 {% endif %}
   --v={{ kubelet.log.level | default(1) }}
-Restart=always
+Restart=on-failure
 StartLimitInterval=0
 RestartSec=10
 
