@@ -41,7 +41,6 @@ All node please install python3.
 | [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md)  | v3.4.13 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.7 | v1.6.7 | v3.8.4 | v1.20.0 |  v0.3.4 |
 | [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.21.0 |  v0.4.4 |
 | [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
-| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
 
 ## Version Support
 
