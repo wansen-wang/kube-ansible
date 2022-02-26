@@ -42,14 +42,6 @@ All node please install python3.
 | [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.21.0 |  v0.4.4 |
 | [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
 
-## Version Support
-
-* Kubernetes >= v1.18.0(< v1.18.0 some default extraArgs is not support)
-* Docker >= v18.09.0(< v18.09.0 download url is not support)
-* Etcd >= v3.4.3(< v3.4.3 some default extraArgs is not support)
-* CNI >= v0.8.0(< v0.8.0 download url is not support)
-* Containerd >= v1.3.0
-
 ## How to use
 
 ### Preparation work
@@ -121,7 +113,38 @@ about Makefile parameter
 ##### Download the default version using official
 
 ```
-make deploy DOWNLOAD_WAY=official
+# 1.13
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.13.12 ETCD_VERSION=3.2.24 CNI_VERSION=0.6.0 DOCKER_VERSION=18.09.0
+
+# 1.14
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.14.10 ETCD_VERSION=3.3.10 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+
+# 1.15
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.15.12 ETCD_VERSION=3.3.10 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+
+# 1.16
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.16.15 ETCD_VERSION=3.3.15 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+
+# 1.17
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.17.17 ETCD_VERSION=3.4.3 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+
+# 1.18
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.18.20 ETCD_VERSION=3.4.3 CNI_VERSION=0.8.5 DOCKER_VERSION=18.09.0
+
+# 1.19
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.19.16 ETCD_VERSION=3.4.9 CNI_VERSION=0.8.6 DOCKER_VERSION=18.09.0
+
+# 1.20
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.20.15 ETCD_VERSION=3.4.13 CNI_VERSION=0.8.7 DOCKER_VERSION=18.09.0
+
+# 1.21
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.21.10 ETCD_VERSION=3.4.13 CNI_VERSION=0.8.7 DOCKER_VERSION=18.09.0
+
+# 1.22
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.22.7 ETCD_VERSION=3.5.0 CNI_VERSION=0.9.1 DOCKER_VERSION=18.09.0
+
+# 1.23
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.23.4 ETCD_VERSION=3.5.0 CNI_VERSION=0.9.1 DOCKER_VERSION=18.09.0
 ```
 
 ##### Download the default version using Nexus

@@ -61,6 +61,9 @@ ExecStart=/usr/local/bin/kube-apiserver \
   {{ extraArg }} \
 {% endfor %}
 {% endif %}
+{% if KUBE_VERSION | version_compare('1.19', '>') %}
+  --logging-format=json \
+{% endif %}
   --v={{ apiServer.log.level | default(1) }}
 
 Restart=on-failure

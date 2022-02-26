@@ -66,7 +66,6 @@ etcd:
     - "--enable-v2=false"
     - "--snapshot-count=10000"
     - "--cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384"
-    - "--listen-metrics-urls=http://127.0.0.1:2381" # version <= v3.2.24 is not have this arg, please remove it.
 
 # ha config
 # none not use lb for apiserver
@@ -156,7 +155,6 @@ apiServer:
     - "--enable-admission-plugins=AlwaysPullImages,ServiceAccount,NamespaceLifecycle,NodeRestriction,LimitRanger,PersistentVolumeClaimResize,DefaultStorageClass,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,Priority"
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--feature-gates=TTLAfterFinished=true"
-    - "--logging-format=json" # version <= v1.14.10 is not have this arg, please remove it.
   log:
     level: 1
 
@@ -172,7 +170,6 @@ controllerManager:
     - "--pod-eviction-timeout=5m0s"
     - "--profiling=false"
     - "--feature-gates=TTLAfterFinished=true"
-    - "--logging-format=json" # version <= v1.14.10 is not have this arg, please remove it.
   log:
     level: 1
 
@@ -183,7 +180,6 @@ scheduler:
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--profiling=false"
     - "--feature-gates=TTLAfterFinished=true"
-    - "--logging-format=json" # version <= v1.14.10 is not have this arg, please remove it.
   log:
     level: 1
 
@@ -193,7 +189,6 @@ kubelet:
   extraArgs:
     - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.5"
     - "--allowed-unsafe-sysctls=net.*"
-    - "--logging-format=json" # version <= v1.14.10 is not have this arg, please remove it.
     - "--network-plugin=cni"
   log:
     level: 1

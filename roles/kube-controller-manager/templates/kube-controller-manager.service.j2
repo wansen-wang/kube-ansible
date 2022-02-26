@@ -31,6 +31,9 @@ ExecStart=/usr/local/bin/kube-controller-manager \
   {{ extraArg }} \
 {% endfor %}
 {% endif %}
+{% if KUBE_VERSION | version_compare('1.19', '>') %}
+  --logging-format=json \
+{% endif %}
   --v={{ controllerManager.log.level | default(1) }}
 
 

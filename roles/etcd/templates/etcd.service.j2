@@ -56,6 +56,9 @@ ExecStart=/usr/local/bin/etcd \
   {{ extraArg }} \
 {% endfor %}
 {% endif %}
+{% if ETCD_VERSION | version_compare('3.2.24', '>=') %}
+  --listen-metrics-urls=http://127.0.0.1:2381 \
+{% endif %}
   --debug='false'
 
 [Install]

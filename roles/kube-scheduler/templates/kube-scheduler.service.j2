@@ -24,6 +24,9 @@ ExecStart=/usr/local/bin/kube-scheduler \
   {{ extraArg }} \
 {% endfor %}
 {% endif %}
+{% if KUBE_VERSION | version_compare('1.19', '>') %}
+  --logging-format=json \
+{% endif %}
   --v={{ scheduler.log.level | default(1) }}
 
 Restart=always
