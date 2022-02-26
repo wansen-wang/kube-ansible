@@ -8,6 +8,7 @@ scripts/binaries
 roles/apps/files/*.yaml
 
 inventory/hosts
+inventory/hosts.*
 group_vars/all.yml
 group_vars/kubernetes.yml
 
