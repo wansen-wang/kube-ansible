@@ -33,6 +33,7 @@ ExecStart=/usr/local/bin/kube-controller-manager \
 {% endif %}
 {% if KUBE_VERSION | version_compare('1.19', '>') %}
   --logging-format=json \
+  --cluster-signing-duration=8760h \
 {% endif %}
   --v={{ controllerManager.log.level | default(1) }}
 
