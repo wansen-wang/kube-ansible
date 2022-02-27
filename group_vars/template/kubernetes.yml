@@ -89,8 +89,8 @@ etcd:
 networking:
   dnsDomain: cluster.local
   ## IPv4 stack
-  serviceSubnet: "{% if IP_STACK | default('ipv4') == 'ipv6' %}fd74:ca9b:0172:0019::/110{% else %}10.96.0.0/12{% endif %}"
-  podSubnet: "{% if IP_STACK | default('ipv4') == 'ipv6' %}fd74:ca9b:0172:0018::/64{% else %}10.244.0.0/16{% endif %}"
+  serviceSubnet: "{{ IP_STACK | default('ipv4') | select('10.96.0.0/12', 'fd74:ca9b:0172:0019::/110') }}"
+  podSubnet: "{{ IP_STACK | default('ipv4') | select('10.244.0.0/16', 'fd74:ca9b:0172:0018::/64') }}"
   ## IPv6 stack
   # serviceSubnet: fd74:ca9b:0172:0019::/110
   # podSubnet: fd74:ca9b:0172:0018::/64
