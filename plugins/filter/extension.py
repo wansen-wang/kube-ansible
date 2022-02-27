@@ -6,11 +6,14 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
-def select(value, ipv4, ipv6):
+def select(value, ipv4, ipv6, iponly=False):
     if value == "ipv4":
         return ipv4
     else:
-        return "[%s]" % ipv6
+        if iponly:
+            return ipv6
+        else:
+            return "[%s]" % ipv6
 
 
 def split_string(string, separator=' '):
