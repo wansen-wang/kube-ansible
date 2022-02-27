@@ -24,19 +24,11 @@ TimeoutStartSec=0
 ExecStart=/usr/local/bin/etcd \
   --name=etcd-{{ ansible_play_hosts.index(inventory_hostname) }} \
   --data-dir={{ etcd.datadir | default('/var/lib/etcd') }} \
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-  --listen-client-urls=https://127.0.0.1:2379,https://[{{ ansible_default_ipv6.address }}]:2379 \
-  --advertise-client-urls=https://[{{ ansible_default_ipv6.address }}]:2379 \
-  --listen-peer-urls=https://[{{ ansible_default_ipv6.address }}]:2380 \
-  --initial-advertise-peer-urls=https://[{{ ansible_default_ipv6.address }}]:2380 \
-  --initial-cluster={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://[{{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}]:2380{% if not loop.last %},{% endif %}{% endfor %} \
-{% else %}
-  --listen-client-urls=https://127.0.0.1:2379,https://{{ ansible_default_ipv4.address }}:2379 \
-  --advertise-client-urls=https://{{ ansible_default_ipv4.address }}:2379 \
-  --listen-peer-urls=https://{{ ansible_default_ipv4.address }}:2380 \
-  --initial-advertise-peer-urls=https://{{ ansible_default_ipv4.address }}:2380 \
-  --initial-cluster={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://{{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}:2380{% if not loop.last %},{% endif %}{% endfor %} \
-{% endif %}
+  --listen-client-urls=https://127.0.0.1:2379,https://{{ IP_STACK | default("ipv4") | select(ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2379 \
+  --advertise-client-urls=https://{{ IP_STACK | default("ipv4") | select(ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2379 \
+  --listen-peer-urls=https://{{ IP_STACK | default("ipv4") | select(ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2380 \
+  --initial-advertise-peer-urls=https://{{ IP_STACK | default("ipv4") | select(ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2380 \
+  --initial-cluster={% for host in etcdnode %}etcd-{{ ansible_play_hosts.index(host) }}=https://{{ IP_STACK | default("ipv4") | select(hostvars[host]['ansible_facts']['default_ipv4']['address'], hostvars[host]['ansible_facts']['default_ipv6']['address']) }}:2380{% if not loop.last %},{% endif %}{% endfor %} \
   --initial-cluster-token=kubernetes-etcd-cluster \
 {% if scale | default(false) %}
   --initial-cluster-state=existing \
@@ -51,15 +43,18 @@ ExecStart=/usr/local/bin/etcd \
   --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt \
   --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt \
   --peer-key-file=/etc/kubernetes/pki/etcd/peer.key \
-{% if etcd.extraArgs is defined %}
-{% for extraArg in etcd.extraArgs %}
-  {{ extraArg }} \
-{% endfor %}
-{% endif %}
 {% if ETCD_VERSION | version_compare('3.2.24', '>=') %}
   --listen-metrics-urls=http://127.0.0.1:2381 \
 {% endif %}
-  --debug='false'
+{% if etcd.extraArgs is defined %}
+{% for extraArg in etcd.extraArgs %}
+{% if not loop.last %}
+  {{ extraArg }} \
+{% else %}
+  {{ extraArg }}
+{% endif %}
+{% endfor %}
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target
