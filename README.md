@@ -2,7 +2,12 @@
 
 This project will used ansible to deployment kubernetes.
 
-Refer to the `README.md` and `group_vars/template.yml` files for project configuration
+Read the documentation to see how the project is used
+
+* [group_vars/README.md](https://github.com/buxiaomo/pki-server)
+* [inventory/README.md](https://github.com/buxiaomo/pki-server)
+
+then return here.
 
 ## Cloud Support
 
