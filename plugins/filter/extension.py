@@ -7,6 +7,30 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
+def ip(value):
+    try:
+        return IPy.IP(value).version()
+    except Exception as e:
+        raise errors.AnsibleFilterError(
+            'ip failed: %s' % to_native(e))
+
+
+def ip_format(value):
+    try:
+        version = IPy.IP(value).version()
+        if version == 4:
+            return value
+        else:
+            return "[%s]" % value
+    except Exception as e:
+        raise errors.AnsibleFilterError(
+            'ip failed: %s' % to_native(e))
+
+
+def interception(value, x, y):
+    return value[x:len(value) - y]
+
+
 def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     if not value:
         raise errors.AnsibleFilterError("Input value cannot be empty")
@@ -147,6 +171,13 @@ class FilterModule(object):
             'split': split_string,
             'split_regex': split_regex,
             'version_compare': version_compare,
-            'version': version_compare
+            'version': version_compare,
+            'interception': interception,
+            'ip_format': ip_format,
+            'ip': ip
         }
 
+# if __name__ == '__main__':
+#     a = "[fd74:ca9b:0172:0018::/64]"
+#     print(a[1:len(a) - 1])
+#     print()

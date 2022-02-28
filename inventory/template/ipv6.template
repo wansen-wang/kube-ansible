@@ -1,0 +1,11 @@
+[master]
+240e:369:7a65:d00:250:56ff:fe82:1a77
+240e:369:7a65:d00:250:56ff:fe82:c3aa
+240e:369:7a65:d00:250:56ff:fe82:9865
+
+[worker]
+240e:369:7a65:d00:250:56ff:fe82:ddd7
+
+[kubernetes:children]
+master
+worker
