@@ -6,7 +6,13 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
+<<<<<<< Updated upstream
 def select(value, ipv4, ipv6):
+=======
+def select(value, ipv4, ipv6, iponly=False):
+    if not value:
+        raise errors.AnsibleFilterError("Input value cannot be empty")
+>>>>>>> Stashed changes
     if value == "ipv4":
         return ipv4
     else:
