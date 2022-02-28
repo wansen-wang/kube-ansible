@@ -14,11 +14,7 @@ Requires=docker.service
 ExecStart=/usr/local/bin/kubelet \
   --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
   --config=/etc/kubernetes/kubelet.yaml \
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-  --node-ip="{{ ansible_default_ipv6.address }}" \
-{% else %}
-  --node-ip={{ ansible_default_ipv4.address }} \
-{% endif %}
+  --node-ip={{ inventory_hostname }} \
 {% if nodename is defined %}
   --hostname-override={{ nodename | lower }} \
 {% endif %}
