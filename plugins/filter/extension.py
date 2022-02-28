@@ -56,23 +56,9 @@ def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     try:
         method = getattr(py_operator, operator)
         if method(value, expectations):
-            try:
-                version = IPy.IP(tValue).version()
-                if version == 4:
-                    return tValue
-                else:
-                    return "[%s]" % tValue
-            except Exception as e:
-                return "[%s]" % tValue
+            return tValue
         else:
-            try:
-                version = IPy.IP(fValue).version()
-                if version == 4:
-                    return fValue
-                else:
-                    return "[%s]" % fValue
-            except Exception as e:
-                return "[%s]" % fValue
+            return fValue
     except Exception as e:
         raise errors.AnsibleFilterError(
             'Version comparison failed: %s' % to_native(e))
