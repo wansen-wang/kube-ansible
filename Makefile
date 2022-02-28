@@ -29,9 +29,6 @@ NEXUS_PASSWORD:=
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
 PKI_URL:=
 
-# IPv4/IPv6 dual-stack ipv4, ipv6
-IP_STACK:=ipv4
-
 ANSIBLE_OPT:=
 
 runtime:
