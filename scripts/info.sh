@@ -26,7 +26,6 @@ echo -e "Project name: \033[32m${PROJECT_NAME}\033[0m\tProject env: \033[32m${PR
 echo -e "Binary download mode: \t\t\033[32m${DOWNLOAD_WAY}\033[0m"
 echo -e "Kubernetes runtime mode: \t\033[32m${RUNTIME}\033[0m"
 echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
-echo -e "Kubernetes IP stack: \t\t\033[32m${IP_STACK}\033[0m"
 echo -e "Etcd version: \t\t\t\033[32m${ETCD_VERSION}\033[0m"
 
 if [ ${RUNTIME} == 'docker' ]; then
