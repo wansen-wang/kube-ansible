@@ -55,7 +55,7 @@ def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
 
     try:
         method = getattr(py_operator, operator)
-        if method(value, expectations):
+        if method(to_text(value), to_text(expectations)):
             return tValue
         else:
             return fValue
@@ -163,7 +163,9 @@ class FilterModule(object):
             'ip': ip
         }
 
+
 # if __name__ == '__main__':
+#     print(select("4", "eq", "4", "10.96.0.0/12","fd74:ca9b:0172:0019::/110"))
 #     a = "[fd74:ca9b:0172:0018::/64]"
 #     print(a[1:len(a) - 1])
 #     print()
