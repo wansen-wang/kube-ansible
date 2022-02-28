@@ -14,26 +14,14 @@ vrrp_script haproxy-check {
 vrrp_instance haproxy-vip {
     state BACKUP
     priority 101
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-    interface {{ ansible_default_ipv6.interface }}
-{% else %}
-    interface {{ ansible_default_ipv4.interface }}
-{% endif %}
+    interface {{ IP_STACK | default("ipv4") | select('eq', 'ipv4', ansible_default_ipv4.interfacee, ansible_default_ipv6.interface) }}
     virtual_router_id 47
     advert_int 3
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-    unicast_src_ip {{ hostvars[inventory_hostname]['ansible_facts']['default_ipv6']['address'] }}
-{% else %}
-    unicast_src_ip {{ hostvars[inventory_hostname]['ansible_facts']['default_ipv4']['address'] }}
-{% endif %}
+    unicast_src_ip {{ IP_STACK | default("ipv4") | select('eq', 'ipv4', hostvars[inventory_hostname]['ansible_facts']['default_ipv4']['address'], hostvars[inventory_hostname]['ansible_facts']['default_ipv6']['address']) }}
     unicast_peer {
 {% for host in groups['master'] %}
 {% if host != inventory_hostname %}
-{% if IP_STACK | default("ipv4") == "ipv6" %}
-    {{ hostvars[host]['ansible_facts']['default_ipv6']['address'] }}
-{% else %}
-    {{ hostvars[host]['ansible_facts']['default_ipv4']['address'] }}
-{% endif %}
+    {{ IP_STACK | default("ipv4") | select('eq', 'ipv4', hostvars[host]['ansible_facts']['default_ipv4']['address'], hostvars[host]['ansible_facts']['default_ipv6']['address']) }}
 {% endif %}
 {% endfor %}
     }

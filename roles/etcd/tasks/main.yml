@@ -278,11 +278,7 @@
 - name: Backup data
   ansible.builtin.shell: |
     NAME=$(date +%Y-%m-%d)
-    {% if IP_STACK | default("ipv4") == "ipv6" %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints [{{ ansible_default_ipv6.address }}]:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
-    {% else %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
-    {% endif %}
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ IP_STACK | default("ipv4") | select('eq', 'ipv4', ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
   ignore_errors: True
 
 - name: Start the service
@@ -307,11 +303,7 @@
 
 - name: Health check
   ansible.builtin.shell: |
-    {% if IP_STACK | default("ipv4") == "ipv6" %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints [{{ ansible_default_ipv6.address }}]:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
-    {% else %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
-    {% endif %}
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ IP_STACK | default("ipv4") | select('eq', 'ipv4', ansible_default_ipv4.address, ansible_default_ipv6.address) }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
   register: etcd_pkg
   until: etcd_pkg is succeeded
   retries: 10
