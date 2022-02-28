@@ -164,7 +164,8 @@
       - "IP:127.0.0.1"
       - "IP:0:0:0:0:0:0:0:1"
       - "IP:::1"
-      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ inventory_hostname }}"
+      - "{% if ha is defined %}IP:{{ ha.vip }}{% else %}DNS:localhost{% endif %}"
       - "{% if ansible_default_ipv6.address is defined %}IP:{{ ansible_default_ipv6.address }}{% else %}IP:::1{% endif %}"
   notify: Clean etcd server csr
 
