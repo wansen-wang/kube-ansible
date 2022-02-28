@@ -1,4 +1,5 @@
 import re
+import IPy
 from ansible import errors
 import operator as py_operator
 from distutils.version import LooseVersion, StrictVersion
@@ -6,17 +7,63 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
-<<<<<<< Updated upstream
-def select(value, ipv4, ipv6):
-=======
-def select(value, ipv4, ipv6, iponly=False):
+def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     if not value:
         raise errors.AnsibleFilterError("Input value cannot be empty")
->>>>>>> Stashed changes
-    if value == "ipv4":
-        return ipv4
+    if not expectations:
+        raise errors.AnsibleFilterError("Input expectations cannot be empty")
+
+    op_map = {
+        '==': 'eq', '=': 'eq', 'eq': 'eq',
+        '<': 'lt', 'lt': 'lt',
+        '<=': 'le', 'le': 'le',
+        '>': 'gt', 'gt': 'gt',
+        '>=': 'ge', 'ge': 'ge',
+        '!=': 'ne', '<>': 'ne', 'ne': 'ne'
+    }
+    if operator in op_map:
+        operator = op_map[operator]
     else:
-        return "[%s]" % ipv6
+        raise errors.AnsibleFilterError(
+            'Invalid operator type (%s). Must be one of %s' % (
+                operator, ', '.join(map(repr, op_map)))
+        )
+
+    try:
+        method = getattr(py_operator, operator)
+        if method(value, expectations):
+            try:
+                version = IPy.IP(tValue).version()
+                if version == 4:
+                    return tValue
+                else:
+                    return "[%s]" % tValue
+            except Exception as e:
+                return "[%s]" % tValue
+        else:
+            try:
+                version = IPy.IP(fValue).version()
+                if version == 4:
+                    return fValue
+                else:
+                    return "[%s]" % fValue
+            except Exception as e:
+                return "[%s]" % fValue
+    except Exception as e:
+        raise errors.AnsibleFilterError(
+            'Version comparison failed: %s' % to_native(e))
+
+
+# def select(value, ipv4, ipv6, iponly=False):
+#     if not value:
+#         raise errors.AnsibleFilterError("Input value cannot be empty")
+#     if value == "ipv4":
+#         return ipv4
+#     else:
+#         if iponly:
+#             return ipv6
+#         else:
+#             return "[%s]" % ipv6
 
 
 def split_string(string, separator=' '):
@@ -102,3 +149,4 @@ class FilterModule(object):
             'version_compare': version_compare,
             'version': version_compare
         }
+
