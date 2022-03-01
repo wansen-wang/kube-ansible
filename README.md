@@ -163,7 +163,7 @@ pip3 install requests
 --docker 20.10.12 \
 --etcd 3.5.2 \
 --kubernetes 1.23.4 \
---cni 1.0.1 \
+--cni 1.1.0 \
 --containerd 1.6.0 \
 --runc 1.1.0 \
 --crictl 1.23.0
