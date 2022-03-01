@@ -53,7 +53,7 @@ deploy:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) ./scripts/info.sh deploy
+		PKI_URL=$(PKI_URL) action="deploy" ./scripts/info.sh deploy
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
@@ -73,7 +73,7 @@ scale:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) ./scripts/info.sh scale
+		PKI_URL=$(PKI_URL) action="scale" ./scripts/info.sh scale
 
 upgrade: 
 	@echo -e "\033[32mUpgrade kubernetes...\033[0m"
@@ -92,7 +92,7 @@ upgrade:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) ./scripts/info.sh upgrade
+		PKI_URL=$(PKI_URL) action="upgrade" ./scripts/info.sh upgrade
 
 uninstall:
 	@echo -e "\033[32mUninstall kubernetes...\033[0m"
