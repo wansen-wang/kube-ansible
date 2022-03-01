@@ -7,16 +7,6 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
-<<<<<<< HEAD
-def select(value, ipv4, ipv6, iponly=False):
-    if value == "ipv4":
-        return ipv4
-    else:
-        if iponly:
-            return ipv6
-        else:
-            return "[%s]" % ipv6
-=======
 # {{ value | ip }}
 # return 4 or 6
 def ip(value):
@@ -80,7 +70,6 @@ def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     except Exception as e:
         raise errors.AnsibleFilterError(
             'Version comparison failed: %s' % to_native(e))
->>>>>>> fix
 
 
 def split_string(string, separator=' '):
