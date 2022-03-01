@@ -7,12 +7,17 @@ from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
 
+# {{ value | ip }}
+# return 4 or 6
 def ip(value):
     try:
         return IPy.IP(value).version()
     except Exception as e:
         raise errors.AnsibleFilterError(
             'ip failed: %s' % to_native(e))
+
+# {{ value | ip_format }}
+# if value is ipv4, will return ipv4. if value is ipv6 will return [value]
 
 
 def ip_format(value):
@@ -29,6 +34,9 @@ def ip_format(value):
 
 def interception(value, x, y):
     return value[x:len(value) - y]
+
+# {{ value | select('eq', '4', true, false) }}
+# Ternary expression
 
 
 def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
@@ -62,18 +70,6 @@ def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     except Exception as e:
         raise errors.AnsibleFilterError(
             'Version comparison failed: %s' % to_native(e))
-
-
-# def select(value, ipv4, ipv6, iponly=False):
-#     if not value:
-#         raise errors.AnsibleFilterError("Input value cannot be empty")
-#     if value == "ipv4":
-#         return ipv4
-#     else:
-#         if iponly:
-#             return ipv6
-#         else:
-#             return "[%s]" % ipv6
 
 
 def split_string(string, separator=' '):
@@ -150,7 +146,6 @@ def version_compare(value, version, operator='eq', strict=None, version_type=Non
 
 
 class FilterModule(object):
-    # version comparison
     def filters(self):
         return {
             'select': select,
