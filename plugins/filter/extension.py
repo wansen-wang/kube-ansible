@@ -18,8 +18,6 @@ def ip(value):
 
 # {{ value | ip_format }}
 # if value is ipv4, will return ipv4. if value is ipv6 will return [value]
-
-
 def ip_format(value):
     try:
         version = IPy.IP(value).version()
@@ -35,10 +33,9 @@ def ip_format(value):
 def interception(value, x, y):
     return value[x:len(value) - y]
 
+
 # {{ value | select('eq', '4', true, false) }}
 # Ternary expression
-
-
 def select(value, operator='eq', expectations=None, tValue=None, fValue=None):
     if not value:
         raise errors.AnsibleFilterError("Input value cannot be empty")
