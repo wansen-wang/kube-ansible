@@ -24,10 +24,12 @@ class Nexus:
         content = open(src, 'rb').read()
         if self.username is not None and self.password is not None:
             auth = (self.username, self.password)
-            resp = requests.put("%s/%s/%s" % (url, directory, src.replace("./.tmp/", "")), data=content, auth=auth)
+            resp = requests.put(
+                "%s/%s/%s" % (url, directory, src.replace("./.tmp/", "")), data=content, auth=auth)
         else:
-            resp = requests.put("%s/%s/%s" % (url, directory, src.replace("./.tmp/", "")), data=content)
-        if resp.status_code != 200:
+            resp = requests.put(
+                "%s/%s/%s" % (url, directory, src.replace("./.tmp/", "")), data=content)
+        if resp.status_code != 201:
             print("Upload failed, status code: %d" % resp.status_code)
             return False
         else:
@@ -50,11 +52,16 @@ class Nexus:
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Download package and upload to nexus.')
-    parser.add_argument('--url', metavar='url', help='nexus url', required=True, type=str)
-    parser.add_argument('--repository', metavar='repository', help='nexus repository name', required=True, type=str)
-    parser.add_argument('--username', default=None, metavar='username', help='nexus username')
-    parser.add_argument('--password', default=None, metavar='password', help='nexus password')
+    parser = argparse.ArgumentParser(
+        description='Download package and upload to nexus.')
+    parser.add_argument('--url', metavar='url',
+                        help='nexus url', required=True, type=str)
+    parser.add_argument('--repository', metavar='repository',
+                        help='nexus repository name', required=True, type=str)
+    parser.add_argument('--username', default=None,
+                        metavar='username', help='nexus username')
+    parser.add_argument('--password', default=None,
+                        metavar='password', help='nexus password')
     parser.add_argument('--docker', metavar='docker', help='docker version')
     parser.add_argument('--etcd', metavar='etcd', help='etcd version')
     parser.add_argument('--kubernetes', metavar='kubernetes',
@@ -73,7 +80,8 @@ if __name__ == "__main__":
     if not os.path.exists(".tmp"):
         os.makedirs(".tmp")
 
-    nexus = Nexus(options.url, options.repository, options.username, options.password)
+    nexus = Nexus(options.url, options.repository,
+                  options.username, options.password)
     if not nexus.Auth():
         print("Username or Password is error!")
         sys.exit(2)
@@ -84,8 +92,8 @@ if __name__ == "__main__":
         print("Download and Upload docker package...")
         Download("https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % options.docker,
                  "docker-%s.tgz" % options.docker)
-        nexus.Upload(src="./.tmp/docker-%s.tgz" % options.docker, directory="/linux/static/stable/x86_64")
-
+        nexus.Upload(src="./.tmp/docker-%s.tgz" % options.docker,
+                     directory="/linux/static/stable/x86_64")
 
     if options.etcd != "" and options.etcd is not None:
         print("Download and Upload etcd package...")
@@ -126,8 +134,10 @@ if __name__ == "__main__":
 
     if options.runc != "" and options.runc is not None:
         print("Download and Upload runc package...")
-        Download("https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (options.runc), "runc.amd64")
-        nexus.Upload(src="./.tmp/runc.amd64", directory="/opencontainers/runc/releases/download/v%s" % options.runc)
+        Download("https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" %
+                 (options.runc), "runc.amd64")
+        nexus.Upload(src="./.tmp/runc.amd64",
+                     directory="/opencontainers/runc/releases/download/v%s" % options.runc)
 
     if options.crictl != "" and options.crictl is not None:
         print("Download and Upload crictl package...")
