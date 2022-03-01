@@ -28,8 +28,10 @@ class Nexus:
         else:
             resp = requests.put("%s/%s/%s" % (url, directory, src.replace("./.tmp/", "")), data=content)
         if resp.status_code != 200:
+            print("Upload failed, status code: %d" % resp.status_code)
             return False
         else:
+            print("Upload success.")
             return True
 
     def Auth(self):
@@ -78,20 +80,21 @@ if __name__ == "__main__":
 
     # nexus.ListComponents()
 
-    if options.docker != "" or options.docker is not None:
+    if options.docker != "" and options.docker is not None:
         print("Download and Upload docker package...")
         Download("https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % options.docker,
                  "docker-%s.tgz" % options.docker)
         nexus.Upload(src="./.tmp/docker-%s.tgz" % options.docker, directory="/linux/static/stable/x86_64")
 
-    if options.etcd != "" or options.etcd is not None:
+
+    if options.etcd != "" and options.etcd is not None:
         print("Download and Upload etcd package...")
         Download("https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (
             options.etcd, options.etcd), "etcd-v%s-linux-amd64.tar.gz" % options.etcd)
         nexus.Upload(src="./.tmp/etcd-v%s-linux-amd64.tar.gz" % options.etcd,
                      directory="/coreos/etcd/releases/download/v%s" % options.etcd)
 
-    if options.kubernetes != "" or options.kubernetes is not None:
+    if options.kubernetes != "" and options.kubernetes is not None:
         print("Download and Upload kubernetes package...")
         file_list = [
             "kube-apiserver",
@@ -107,26 +110,26 @@ if __name__ == "__main__":
                 options.kubernetes, f), f)
             nexus.Upload(src="./.tmp/%s" % f,
                          directory="/kubernetes-release/release/v%s/bin/linux/amd64" % options.kubernetes)
-    if options.cni != "" or options.cni is not None:
+    if options.cni != "" and options.cni is not None:
         print("Download and Upload cni package...")
         Download("https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
             options.cni, options.cni), "cni-plugins-linux-amd64-v%s.tgz" % options.cni)
         nexus.Upload(src="./.tmp/cni-plugins-linux-amd64-v%s.tgz" % options.cni,
                      directory="/containernetworking/plugins/releases/download/v%s" % options.cni)
 
-    if options.containerd != "" or options.containerd is not None:
+    if options.containerd != "" and options.containerd is not None:
         print("Download and Upload containerd package...")
         Download("https://github.com/containerd/containerd/releases/download/v%s/containerd-%s.linux-amd64.tar.gz" % (
             options.containerd, options.containerd), "containerd-%s.linux-amd64.tar.gz" % options.containerd)
         nexus.Upload(src="./.tmp/containerd-%s.linux-amd64.tar.gz" % options.containerd,
                      directory="/containerd/containerd/releases/download/v%s" % options.containerd)
 
-    if options.runc != "" or options.runc is not None:
+    if options.runc != "" and options.runc is not None:
         print("Download and Upload runc package...")
         Download("https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (options.runc), "runc.amd64")
         nexus.Upload(src="./.tmp/runc.amd64", directory="/opencontainers/runc/releases/download/v%s" % options.runc)
 
-    if options.crictl != "" or options.crictl is not None:
+    if options.crictl != "" and options.crictl is not None:
         print("Download and Upload crictl package...")
         Download("https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (
             options.crictl, options.crictl), "crictl-v%s-linux-amd64.tar.gz" % options.crictl)
