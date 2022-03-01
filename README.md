@@ -2,7 +2,12 @@
 
 This project will used ansible to deployment kubernetes.
 
-Refer to the `README.md` and `group_vars/template.yml` files for project configuration
+Read the documentation to see how the project is used
+
+* [group_vars/README.md](https://github.com/buxiaomo/pki-server)
+* [inventory/README.md](https://github.com/buxiaomo/pki-server)
+
+then return here.
 
 ## Cloud Support
 
@@ -158,7 +163,7 @@ pip3 install requests
 --docker 20.10.12 \
 --etcd 3.5.2 \
 --kubernetes 1.23.4 \
---cni 1.0.1 \
+--cni 1.1.0 \
 --containerd 1.6.0 \
 --runc 1.1.0 \
 --crictl 1.23.0

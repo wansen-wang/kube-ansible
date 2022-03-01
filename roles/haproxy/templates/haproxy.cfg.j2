@@ -49,11 +49,7 @@ backend k8s-apiserver
   balance roundrobin
   default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
 {% for host in groups['master'] %}
-  {% if IP_STACK | default("ipv4") == "ipv6" %}
-  server {{ hostvars[host].ansible_hostname }} [{{ hostvars[host].inventory_hostname }}]:6443 check check-ssl verify none
-  {% else %}
-  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host].inventory_hostname }}:6443 check check-ssl verify none
-  {% endif %}
+  server {{ hostvars[host].ansible_hostname }} {{ host | ip_format }}:6443 check check-ssl verify none
 {% endfor %}
 {% endif %}
 {% endif %}
@@ -72,11 +68,7 @@ backend k8s-ingress-http
   balance roundrobin
   default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
 {% for host in groups['all'] %}
-  {% if IP_STACK | default("ipv4") == "ipv6" %}
-  server {{ hostvars[host].ansible_hostname }} [{{ hostvars[host].inventory_hostname }}]:{{ loadBalancing.http.dest }} check
-  {% else %}
-  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host].inventory_hostname }}:{{ loadBalancing.http.dest }} check
-  {% endif %}
+  server {{ hostvars[host].ansible_hostname }} {{ host | ip_format }}:{{ loadBalancing.http.dest }} check
 {% endfor %}
 {% endif %}
 
@@ -95,10 +87,6 @@ backend k8s-ingress-https
   balance roundrobin
   default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
 {% for host in groups['all'] %}
-  {% if IP_STACK | default("ipv4") == "ipv6" %}
-  server {{ hostvars[host].ansible_hostname }} [{{ hostvars[host].inventory_hostname }}]:{{ loadBalancing.https.dest }} check check-ssl verify none
-  {% else %}
-  server {{ hostvars[host].ansible_hostname }} {{ hostvars[host].inventory_hostname }}:{{ loadBalancing.https.dest }} check check-ssl verify none
-  {% endif %}
+  server {{ hostvars[host].ansible_hostname }} {{ host | ip_format }}:{{ loadBalancing.https.dest }} check check-ssl verify none
 {% endfor %}
 {% endif %}

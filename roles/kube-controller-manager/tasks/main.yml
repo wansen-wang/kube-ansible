@@ -171,7 +171,7 @@
 
 - name: Waiting for the service
   wait_for:
-    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
+    host: "{{ inventory_hostname }}"
     port: 10257
     delay: 30
     state: started
@@ -179,7 +179,7 @@
 
 - name: Health check
   uri:
-    url: "https://{% if IP_STACK | default('ipv4') == 'ipv6' %}[{{ ansible_default_ipv6.address }}]{% else %}{{ ansible_default_ipv4.address }}{% endif %}:10257/healthz"
+    url: "https://{{ inventory_hostname | ip_format }}:10257/healthz"
     validate_certs: no
     return_content: yes
     client_cert: "/etc/kubernetes/pki/kube-controller-manager.crt"

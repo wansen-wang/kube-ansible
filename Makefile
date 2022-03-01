@@ -29,9 +29,6 @@ NEXUS_PASSWORD:=
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
 PKI_URL:=
 
-# IPv4/IPv6 dual-stack ipv4, ipv6
-IP_STACK:=ipv4
-
 ANSIBLE_OPT:=
 
 runtime:
@@ -56,8 +53,7 @@ deploy:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) \
-		IP_STACK=$(IP_STACK) ./scripts/info.sh deploy
+		PKI_URL=$(PKI_URL) ./scripts/info.sh deploy
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
@@ -77,8 +73,7 @@ scale:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) \
-		IP_STACK=$(IP_STACK) ./scripts/info.sh scale
+		PKI_URL=$(PKI_URL) ./scripts/info.sh scale
 
 upgrade: 
 	@echo -e "\033[32mUpgrade kubernetes...\033[0m"
@@ -97,8 +92,7 @@ upgrade:
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) \
-		IP_STACK=$(IP_STACK) ./scripts/info.sh upgrade
+		PKI_URL=$(PKI_URL) ./scripts/info.sh upgrade
 
 uninstall:
 	@echo -e "\033[32mUninstall kubernetes...\033[0m"

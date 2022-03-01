@@ -176,7 +176,7 @@
       - "IP:::1"
       - "IP:{{ networking.serviceSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(1) }}"
       - "IP:{{ networking.serviceSubnet.split(',')[1] | default('2001:db8:42:1::/112') | ansible.netcommon.next_nth_usable(1) }}"
-      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ inventory_hostname }}"
       - "{% if ansible_default_ipv6.address is defined %}IP:{{ ansible_default_ipv6.address }}{% else %}IP:::1{% endif %}"
   changed_when: True
   notify: Clean kube-apiserver csr
@@ -364,7 +364,7 @@
 
 - name: Waiting for the service
   wait_for:
-    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
+    host: "{{ inventory_hostname }}"
     port: 6443
     delay: 30
     state: started
@@ -372,7 +372,7 @@
 
 - name: Health check
   uri:
-    url: "https://{% if IP_STACK | default('ipv4') == 'ipv6' %}[{{ ansible_default_ipv6.address }}]{% else %}{{ ansible_default_ipv4.address }}{% endif %}:6443/healthz"
+    url: "https://{{ inventory_hostname | ip_format }}:6443/healthz"
     client_cert: "/etc/kubernetes/pki/admin.crt"
     client_key: "/etc/kubernetes/pki/admin.key"
     validate_certs: no

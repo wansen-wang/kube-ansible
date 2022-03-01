@@ -164,7 +164,8 @@
       - "IP:127.0.0.1"
       - "IP:0:0:0:0:0:0:0:1"
       - "IP:::1"
-      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ inventory_hostname }}"
+      - "{% if ha is defined %}IP:{{ ha.vip }}{% else %}DNS:localhost{% endif %}"
       - "{% if ansible_default_ipv6.address is defined %}IP:{{ ansible_default_ipv6.address }}{% else %}IP:::1{% endif %}"
   notify: Clean etcd server csr
 
@@ -213,7 +214,7 @@
       - "IP:127.0.0.1"
       - "IP:0:0:0:0:0:0:0:1"
       - "IP:::1"
-      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ inventory_hostname }}"
       - "{% if ansible_default_ipv6.address is defined %}IP:{{ ansible_default_ipv6.address }}{% else %}IP:::1{% endif %}"
   notify: Clean etcd peer csr
 
@@ -278,11 +279,7 @@
 - name: Backup data
   ansible.builtin.shell: |
     NAME=$(date +%Y-%m-%d)
-    {% if IP_STACK | default("ipv4") == "ipv6" %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints [{{ ansible_default_ipv6.address }}]:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
-    {% else %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
-    {% endif %}
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --command-timeout=3s --endpoints {{ inventory_hostname | ip_format }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key snapshot save /tmp/kubernetes-etcd.${NAME}.backup.db
   ignore_errors: True
 
 - name: Start the service
@@ -301,17 +298,13 @@
     state: started
     connect_timeout: 10
     active_connection_states: ['ESTABLISHED', 'FIN_WAIT1', 'FIN_WAIT2', 'SYN_RECV', 'SYN_SENT', 'TIME_WAIT']
-    host: "{% if IP_STACK | default('ipv4') == 'ipv6' %}{{ ansible_default_ipv6.address }}{% else %}{{ ansible_default_ipv4.address }}{% endif %}"
+    host: "{{ inventory_hostname }}"
   connection: local
   when: etcd_systemd.changed
 
 - name: Health check
   ansible.builtin.shell: |
-    {% if IP_STACK | default("ipv4") == "ipv6" %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints [{{ ansible_default_ipv6.address }}]:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
-    {% else %}
-      ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ ansible_default_ipv4.address }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
-    {% endif %}
+    ETCDCTL_API=3 /usr/local/bin/etcdctl --endpoints {{ inventory_hostname | ip_format }}:2379 --cacert /etc/kubernetes/pki/etcd/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt --key /etc/kubernetes/pki/etcd/server.key endpoint health
   register: etcd_pkg
   until: etcd_pkg is succeeded
   retries: 10

@@ -3,7 +3,7 @@ Welcome to Kube-Ansible ENVIRONMENT~~
 
 Machine ID:    {{ ansible_machine_id }}
 HOSTNAME:      {{ ansible_hostname }}
-IP:            {{ ansible_default_ipv4.address }}
+IP:            {{ inventory_hostname }}
 
 OS:            {{ ansible_distribution }}-{{ ansible_distribution_version }}
 Kernel:        {{ ansible_kernel }}
