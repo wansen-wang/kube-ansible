@@ -3,7 +3,7 @@
   include_vars: "{{ DOWNLOAD_WAY }}.yml"
 
 - name: Drain Node
-  ansible.builtin.shell: "kubectl drain {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }} --ignore-daemonsets"
+  ansible.builtin.shell: "kubectl drain {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %} --ignore-daemonsets"
   run_once: true
   delegate_to: localhost
   when: action | default('deploy')  == "upgrade"
