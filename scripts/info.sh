@@ -62,7 +62,8 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \
-    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+    -e IP_STACK=${IP_STACK} 
+    -e action="deploy" ${ANSIBLE_ARG}
   ;;
 "scale")
   read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
@@ -76,7 +77,8 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \
-    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+    -e IP_STACK=${IP_STACK} \
+    -e action="scale" ${ANSIBLE_ARG}
   ;;
 "upgrade")
   ansible-playbook -i ./inventory/hosts ./upgrade.yml \
@@ -86,7 +88,7 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \
-    -e IP_STACK=${IP_STACK} ${ANSIBLE_ARG}
+    -e IP_STACK=${IP_STACK} -e action="upgrade" ${ANSIBLE_ARG}
   ;;
 *) ;;
 esac
