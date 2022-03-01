@@ -218,15 +218,15 @@ apps:
   files:
     - {
         name: "metrics.yaml",
-        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ IP_STACK }}/metrics.yaml"
+        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ inventory_hostname | ip | select('eq', '4', 'ipv4', 'ipv6') }}/metrics.yaml"
       }
     - {
         name: "coredns.yaml",
-        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ IP_STACK }}/coredns.yaml"
+        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ inventory_hostname | ip | select('eq', '4', 'ipv4', 'ipv6') }}/coredns.yaml"
       }
     - {
         name: "calico.yaml",
-        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ IP_STACK }}/calico.yaml"
+        url: "https://raw.githubusercontent.com/buxiaomo/kubernetes-sigs/{{ inventory_hostname | ip | select('eq', '4', 'ipv4', 'ipv6') }}/calico.yaml"
       }
     # - {
     #     name: "traefik.yaml",
