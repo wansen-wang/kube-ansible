@@ -40,11 +40,22 @@ enforceNodeAllocatable:
 eventBurst: 100
 eventRecordQPS: 50
 evictionHard:
-  imagefs.available: 15%
-  memory.available: 200Mi
+  imagefs.available: 10%
+  memory.available: 500Mi
   nodefs.available: 10%
   nodefs.inodesFree: 5%
-evictionPressureTransitionPeriod: 5m0s
+evictionMaxPodGracePeriod: 30
+evictionPressureTransitionPeriod: 5m
+evictionSoft:
+  imagefs.available: 15%
+  memory.available: 512Mi
+  nodefs.available: 15%
+  nodefs.inodesFree: 10%
+evictionSoftGracePeriod:
+  imagefs.available: 3m
+  memory.available: 1m
+  nodefs.available: 3m
+  nodefs.inodesFree: 1m
 kubeReserved:
 {% if inventory_hostname in groups['master'] %}
   cpu: 400m
@@ -55,9 +66,9 @@ kubeReserved:
 {% endif %}
   ephemeral-storage: 500Mi
 systemReserved:
-  memory: 1Gi
-  cpu: 500m
-  ephemeral-storage: 2Gi
+  cpu: 100m
+  memory: 200Mi
+  ephemeral-storage: 1Gi
 kubeReservedCgroup: /kube.slice
 systemReservedCgroup: /system.slice
 failSwapOn: true
