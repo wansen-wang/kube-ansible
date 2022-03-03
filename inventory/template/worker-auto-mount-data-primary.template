@@ -4,13 +4,14 @@
 172.16.5.13
 
 [worker]
-172.16.5.14 DataDevice=/dev/sdc
-172.16.5.15 DataDevice=/dev/sdc
-172.16.5.16 DataDevice=/dev/sdc
-172.16.5.17 DataDevice=/dev/sdc
+172.16.5.14
+172.16.5.15
+172.16.5.16
+172.16.5.17
 
 [worker:vars]
 DataDir=/data
+DataDevice=/dev/sdc
 
 [kubernetes:children]
 master
