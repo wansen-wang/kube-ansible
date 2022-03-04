@@ -7,7 +7,7 @@ function check_new_version() {
   grep -E "KUBE_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/KUBE_VERSION:=.*/KUBE_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} kubernetes version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update kubernetes version to ${tag_name};"
   fi
 
   # Etcd
@@ -15,7 +15,7 @@ function check_new_version() {
   grep -E "ETCD_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/ETCD_VERSION:=.*/ETCD_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} etcd version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update etcd version to ${tag_name};"
   fi
 
   # CNI
@@ -23,7 +23,7 @@ function check_new_version() {
   grep -E "CNI_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/CNI_VERSION:=.*/CNI_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} cni version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update cni version to ${tag_name};"
   fi
 
   # Docker
@@ -31,7 +31,7 @@ function check_new_version() {
   grep -E "DOCKER_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/DOCKER_VERSION:=.*/DOCKER_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} docker version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update docker version to ${tag_name};"
   fi
 
   # containerd
@@ -39,7 +39,7 @@ function check_new_version() {
   grep -E "CONTAINERD_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/CONTAINERD_VERSION:=.*/CONTAINERD_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} containerd version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update containerd version to ${tag_name};"
   fi
 
   # crictl
@@ -47,7 +47,7 @@ function check_new_version() {
   grep -E "CRICTL_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/CRICTL_VERSION:=.*/CRICTL_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} crictl version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update crictl version to ${tag_name};"
   fi
 
   # runc
@@ -55,7 +55,7 @@ function check_new_version() {
   grep -E "RUNC_VERSION:=${tag_name:1}" ./Makefile
   if [ $? -ne 0 ]; then
     sed -i "s/RUNC_VERSION:=.*/RUNC_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} runc version to ${tag_name};"
+    COMMIT_MSG="${COMMIT_MSG} update runc version to ${tag_name};"
   fi
 
   echo ${COMMIT_MSG}
