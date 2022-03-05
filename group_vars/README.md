@@ -4,7 +4,7 @@
 
 include configuration
 
-* proxy_env
+* proxy_env (download file)
 * timezone
 * modprobe
 * ipvs
