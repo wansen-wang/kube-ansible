@@ -4,8 +4,8 @@ This project will used ansible to deployment kubernetes.
 
 Read the documentation to see how the project is used
 
-* [group_vars/README.md](https://github.com/buxiaomo/pki-server)
-* [inventory/README.md](https://github.com/buxiaomo/pki-server)
+* [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
+* [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
 
 then return here.
 
