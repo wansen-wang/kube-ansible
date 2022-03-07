@@ -11,6 +11,7 @@ then return here.
 
 ## Cloud Support
 
+* [x] Raspberry Pi
 * [x] Azure
 * [ ] Aliyun (no test)
 * [x] Aws (APIServer HA use the CLB)
