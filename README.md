@@ -11,7 +11,7 @@ then return here.
 
 ## Cloud Support
 
-* [x] [Raspberry Pi](https://blog.csdn.net/yinjl123456/article/details/118034953)
+* [x] Raspberry Pi
 * [x] Azure
 * [ ] Aliyun (no test)
 * [x] Aws (APIServer HA use the CLB)
@@ -263,7 +263,12 @@ component attributes of directory format:
 * /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kube-proxy
 * /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kubelet
 
-# knowledge
+## Known Issues 
+
+* error: Following Cgroup subsystem not mounted: [memory], see [here](https://github.com/buxiaomo/kube-ansible/issues/2)
+
+
+## knowledge
 
 * [download kubernetes](https://www.downloadkubernetes.com)
 * [kubernetes](https://github.com/kubernetes/kubernetes)
