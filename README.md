@@ -158,7 +158,7 @@ make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.23.4 ETCD_VERSION=3.5.0 CNI_VER
 
 ```
 pip3 install requests
-./scripts/upload-nexus.py --url http://nexus.example.com \
+./scripts/upload-to-nexus.py --url http://nexus.example.com \
 --repository kube-ansible --username admin --password admin123 \
 --docker 20.10.12 \
 --etcd 3.5.2 \
@@ -248,7 +248,7 @@ if you want to deploy extended application, please reference [here](https://gith
 
 create an raw repository, and upload the binaries package.
 
-you can use `scripts/upload-nexus.py` file
+you can use `scripts/upload-to-nexus.py` file
 
 component attributes of directory format:
 
