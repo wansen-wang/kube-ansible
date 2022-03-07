@@ -106,18 +106,24 @@ if __name__ == "__main__":
         print("Download and Upload kubernetes package...")
         file_list = [
             "kube-apiserver",
+            "kube-apiserver.sha256",
             "kube-controller-manager",
+            "kube-controller-manager.sha256",
             "kube-scheduler",
+            "kube-scheduler.sha256",
             "kubectl",
+            "kubectl.sha256",
             "kube-proxy",
-            "kubelet"
+            "kube-proxy.sha256",
+            "kubelet",
+            "kubelet.sha256"
         ]
         for f in file_list:
             print("Download and Upload kubernetes package(%s)..." % f)
-            Download("https://storage.googleapis.com/kubernetes-release/release/v%s/bin/linux/amd64/%s" % (
-                options.kubernetes, f), f)
-            nexus.Upload(src="./.tmp/%s" % f,
-                         directory="/kubernetes-release/release/v%s/bin/linux/amd64" % options.kubernetes)
+            Download("https://storage.googleapis.com/kubernetes-release/release/v%s/bin/linux/amd64/%s" %
+                     (options.kubernetes, f), f)
+            nexus.Upload(
+                src="./.tmp/%s" % f, directory="/kubernetes-release/release/v%s/bin/linux/amd64" % options.kubernetes)
     if options.cni != "" and options.cni is not None:
         print("Download and Upload cni package...")
         Download("https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (

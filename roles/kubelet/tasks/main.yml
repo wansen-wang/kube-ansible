@@ -13,8 +13,8 @@
 - name: Download package
   get_url:
     url: "{{ download_url }}"
+    checksum: "sha256:{{ checksum_url }}.sha256"
     dest: /usr/local/bin/kubelet
-    # checksum: "sha256:{{ download_url }}.sha256"
     force: true
     mode: 0755
     owner: root

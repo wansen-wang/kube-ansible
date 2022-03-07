@@ -264,6 +264,7 @@ component attributes of directory format:
 
 # knowledge
 
+* [download kubernetes](https://www.downloadkubernetes.com)
 * [kubernetes](https://github.com/kubernetes/kubernetes)
 * [kubernetes changelog](https://github.com/kubernetes/kubernetes/tree/master/CHANGELOG)
 * [kubernetes command line tools reference](https://kubernetes.io/zh/docs/reference/command-line-tools-reference/feature-gates/)
