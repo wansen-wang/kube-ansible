@@ -245,24 +245,6 @@ This repo only deploy a kubernetes cluster and core application like 'coredns', 
 
 if you want to deploy extended application, please reference [here](https://github.com/buxiaomo/kubernetes-sigs.git).
 
-## <span id = "nexus">about nexus package</span>
-
-create an raw repository, and upload the binaries package.
-
-you can use `scripts/upload-to-nexus.py` file
-
-component attributes of directory format:
-
-* /linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz
-* /coreos/flannel/releases/download/${FLANNEL_VERSION}/flannel-v${FLANNEL_VERSION}-linux-amd64.tar.gz
-* /coreos/etcd/releases/download/v${ETCD_VERSION}/etcd-v${ETCD_VERSION}-linux-amd64.tar.gz
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kube-apiserver
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kube-controller-manager
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kube-scheduler
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kubectl
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kube-proxy
-* /kubernetes-release/release/v${KUBE_VERSION}/bin/linux/amd64/kubelet
-
 ## Known Issues 
 
 * error: Following Cgroup subsystem not mounted: [memory], see [here](https://github.com/buxiaomo/kube-ansible/issues/2)
