@@ -15,7 +15,6 @@ package:
   - bash-completion
   - nfs-common
   - dnsutils
-  - python-netaddr
   - python-setuptools
   - python3-pip
   - python3-netaddr
