@@ -26,7 +26,7 @@
 
     - name: Wait for haproxy
       wait_for:
-        port: "{% if ha is defined and ha.type == 'slb' %}8443{% else %}8080{% endif %}"
+        port: "{% if ha is defined and ha.type == 'slb' %}8443{% else %}8081{% endif %}"
         delay: 15
         state: started
         host: "{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}"
