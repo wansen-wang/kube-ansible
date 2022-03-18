@@ -3,7 +3,6 @@
     name: '*'
     state: latest
     exclude: kernel*
-    disablerepo: "updates-openlogic"
 
 - name: Install epel-release applications
   ansible.builtin.package:
