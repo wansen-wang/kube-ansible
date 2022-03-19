@@ -11,7 +11,7 @@ CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
 Memory:        {{ ansible_memtotal_mb }} MB
 
 Kubernetes version: 		    {{ KUBE_VERSION }}
-Etcd version: 			        {{ ETCD_VERSION }}
+Etcd version:               {{ ETCD_VERSION }}
 {%- if RUNTIME == 'docker' %} 
 Docker version:             {{ DOCKER_VERSION }}
 {% else %}
@@ -19,7 +19,7 @@ Containerd version:         {{ CONTAINERD_VERSION }}
 Crictl version:             {{ CRICTL_VERSION }}
 Runc version:               {{ RUNC_VERSION }}
 {%- endif %}
-CNI version: 			          {{ CNI_VERSION }}
+CNI version:                {{ CNI_VERSION }}
 
 The Roles of this node are:
 {%- if inventory_hostname in groups['master'] %} 
