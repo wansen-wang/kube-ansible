@@ -20,3 +20,4 @@ package:
   - python3-netaddr
   - python3-setuptools
   - jq
+  - bcron

@@ -21,3 +21,4 @@ package:
   - python36-netaddr
   - python3-setuptools
   - jq
+  - cronie
