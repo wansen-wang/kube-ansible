@@ -10,7 +10,7 @@ Kernel:        {{ ansible_kernel }}
 CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
 Memory:        {{ ansible_memtotal_mb }} MB
 
-Kubernetes version: 		    {{ KUBE_VERSION }}
+Kubernetes version:         {{ KUBE_VERSION }}
 Etcd version:               {{ ETCD_VERSION }}
 {%- if RUNTIME == 'docker' %} 
 Docker version:             {{ DOCKER_VERSION }}
