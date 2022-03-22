@@ -1,0 +1,24 @@
+svc_name: ufw
+
+package:
+  - conntrack
+  - net-tools
+  - sysstat
+  - tar
+  - unzip
+  - tcpdump
+  - telnet
+  - lsof
+  - strace
+  - wget
+  - psmisc
+  - ipset
+  - socat
+  - bash-completion
+  - nfs-common
+  - dnsutils
+  - python-setuptools
+  - python3-pip
+  - python3-netaddr
+  - python3-setuptools
+  - jq
