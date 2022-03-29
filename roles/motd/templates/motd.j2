@@ -1,7 +1,9 @@
 ------------------------------------------------------------------------------
 Welcome to Kube-Ansible ENVIRONMENT~~
 
+{% if ansible_machine_id is defined %} 
 Machine ID:    {{ ansible_machine_id }}
+{% endif %}
 HOSTNAME:      {{ ansible_hostname }}
 IP:            {{ inventory_hostname }}
 
