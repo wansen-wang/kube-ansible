@@ -1,6 +1,7 @@
 #!/bin/bash
 command -v yum &>/dev/null && export PKG=yum
 command -v apt &>/dev/null && export PKG=apt
+command -v apk &>/dev/null && export PKG=apk
 case ${PKG} in
 'yum')
     yum install -y epel-release
@@ -9,6 +10,10 @@ case ${PKG} in
 'apt')
     apt-get update
     apt-get install python3 python3-pip sshpass curl rsync wget -y
+    ;;
+'apk')
+    apk update
+    apk add python3 py3-pip python3-dev sshpass curl rsync wget gcc linux-headers libc-dev libffi-dev
     ;;
 '*')
     echo "unknow OS version."
