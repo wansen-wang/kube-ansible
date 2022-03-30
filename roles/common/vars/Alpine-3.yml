@@ -13,7 +13,6 @@ package:
   - socat
   - bash-completion
   - nfs-utils
-  - bind-utils
   - py3-pip
   - py3-netaddr
   - py3-setuptools
