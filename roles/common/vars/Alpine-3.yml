@@ -17,3 +17,4 @@ package:
   - py3-netaddr
   - py3-setuptools
   - jq
+  - linux-pam
