@@ -1,7 +1,6 @@
-- name: Update all packages to their latest version
+- name: Update all installed packages to the latest versions
   community.general.apk:
-    name: "*"
-    state: latest
+    upgrade: yes
 
 - name: Install some applications
   community.general.apk:
