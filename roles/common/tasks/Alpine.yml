@@ -2,7 +2,6 @@
   community.general.apk:
     name: "*"
     state: latest
-    autoremove: yes
 
 - name: Install some applications
   community.general.apk:
