@@ -1,0 +1,19 @@
+package:
+  - net-tools
+  - sysstat
+  - tar
+  - unzip
+  - tcpdump
+  - lsof
+  - strace
+  - wget
+  - psmisc
+  - ipset
+  - socat
+  - bash-completion
+  - nfs-utils
+  - bind-utils
+  - py3-pip
+  - py3-netaddr
+  - py3-setuptools
+  - jq
