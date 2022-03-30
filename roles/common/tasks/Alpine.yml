@@ -1,0 +1,11 @@
+- name: Update all packages to their latest version
+  community.general.apk:
+    name: "*"
+    state: latest
+    autoremove: yes
+
+- name: Install some applications
+  community.general.apk:
+    name: "{{ package }}"
+    state: present
+    update_cache: yes

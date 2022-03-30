@@ -1,5 +1,6 @@
 package:
   - net-tools
+  - tzdata
   - sysstat
   - tar
   - unzip
