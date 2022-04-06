@@ -335,3 +335,4 @@
     minute: "0"
     hour: "2"
     job: "/usr/local/bin/etcd-backup.sh"
+  ignore_errors: True
