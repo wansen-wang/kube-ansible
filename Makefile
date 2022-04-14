@@ -8,7 +8,7 @@ DOWNLOAD_WAY:=official
 
 # binary version
 KUBE_VERSION:=1.23.5
-ETCD_VERSION:=3.5.2
+ETCD_VERSION:=3.5.3
 CNI_VERSION:=1.1.1
 
 # container runtime. containerd or docker
