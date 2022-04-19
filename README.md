@@ -60,6 +60,7 @@ Gitlab: https://gitlab.com/buxiaomo/kube-ansible.git
 
 Github: https://github.com/buxiaomo/kube-ansible.git
 
+JiHulab: https://jihulab.com/buxiaomo/kube-ansible.git
 ```
 # ubuntu
 apt-get update
