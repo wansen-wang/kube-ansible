@@ -6,14 +6,12 @@ case ${PKG} in
 'yum')
     yum install -y epel-release
     yum install python3 python3-pip sshpass curl rsync wget -y
+    export ANSIBLE_VERSION=4.10.0
     ;;
 'apt')
     apt-get update
     apt-get install python3 python3-pip sshpass curl rsync wget -y
-    ;;
-'apk')
-    apk update
-    apk add python3 py3-pip python3-dev sshpass curl rsync wget gcc linux-headers libc-dev libffi-dev
+    export ANSIBLE_VERSION=5.6.0
     ;;
 '*')
     echo "unknow OS version."
@@ -21,7 +19,7 @@ case ${PKG} in
     ;;
 esac
 pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
-pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed "ansible==4.10.0" IPy requests kubernetes openshift
+pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed "ansible==${ANSIBLE_VERSION}" IPy requests kubernetes openshift
 
 [ -f /usr/local/bin/yq ] || wget https://github.com/mikefarah/yq/releases/download/v4.13.4/yq_linux_amd64 -O /usr/local/bin/yq
 chmod +x /usr/local/bin/yq
