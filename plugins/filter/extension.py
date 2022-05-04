@@ -6,19 +6,6 @@ from distutils.version import LooseVersion, StrictVersion
 from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
-def arch(value):
-    if value == 'x86_64':
-        return 'amd64'
-    if value == 'i386':
-        return '386'
-    if value == 'aarch64' or value == 'arm64':
-        return 'arm64'
-    if value == 'armv6':
-        return 'arm/v6'
-    if value == 'armv7':
-        return 'arm/v7'
-    else:
-        return value
 
 # {{ value | ip }}
 # return 4 or 6
