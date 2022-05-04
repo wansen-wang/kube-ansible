@@ -1,4 +1,4 @@
-apiVersion: audit.k8s.io/v1beta1
+apiVersion: {% if KUBE_VERSION | version_compare('1.24', '>=') %}audit.k8s.io/v1{% else%}audit.k8s.io/v1beta1{% endif %}
 kind: Policy
 rules:
   # Do not log from kube-system accounts
