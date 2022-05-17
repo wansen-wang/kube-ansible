@@ -5,11 +5,6 @@ docker:
   # device: /dev/sdb
   # Convert the json format to yaml
   daemon:
-    default-runtime: "nvidia"
-    runtimes: 
-      nvidia: 
-        path: "nvidia-container-runtime"
-        runtimeArgs: []
     exec-opts:
       - "native.cgroupdriver=systemd"
     registry-mirrors:
@@ -30,7 +25,7 @@ docker:
     icc: false
     debug: false
     features:
-      buildkit: true
+      buildkit: false
     builder:
       gc:
         enabled: true

@@ -1,7 +1,7 @@
 ---
 - name: Base environment configuration
   hosts: all
-  become: yes
+  become: true
   roles:
     - motd
     - common
@@ -12,7 +12,7 @@
 
 - name: Certificate of the cluster
   hosts: all
-  become: yes
+  become: true
   roles:
     - ca
   tags:
@@ -20,7 +20,7 @@
 
 - name: Deployment etcd cluster
   hosts: "{% if groups['etcd'] is not defined %}master{% else %}etcd{% endif %}"
-  become: yes
+  become: true
   vars:
     scale: false
   roles:
@@ -30,14 +30,14 @@
 
 - name: Initialization kubernetes dependence
   hosts: kubernetes
-  become: yes
+  become: true
   roles:
     - cni
     - ipvsadm
 
 - name: Deployment kubernetes master
   hosts: master
-  become: yes
+  become: true
   roles:
     - haproxy
     - keepalived
@@ -54,7 +54,7 @@
 
 - name: Deployment kubernetes worker
   hosts: worker
-  become: yes
+  become: true
   roles:
     - "{% if RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
