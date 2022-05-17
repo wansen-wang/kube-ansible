@@ -320,6 +320,7 @@
   when:
     - apiServer.admissionControlConfigFile is defined
     - apiServer.admissionControlConfigFile | length >= 1
+    - KUBE_VERSION | version_compare('1.15', '>=')
   register: apiserver_admission_control_cfg
 
 - name: Create admission control config plugins files

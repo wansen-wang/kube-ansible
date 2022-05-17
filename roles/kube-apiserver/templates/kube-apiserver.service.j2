@@ -49,7 +49,9 @@ ExecStart=/usr/local/bin/kube-apiserver \
   --audit-log-maxsize=200 \
   --encryption-provider-config=/etc/kubernetes/encryption-config.yaml \
 {% if apiServer.admissionControlConfigFile is defined %}
+{% if KUBE_VERSION | version_compare('1.15', '>=') %}
   --admission-control-config-file=/etc/kubernetes/admission-control-config.yaml \
+{% endif %}
 {% endif %}
 {% if apiServer.extraArgs is defined %}
 {% for extraArg in apiServer.extraArgs %}
