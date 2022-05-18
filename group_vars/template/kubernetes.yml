@@ -97,52 +97,12 @@ networking:
   # serviceSubnet: 10.96.0.0/12,fd74:ca9b:0172:0019::/110
   # podSubnet: 10.244.0.0/16,fd74:ca9b:0172:0018::/64
 
-# kubernetes cloud provider config
-# cloudProvider:
-#   provider: azure
-#   config: |
-#     {
-#       "cloud": "AzurePublicCloud"
-#       "tenantId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-#       "subscriptionId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-#       "aadClientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-#       "aadClientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-#       "resourceGroup": "<Resource Group of the K8s cluster>"
-#       "location": "<Region of the K8s cluster>"
-#       "subnetName": "<Subnet Name where the cluster is running>"
-#       "securityGroupName": "<network security group assigned to the subnet>"
-#       "routeTableName": "<route table assiged to the subnet>"
-#       "vnetName": "<virtual network of the cluster>"
-#       "vnetResourceGroup": "<Resource Group of the K8s cluster>"
-#       "cloudProviderBackoff": true,
-#       "cloudProviderBackoffRetries": 6,
-#       "cloudProviderBackoffExponent": 1.5,
-#       "cloudProviderBackoffDuration": 5,
-#       "cloudProviderBackoffJitter": 1,
-#       "cloudProviderRatelimit": true,
-#       "cloudProviderRateLimitQPS": 3,
-#       "cloudProviderRateLimitBucket": 10,
-#       "useManagedIdentityExtension": false,
-#       "useInstanceMetadata": true
-#     }
-
 # kube-apiserver config
 apiServer:
   bindAddress: "0.0.0.0"
   encryption: Tsg7sO4Ki/W3s9bfwGfTi8ECcp+/3uDedQMq6rLQTIY= # head -c 32 /dev/urandom | base64
   certSANs:
     - "DNS:*.kubernetes.local"
-  admissionControlConfigFile:
-    - name: EventRateLimit
-      path: EventRateLimit.yaml
-      configuration:
-        apiVersion: eventratelimit.admission.k8s.io/v1alpha1
-        kind: Configuration
-        limits:
-          - type: Namespace
-            qps: 50
-            burst: 100
-            cacheSize: 2000
   extraArgs:
     - "--event-ttl=4h"
     - "--anonymous-auth=false"
