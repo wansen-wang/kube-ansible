@@ -312,42 +312,42 @@
     mode: "0644"
   register: apiserver_audit_policy_cfg
 
-- name: Install admission control config
-  ansible.builtin.template:
-    src: admission-control-config.yaml.j2
-    dest: /etc/kubernetes/admission-control-config.yaml
-    mode: "0644"
-  when:
-    - apiServer.admissionControlConfigFile is defined
-    - apiServer.admissionControlConfigFile | length >= 1
-    - KUBE_VERSION | version_compare('1.15', '>=')
-  register: apiserver_admission_control_cfg
+# - name: Install admission control config
+#   ansible.builtin.template:
+#     src: admission-control-config.yaml.j2
+#     dest: /etc/kubernetes/admission-control-config.yaml
+#     mode: "0644"
+#   when:
+#     - apiServer.admissionControlConfigFile is defined
+#     - apiServer.admissionControlConfigFile | length >= 1
+#     - KUBE_VERSION | version_compare('1.15', '>=')
+#   register: apiserver_admission_control_cfg
 
-- name: Create admission control config plugins files
-  ansible.builtin.file:
-    path: "/etc/kubernetes/{{ item.path }}"
-    state: touch
-  with_items: "{{ apiServer.admissionControlConfigFile }}"
-  when:
-    - apiServer.admissionControlConfigFile is defined
-    - apiServer.admissionControlConfigFile | length >= 1
+# - name: Create admission control config plugins files
+#   ansible.builtin.file:
+#     path: "/etc/kubernetes/{{ item.path }}"
+#     state: touch
+#   with_items: "{{ apiServer.admissionControlConfigFile }}"
+#   when:
+#     - apiServer.admissionControlConfigFile is defined
+#     - apiServer.admissionControlConfigFile | length >= 1
 
-- name: Install admission control config plugins
-  blockinfile:
-    path: "/etc/kubernetes/{{ item.path }}"
-    block: |
-      {{ item.configuration | to_nice_yaml(indent=2) }}
-  with_items: "{{ apiServer.admissionControlConfigFile }}"
-  when:
-    - apiServer.admissionControlConfigFile is defined
-    - apiServer.admissionControlConfigFile | length >= 1
+# - name: Install admission control config plugins
+#   blockinfile:
+#     path: "/etc/kubernetes/{{ item.path }}"
+#     block: |
+#       {{ item.configuration | to_nice_yaml(indent=2) }}
+#   with_items: "{{ apiServer.admissionControlConfigFile }}"
+#   when:
+#     - apiServer.admissionControlConfigFile is defined
+#     - apiServer.admissionControlConfigFile | length >= 1
 
-- name: Configuration cloud provider
-  ansible.builtin.template:
-    src: cloud.conf.j2
-    dest: /etc/kubernetes/cloud.conf
-  when: cloudProvider is defined
-  register: apiserver_cloud_provider_cfg
+# - name: Configuration cloud provider
+#   ansible.builtin.template:
+#     src: cloud.conf.j2
+#     dest: /etc/kubernetes/cloud.conf
+#   when: cloudProvider is defined
+#   register: apiserver_cloud_provider_cfg
 
 - name: Install systemd file
   ansible.builtin.template:
@@ -362,7 +362,7 @@
     enabled: yes
     daemon_reload: yes
   register: apiserver_systemd
-  when: apiserver_pkg.changed or apiserver_tls_apiserver_key.changed or apiserver_tls_apiserver_crt.changed or apiserver_tls_frontproxyclient_key.changed or apiserver_tls_frontproxyclient_crt.changed or apiserver_tls_apiserverkubeletclient_key.changed or apiserver_tls_apiserverkubeletclient_crt.changed or apiserver_tls_apiserveretcdclient_key.changed or apiserver_tls_apiserveretcdclient_crt.changed or apiserver_encryption_config_cfg.changed or apiserver_audit_policy_cfg.changed or apiserver_admission_control_cfg.changed or apiserver_cloud_provider_cfg.changed or apiserver_systemd_cfg.changed 
+  when: apiserver_pkg.changed or apiserver_tls_apiserver_key.changed or apiserver_tls_apiserver_crt.changed or apiserver_tls_frontproxyclient_key.changed or apiserver_tls_frontproxyclient_crt.changed or apiserver_tls_apiserverkubeletclient_key.changed or apiserver_tls_apiserverkubeletclient_crt.changed or apiserver_tls_apiserveretcdclient_key.changed or apiserver_tls_apiserveretcdclient_crt.changed or apiserver_encryption_config_cfg.changed or apiserver_audit_policy_cfg.changed or apiserver_systemd_cfg.changed 
 
 - name: Waiting for the service
   wait_for:
