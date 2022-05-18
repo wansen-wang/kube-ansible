@@ -7,12 +7,12 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # binary version
-KUBE_VERSION:=1.15.12
-ETCD_VERSION:=3.3.10
+KUBE_VERSION:=1.24.0
+ETCD_VERSION:=3.5.4
 CNI_VERSION:=1.1.1
 
 # container runtime. containerd or docker
-RUNTIME:=docker
+RUNTIME:=containerd
 DOCKER_VERSION:=20.10.16
 
 CONTAINERD_VERSION:=1.6.4
