@@ -37,16 +37,17 @@ All node please install python3.
 
 | Kubernetes | Etcd | Docker | CNI | CoreDNS | Calico | cri-tools | metrics-server | 
 |---|---|---|---|---|---|---|---|
-| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.3.1 | v3.3.1 | v1.12.0 |  v0.3.1 |
-| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.3.1 | v3.3.1 | v1.14.0 |  v0.3.3 |
-| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
-| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
-| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.5 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
-| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.9 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.6 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
-| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md)  | v3.4.13 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.7 | v1.6.7 | v3.8.4 | v1.19.0 |  v0.3.4 |
-| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md)  | v3.4.13 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.8.7 | v1.6.7 | v3.8.4 | v1.20.0 |  v0.3.4 |
-| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.21.0 |  v0.4.4 |
-| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
+| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10 | 18.09.9 | v0.7.5 | v1.3.1 | v3.3.1 | v1.12.0 |  v0.3.1 |
+| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10 | 18.09.9 | v0.7.5 | v1.3.1 | v3.3.1 | v1.14.0 |  v0.3.3 |
+| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15 | 18.09.9 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
+| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3 | 19.03.9 | v0.7.5 | v1.6.2 | v3.3.1 | v1.14.0 |  v0.3.4 |
+| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3 | 19.03.9 | v0.8.5 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
+| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.9 | 19.03.9 | v0.8.6 | v1.6.7 | v3.8.4 | v1.17.0 |  v0.3.4 |
+| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md) | v3.4.13 | 19.03.9 | v0.8.7 | v1.6.7 | v3.8.4 | v1.19.0 |  v0.3.4 |
+| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md) | v3.4.13 | 20.10.16 | v0.8.7 | v1.6.7 | v3.8.4 | v1.20.0 |  v0.3.4 |
+| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | 20.10.16 | v0.9.1 | v1.3.1 | v3.19.1 | v1.21.0 |  v0.4.4 |
+| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | 20.10.16 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
+| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3 | 20.10.16 | v0.9.1 | v1.3.1 | v3.19.1 | v1.22.0 |  v0.4.4 |
 
 ## How to use
 
@@ -119,39 +120,44 @@ about Makefile parameter
 
 ##### Download the default version using official
 
+###### version < 1.24
 ```
-# 1.13
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.13.12 ETCD_VERSION=3.2.24 CNI_VERSION=0.6.0 DOCKER_VERSION=18.09.0
-
 # 1.14
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.14.10 ETCD_VERSION=3.3.10 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.3.10 KUBE_VERSION=1.14.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
 
 # 1.15
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.15.12 ETCD_VERSION=3.3.10 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.3.10 KUBE_VERSION=1.15.12 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
 
 # 1.16
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.16.15 ETCD_VERSION=3.3.15 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.3.15 KUBE_VERSION=1.16.15 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5
 
 # 1.17
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.17.17 ETCD_VERSION=3.4.3 CNI_VERSION=0.7.5 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.4.3 KUBE_VERSION=1.17.17 DOCKER_VERSION=19.03.9 CNI_VERSION=0.7.5
 
 # 1.18
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.18.20 ETCD_VERSION=3.4.3 CNI_VERSION=0.8.5 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.4.3 KUBE_VERSION=1.18.20 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.5
 
 # 1.19
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.19.16 ETCD_VERSION=3.4.9 CNI_VERSION=0.8.6 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.4.9 KUBE_VERSION=1.19.16 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.6
 
 # 1.20
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.20.15 ETCD_VERSION=3.4.13 CNI_VERSION=0.8.7 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.4.13 KUBE_VERSION=1.20.15 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.7
 
 # 1.21
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.21.10 ETCD_VERSION=3.4.13 CNI_VERSION=0.8.7 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.4.13 KUBE_VERSION=1.21.10 DOCKER_VERSION=20.10.16 CNI_VERSION=0.8.7
 
 # 1.22
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.22.7 ETCD_VERSION=3.5.0 CNI_VERSION=0.9.1 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.5.0 KUBE_VERSION=1.22.7 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
 
 # 1.23
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.23.4 ETCD_VERSION=3.5.0 CNI_VERSION=0.9.1 DOCKER_VERSION=18.09.0
+make deploy RUNTIME=docker ETCD_VERSION=3.5.0 KUBE_VERSION=1.23.4 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
+```
+
+###### version >= 1.24
+
+```
+# 1.24
+make deploy RUNTIME=containerd ETCD_VERSION=3.5.3 KUBE_VERSION=1.24.0 CONTAINERD_VERSION=1.4.12 RUNC_VERSION=1.1.1 CNI_VERSION=0.9.1
 ```
 
 ##### Download the default version using Nexus
