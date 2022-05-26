@@ -1,0 +1,9 @@
+[master]
+172.16.102.11 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:c2be
+
+[worker]
+172.16.102.12 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:bdb8
+
+[kubernetes:children]
+master
+worker

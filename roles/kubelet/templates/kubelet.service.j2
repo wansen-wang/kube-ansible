@@ -14,7 +14,11 @@ Requires=docker.service
 ExecStart=/usr/local/bin/kubelet \
   --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
   --config=/etc/kubernetes/kubelet.yaml \
+{% if ipv6 is defined %}
+  --node-ip={{ inventory_hostname }},{{ ipv6 }} \
+{% else %}
   --node-ip={{ inventory_hostname }} \
+{% endif %}
 {% if nodename is defined %}
   --hostname-override={{ nodename | lower }} \
 {% endif %}

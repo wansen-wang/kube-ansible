@@ -213,3 +213,6 @@ apps:
     #     name: "cert-manager.yaml",
     #     url: "https://github.com/jetstack/cert-manager/releases/download/v1.5.3/cert-manager.yaml"
     #   }
+
+
+# 1.14, 1.15 https://docs.projectcalico.org/archive/v3.14/manifests/calico.yaml
