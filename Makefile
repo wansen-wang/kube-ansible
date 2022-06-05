@@ -35,7 +35,7 @@ runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
 
-deploy:
+deploy: runtime
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
 	@PROJECT_NAME=$(PROJECT_NAME) \
@@ -154,3 +154,11 @@ nexus:
 
 help:
 	@./scripts/help.sh
+
+vagrant:
+	@mkdir -p .ssh
+	@ssh-keygen -t rsa -N '' -f .ssh/id_rsa -q
+	@cd group_vars && make
+	@cp -f ./inventory/template/single-master.template ./inventory/hosts
+	@vagrant up
+	@vagrant ssh master -c 'cd /vagrant && sudo make deploy'
