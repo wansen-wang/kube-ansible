@@ -107,5 +107,8 @@
     dest: /etc/bash_completion.d/docker
     mode: 0755
     timeout: 3
+  register: docker_completion
+  until: docker_completion is succeeded
+  retries: 10
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
   ignore_errors: True

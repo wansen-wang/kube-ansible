@@ -1,7 +1,6 @@
 #!/bin/bash
 command -v yum &>/dev/null && export PKG=yum
 command -v apt &>/dev/null && export PKG=apt
-command -v apk &>/dev/null && export PKG=apk
 case ${PKG} in
 'yum')
     yum install -y epel-release

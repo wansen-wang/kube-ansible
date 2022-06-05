@@ -35,7 +35,7 @@ runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
 
-deploy: runtime
+deploy: 
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
 	@PROJECT_NAME=$(PROJECT_NAME) \
@@ -102,22 +102,16 @@ fix:
 	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
 local:
-	@command -v yq &>/dev/null || (echo "Please install yq." && exit 1) && exit 0
-	@rm -rf .ssh && mkdir -p .ssh
-	@cp -f ./inventory/template/virtualbox.template ./inventory/hosts
-	@ssh-keygen -t rsa -P "" -f ./.ssh/id_rsa
+	@mkdir -p .ssh
+	@ssh-keygen -t rsa -N '' -f .ssh/id_rsa -q
+	@cd group_vars && make
+	@[ -f ./inventory/hosts ] || cp -f ./inventory/template/single-master.template ./inventory/hosts
 	@vagrant up
-	@yq e -i '.ha.type="slb"' ./group_vars/kubernetes.yml
-	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa'
-	# @vagrant ssh ansible -c 'sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub'
-	# @vagrant ssh ansible -c 'sudo cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys'
-	# @vagrant ssh ansible -c 'sudo apt install git make -y'
-	# @vagrant ssh ansible -c 'cd /vagrant && sudo make runtime'
-	# @vagrant ssh ansible -c 'cd /vagrant/group_vars && sudo make'
-	# @vagrant ssh ansible -c ''
-	# @vagrant ssh ansible -c 'yq e -i \'.ha.vip="192.168.22.9"\' /vagrant/group_vars/kubernetes.yml'
-	# @vagrant ssh ansible -c 'yq e -i \'.ha.mask="24"\' /vagrant/group_vars/kubernetes.yml'
-	# @vagrant ssh ansible -c 'cd /vagrant && sudo make install'
+	@vagrant ssh master -c 'cd /vagrant && sudo make runtime'
+
+clean:
+	@rm -rf .ssh
+	@vagrant destroy -f
 
 version: 
 	@command -v jq > /dev/null 2>&1 || ( echo -e "\033[32mPlease install jq\033[0m" &&  exit 1)
@@ -154,11 +148,3 @@ nexus:
 
 help:
 	@./scripts/help.sh
-
-vagrant:
-	@mkdir -p .ssh
-	@ssh-keygen -t rsa -N '' -f .ssh/id_rsa -q
-	@cd group_vars && make
-	@cp -f ./inventory/template/single-master.template ./inventory/hosts
-	@vagrant up
-	@vagrant ssh master -c 'cd /vagrant && sudo make deploy'

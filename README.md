@@ -69,6 +69,7 @@ apt-get install git make -y
 
 # centos
 yum install git make vim -y
+yum install asciinema -y
 
 # clone code
 git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
@@ -82,6 +83,15 @@ if python3 not install on other node, please run command `ansible-playbook fix-p
 ```
 make runtime
 ```
+
+#### Configuration parameters
+```
+cd group_vars
+make
+```
+
+* [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
+* [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
 
 #### <span id = "download">Download the way</span>
 
@@ -277,6 +287,18 @@ if you want to deploy extended application, please reference [here](https://gith
 
 
 
+<!-- network:
+  k8s:
+    serviceSubnet: 10.96.0.0/12
+    podSubnet: 10.244.0.0/16
+  flannel:
+    podSubnet: 10.244.0.0/16
+    uri: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  calico:
+    podSubnet: 192.168.0.0/16
+    uri: https://projectcalico.docs.tigera.io/manifests/calico.yaml
+  multus:
+    uri: https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset.yml -->
 
 
 <!-- 
@@ -291,21 +313,21 @@ kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
 --embed-certs=true \
---server=https://172.16.6.10:6443 \
---kubeconfig=/etc/kubernetes/tmp.kubeconfig
+--server=https://172.16.5.10:6443 \
+--kubeconfig=/tmp/admin.kubeconfig
 
 kubectl config set-credentials admin \
 --client-certificate=/etc/kubernetes/pki/admin.crt \
 --client-key=/etc/kubernetes/pki/admin.key \
 --embed-certs=true \
---kubeconfig=/etc/kubernetes/tmp.kubeconfig
+--kubeconfig=/tmp/admin.kubeconfig
 
 kubectl config set-context default \
 --cluster=kubernetes \
 --user=admin \
---kubeconfig=/etc/kubernetes/tmp.kubeconfig
+--kubeconfig=/tmp/admin.kubeconfig
 
-kubectl config use-context default --kubeconfig=/etc/kubernetes/tmp.kubeconfig
+kubectl config use-context default --kubeconfig=/tmp/admin.kubeconfig
 
 openssl_certificate                                           Generate and/...
 openssl_certificate_info                                      Provide infor...
