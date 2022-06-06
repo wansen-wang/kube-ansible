@@ -17,12 +17,12 @@
   pip:
     name: 
       - pyyaml
-      - pyopenssl>=0.15
-      - cryptography>=1.2.3
+      - pyopenssl
+      - cryptography
       - IPy
       - kubernetes
       - openshift
-    extra_args: "-i https://pypi.tuna.tsinghua.edu.cn/simple"
+    extra_args: "-i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed"
 
 - name: Set the Hostname
   ansible.builtin.hostname:
