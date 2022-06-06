@@ -18,14 +18,16 @@ proxy_env:
 timezone: "Asia/Shanghai"
 
 modprobe:
-  filename: /etc/modules
+  filename: /etc/modules-load.d/00-k8s.conf
   params:
-    - nf_conntrack
     - br_netfilter
+    - nf_conntrack
     - overlay
+    - xt_REDIRECT
+    - xt_owner
 
 ipvs:
-  filename: /etc/modules
+  filename: /etc/modules-load.d/01-k8s.conf
   params:
     - ip_vs
     - ip_vs_rr
