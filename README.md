@@ -111,7 +111,6 @@ about Makefile parameter
 | PKI_URL | PKI Server, about pki server, you can reference [here](https://github.com/buxiaomo/pki-server) | N/A | pki server url |
 | PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
-| IP_STACK | Kubernetes IP Stack | ipv4 |ipv4 or ipv6 |
 | DOWNLOAD_WAY | Binary download mode  | official  | official or nexus |
 | RUNTIME | container runtime  | docker  | docker or containerd|
 | CONTAINERD_VERSION | containerd binary version | latest  | N/A|
@@ -133,34 +132,34 @@ about Makefile parameter
 ###### version < 1.24
 ```
 # 1.14
-make deploy RUNTIME=docker ETCD_VERSION=3.3.10 KUBE_VERSION=1.14.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
+make deploy RUNTIME=docker KUBE_VERSION=1.14.10 ETCD_VERSION=3.3.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
 
 # 1.15
-make deploy RUNTIME=docker ETCD_VERSION=3.3.10 KUBE_VERSION=1.15.12 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
+make deploy RUNTIME=docker KUBE_VERSION=1.15.12 ETCD_VERSION=3.3.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
 
 # 1.16
-make deploy RUNTIME=docker ETCD_VERSION=3.3.15 KUBE_VERSION=1.16.15 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5
+make deploy RUNTIME=docker KUBE_VERSION=1.16.15 ETCD_VERSION=3.3.15 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5
 
 # 1.17
-make deploy RUNTIME=docker ETCD_VERSION=3.4.3 KUBE_VERSION=1.17.17 DOCKER_VERSION=19.03.9 CNI_VERSION=0.7.5
+make deploy RUNTIME=docker KUBE_VERSION=1.17.17 ETCD_VERSION=3.4.3 DOCKER_VERSION=19.03.9 CNI_VERSION=0.7.5
 
 # 1.18
-make deploy RUNTIME=docker ETCD_VERSION=3.4.3 KUBE_VERSION=1.18.20 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.5
+make deploy RUNTIME=docker KUBE_VERSION=1.18.20 ETCD_VERSION=3.4.3 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.5
 
 # 1.19
-make deploy RUNTIME=docker ETCD_VERSION=3.4.9 KUBE_VERSION=1.19.16 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.6
+make deploy RUNTIME=docker KUBE_VERSION=1.19.16 ETCD_VERSION=3.4.9 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.6
 
 # 1.20
-make deploy RUNTIME=docker ETCD_VERSION=3.4.13 KUBE_VERSION=1.20.15 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.7
+make deploy RUNTIME=docker KUBE_VERSION=1.20.6 ETCD_VERSION=3.4.13 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.7
 
 # 1.21
-make deploy RUNTIME=docker ETCD_VERSION=3.4.13 KUBE_VERSION=1.21.10 DOCKER_VERSION=20.10.16 CNI_VERSION=0.8.7
+make deploy RUNTIME=docker KUBE_VERSION=1.21.10 ETCD_VERSION=3.4.13 DOCKER_VERSION=20.10.16 CNI_VERSION=0.8.7
 
 # 1.22
-make deploy RUNTIME=docker ETCD_VERSION=3.5.0 KUBE_VERSION=1.22.9 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
+make deploy RUNTIME=docker KUBE_VERSION=1.22.9 ETCD_VERSION=3.5.0 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
 
 # 1.23
-make deploy RUNTIME=docker ETCD_VERSION=3.5.0 KUBE_VERSION=1.23.4 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
+make deploy RUNTIME=docker KUBE_VERSION=1.23.4 ETCD_VERSION=3.5.0 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
 ```
 
 ###### version >= 1.24
@@ -284,7 +283,7 @@ if you want to deploy extended application, please reference [here](https://gith
 * [k8s_the_hard_way](https://github.com/pythops/k8s_the_hard_way)
 * [IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/concepts/services-networking/dual-stack/)
 * [validate IPv4/IPv6 dual-stack](https://kubernetes.io/zh/docs/tasks/network/validate-dual-stack/)
-
+* [CoreDNS k8s version](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md)
 
 
 <!-- network:
@@ -313,7 +312,7 @@ kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
 --embed-certs=true \
---server=https://172.16.5.10:6443 \
+--server=https://172.16.5.11:6443 \
 --kubeconfig=/tmp/admin.kubeconfig
 
 kubectl config set-credentials admin \
