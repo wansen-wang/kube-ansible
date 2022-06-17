@@ -7,7 +7,7 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # binary version
-KUBE_VERSION:=1.24.1
+KUBE_VERSION:=1.23.8
 ETCD_VERSION:=3.5.4
 CNI_VERSION:=1.1.1
 
