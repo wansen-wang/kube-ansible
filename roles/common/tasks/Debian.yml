@@ -9,3 +9,16 @@
     name: "{{ package }}"
     state: present
     update_cache: yes
+
+- name: Add graphics drivers repository from PPA and install its signing key
+  ansible.builtin.apt_repository:
+    repo: ppa:graphics-drivers/ppa
+    state: present
+  when: gpu | default(false)
+
+- name: Install nvidia-driver applications
+  apt:
+    name: nvidia-driver-{{ gpu_version | default(510) }}
+    state: present
+    update_cache: yes
+  when: gpu | default(false)

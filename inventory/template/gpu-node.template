@@ -1,0 +1,11 @@
+[master]
+192.168.56.10
+
+[worker]
+192.168.56.11
+192.168.56.12 gpu=true
+192.168.56.13 gpu=true
+
+[kubernetes:children]
+master
+worker

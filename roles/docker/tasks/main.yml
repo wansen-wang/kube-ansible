@@ -112,3 +112,7 @@
   retries: 10
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
   ignore_errors: True
+
+- name: Install nvidia-container-runtime
+  include_tasks: "{{ ansible_os_family }}.yml"
+  when: gpu | default(false)

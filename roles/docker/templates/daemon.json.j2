@@ -1,1 +1,5 @@
+{% if gpu | default(false) %}
+{{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | combine({'default-runtime': 'nvidia'} , recursive=True) | combine({'runtimes': {'nvidia': {'path': '/usr/bin/nvidia-container-runtime', 'runtimeArgs':[]}}} , recursive=True) | to_nice_json }}
+{% else %}
 {{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | to_nice_json }}
+{% endif %}

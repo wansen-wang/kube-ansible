@@ -25,6 +25,8 @@ modprobe:
     - overlay
     - xt_REDIRECT
     - xt_owner
+    - ip_tables
+    - ip6table_filter
 
 ipvs:
   filename: /etc/modules-load.d/01-k8s.conf
