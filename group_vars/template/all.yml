@@ -1,7 +1,7 @@
 ---
 # Ansible settings
 ansible_ssh_port: 22
-ansible_ssh_user: "root"
+ansible_ssh_user: "vagrant"
 # ansible_ssh_pass: "root"
 # ansible_sudo_user: "root"
 # ansible_sudo_pass: "root"

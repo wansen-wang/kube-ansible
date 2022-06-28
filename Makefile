@@ -12,7 +12,7 @@ ETCD_VERSION:=3.5.4
 CNI_VERSION:=1.1.1
 
 # container runtime. containerd or docker
-RUNTIME:=containerd
+RUNTIME:=docker
 DOCKER_VERSION:=20.10.17
 
 CONTAINERD_VERSION:=1.6.6
@@ -101,18 +101,6 @@ uninstall:
 fix:
 	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
-local:
-	@mkdir -p .ssh
-	@ssh-keygen -t rsa -N '' -f .ssh/id_rsa -q
-	@cd group_vars && make
-	@[ -f ./inventory/hosts ] || cp -f ./inventory/template/single-master.template ./inventory/hosts
-	@vagrant up
-	@vagrant ssh master -c 'cd /vagrant && sudo make runtime'
-
-clean:
-	@rm -rf .ssh
-	@vagrant destroy -f
-
 version: 
 	@command -v jq > /dev/null 2>&1 || ( echo -e "\033[32mPlease install jq\033[0m" &&  exit 1)
 	@echo "etcd" > .etcd
@@ -148,3 +136,14 @@ nexus:
 
 help:
 	@./scripts/help.sh
+
+local:
+	@cd group_vars && make
+	@[ -f ./inventory/hosts ] || cp ./inventory/template/single-master.template ./inventory/hosts
+	@vagrant up
+	@vagrant ssh master -c 'cd /vagrant/ && make runtime'
+	@vagrant ssh master -c 'cd /vagrant/ && make deploy'
+
+clean:
+	@rm -rf .ssh
+	@vagrant destroy -f
