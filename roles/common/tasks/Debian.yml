@@ -14,11 +14,11 @@
   ansible.builtin.apt_repository:
     repo: ppa:graphics-drivers/ppa
     state: present
-  when: gpu | default(false)
+  when: gpu_version is defined
 
 - name: Install nvidia-driver applications
   apt:
     name: nvidia-driver-{{ gpu_version | default(510) }}
     state: present
     update_cache: yes
-  when: gpu | default(false)
+  when: gpu_version is defined
