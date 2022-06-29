@@ -52,6 +52,10 @@
     - /etc/docker
     - "{{ docker.datadir | default('/var/lib/docker') }}"
 
+- name: Install nvidia-container-runtime
+  include_tasks: "{{ ansible_os_family }}.yml"
+  when: gpu | default(false)
+
 - name: Configuration daemon
   ansible.builtin.template:
     src: daemon.json.j2
@@ -99,6 +103,7 @@
     state: restarted
     enabled: yes
     daemon_reload: yes
+    masked: yes
   when: docker_pkg.changed or docker_cfg.changed or docker_systemd.changed or docker_systemd_d.changed
 
 - name: Install docker completion
@@ -112,7 +117,3 @@
   retries: 10
   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
   ignore_errors: True
-
-- name: Install nvidia-container-runtime
-  include_tasks: "{{ ansible_os_family }}.yml"
-  when: gpu | default(false)
