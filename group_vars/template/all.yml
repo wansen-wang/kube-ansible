@@ -49,6 +49,7 @@ sysctl:
     net.ipv4.tcp_keepalive_probes: 10
     net.ipv4.neigh.default.gc_stale_time: 120
     net.ipv4.conf.all.rp_filter: 0
+    net.ipv4.conf.default.forwarding: 1
     net.ipv4.conf.default.rp_filter: 0
     net.ipv4.conf.default.arp_announce: 2
     net.ipv4.conf.lo.arp_announce: 2
