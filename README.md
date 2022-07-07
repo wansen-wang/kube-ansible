@@ -309,6 +309,7 @@ openssl x509 -req -in sa.csr -CA ca.crt -CAkey ca.key -CAcreateserial -days 1000
 
 kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}{":\t"}{.status.allocatable.memory}{":\t"}{.status.capacity.memory}{"\n"}{end}'
 
+
 kubectl config set-cluster kubernetes \
 --certificate-authority=/etc/kubernetes/pki/ca.crt \
 --embed-certs=true \
