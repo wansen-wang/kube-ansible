@@ -9,4 +9,4 @@
         state: latest
 
     - name: Upgrade pip
-      shell: curl -s https://bootstrap.pypa.io/pip/get-pip.py | python3
+      shell: curl -s https://bootstrap.pypa.io/pip/3.6/get-pip.py | python3
