@@ -59,7 +59,7 @@ evictionSoftGracePeriod:
 kubeReserved:
 {% if inventory_hostname in groups['master'] %}
   cpu: 400m
-  memory: 512Mi
+  memory: 1Gi
 {% else %}
   cpu: 100m
   memory: 256Mi
@@ -69,7 +69,7 @@ systemReserved:
   cpu: 100m
   memory: 200Mi
   ephemeral-storage: 1Gi
-kubeReservedCgroup: /kube.slice
+kubeReservedCgroup: /kubelet.service
 systemReservedCgroup: /system.slice
 failSwapOn: true
 fileCheckFrequency: 10s
