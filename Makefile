@@ -137,12 +137,15 @@ nexus:
 help:
 	@./scripts/help.sh
 
-local:
+local: clean
+	@mkdir -p .ssh
+	@ssh-keygen -t RSA -N '' -f .ssh/id_rsa
 	@cd group_vars && make
 	@[ -f ./inventory/hosts ] || cp ./inventory/template/single-master.template ./inventory/hosts
 	@vagrant up
-	@vagrant ssh master -c 'cd /vagrant/ && make runtime'
-	@vagrant ssh master -c 'cd /vagrant/ && make deploy'
+	@vagrant ssh master -c 'cd /vagrant/ && sudo make runtime'
+	@vagrant ssh master -c 'cd /vagrant/ && sudo make deploy RUNTIME=docker KUBE_VERSION=1.23.8 ETCD_VERSION=3.5.4'
+	@vagrant ssh master
 
 clean:
 	@rm -rf .ssh

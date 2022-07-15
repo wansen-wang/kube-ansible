@@ -21,10 +21,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on"]
       end # end provider
       cfg.vm.provision "shell", inline: <<-SHELL
-        sudo cp /vagrant/.ssh/id_rsa /home/vagrant/.ssh/id_rsa
-	      sudo cp /vagrant/.ssh/id_rsa.pub /home/vagrant/.ssh/id_rsa.pub
-	      sudo cat /vagrant/.ssh/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
-        sudo chown -R vagrant:vagrant /home/vagrant/.ssh
+        sudo cp /vagrant/.ssh/id_rsa /root/.ssh/id_rsa
+	      sudo cp /vagrant/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
+	      sudo cp /vagrant/.ssh/id_rsa.pub /root/.ssh/authorized_keys
+        sudo chown -R root:root /root/.ssh
         sudo apt-get update
         sudo apt-get install python3 python3-pip sshpass curl rsync wget vim -y
         sudo pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
