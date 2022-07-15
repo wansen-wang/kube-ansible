@@ -25,3 +25,18 @@
         /usr/local/bin/kubectl label node {{ hostvars[inventory_hostname].ansible_hostname | lower }} node-role.kubernetes.io/control-plane="" --overwrite
       {% endif %}
     {% endif %}
+
+- name: Upload kubeconfig to cluster manager
+  uri:
+    url: '{{ WEBHOOK_URL }}?name={{ PROJECT_NAME }}'
+    src: /etc/kubernetes/remote-access.kubeconfig
+    user: '{{ WEBHOOK_USER }}'
+    password: '{{ WEBHOOK_PASS }}'
+    force_basic_auth: yes
+    method: POST
+    body_format: raw
+  ignore_errors: True
+  run_once: true
+  when:
+    - inventory_hostname in groups['master']
+    - WEBHOOK_URL is defined
