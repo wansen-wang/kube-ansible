@@ -13,10 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   cluster.each_with_index do |(hostname, info), index|
     config.vm.define hostname do |cfg|
       cfg.vm.provider :virtualbox do |vb, override|
-        # config.vm.box = "ubuntu/focal64"
-        # config.vm.box_version = "v20220615.0.0"
-        config.vm.box = "centos/7"
-        config.vm.box_version = "2004.01"
+        config.vm.box = "ubuntu/focal64"
+        config.vm.box_version = "20220715.0.0"
         override.vm.network :private_network, ip: "#{info[:ip]}"
         override.vm.hostname = hostname
         vb.name = hostname
@@ -28,10 +26,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	      sudo cp /vagrant/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub
 	      sudo cp /vagrant/.ssh/id_rsa.pub /root/.ssh/authorized_keys
         sudo chown -R root:root /root/.ssh
-        command -v yum &>/dev/null && sudo yum install -y epel-release
-        command -v yum &>/dev/null && sudo yum install -y python3 python3-pip sshpass curl rsync wget python3-netaddr python-netaddr
-        command -v apt &>/dev/null && sudo apt-get update
-        command -v apt &>/dev/null && sudo apt-get install python3 python3-pip sshpass curl rsync wget vim -y
+        sudo apt-get update
+        sudo apt-get install python3 python3-pip sshpass curl rsync wget vim -y
         sudo pip3 install --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
       SHELL
     end
