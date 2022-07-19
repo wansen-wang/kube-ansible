@@ -58,14 +58,18 @@ data:
         health {
           lameduck 15s
         }
+        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") | version_compare('1.6.5', '>') %}
         ready
+        {% endif %}
         kubernetes cluster.local in-addr.arpa ip6.arpa {
           pods verified
           fallthrough in-addr.arpa ip6.arpa
         }
         prometheus :9153
         forward . /etc/resolv.conf {
+        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") | version_compare('1.6.7', '>') %}
           max_concurrent 1000
+        {% endif %}
           prefer_udp
         }
         cache 30

@@ -22,11 +22,11 @@ Containerd version:         {{ KUBE_VERSION | component_version | community.gene
 CNI version:                {{ KUBE_VERSION | component_version | community.general.json_query("cni") }}
 
 The Roles of this node are:
-{%- if inventory_hostname in groups['master'] %}
+{% if inventory_hostname in groups['master'] %}
   - kube-master
   - kube-worker
 {% else %}
   - kube-worker
-{%- endif %}
+{% endif %}
 
 ------------------------------------------------------------------------------

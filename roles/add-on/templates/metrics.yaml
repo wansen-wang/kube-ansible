@@ -127,9 +127,21 @@ spec:
       labels:
         k8s-app: metrics-server
     spec:
+      replicas: 2
       tolerations:
-        - operator: Exists
-          effect: NoSchedule
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                k8s-app: metrics-server
+            namespaces:
+            - kube-system
+            topologyKey: kubernetes.io/hostname
       containers:
         - name: metrics-server
           image: k8s.gcr.io/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}

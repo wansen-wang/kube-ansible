@@ -125,8 +125,8 @@ local: clean
 	@[ -f ./inventory/hosts ] || cp ./inventory/template/single-master.template ./inventory/hosts
 	@vagrant up
 	@vagrant ssh master -c 'cd /vagrant/ && sudo make runtime'
-	@vagrant ssh master -c 'cd /vagrant/ && sudo make deploy RUNTIME=docker KUBE_VERSION=1.23.8 ETCD_VERSION=3.5.4'
-	@vagrant ssh master
+	# @vagrant ssh master -c 'cd /vagrant/ && sudo make deploy RUNTIME=docker KUBE_VERSION=1.23.8 ETCD_VERSION=3.5.4'
+	# @vagrant ssh master
 
 clean:
 	@rm -rf .ssh

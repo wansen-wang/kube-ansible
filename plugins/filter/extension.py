@@ -20,7 +20,7 @@ def component_version(value):
                 "calico": "3.12.3",
                 "cilium": "1.3.0",
                 "flannel": "0.11.0",
-                "coredns": "1.3.1",
+                "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
         },
@@ -34,7 +34,7 @@ def component_version(value):
                 "calico": "3.15.5",
                 "cilium": "1.5.5",
                 "flannel": "0.11.0",
-                "coredns": "1.6.5",
+                "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
         },
@@ -48,7 +48,7 @@ def component_version(value):
                 "calico": "3.16.10",
                 "cilium": "1.5.5",
                 "flannel": "0.11.0",
-                "coredns": "1.6.2",
+                "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
         },
@@ -62,7 +62,7 @@ def component_version(value):
                 "calico": "3.17.6",
                 "cilium": "1.7.2",
                 "flannel": "0.12.0",
-                "coredns": "1.6.5",
+                "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
         },
