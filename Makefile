@@ -7,17 +7,9 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # binary version
-KUBE_VERSION:=1.24.3
-ETCD_VERSION:=3.4.19
-CNI_VERSION:=1.1.1
-
-# container runtime. containerd or docker
-RUNTIME:=docker
-DOCKER_VERSION:=20.10.17
-
-CONTAINERD_VERSION:=1.6.6
-CRICTL_VERSION:=1.24.2
-RUNC_VERSION:=1.1.3
+KUBE_VERSION:=1.14.3
+KUBE_RUNTIME:=docker
+KUBE_NETWORK:=calico
 
 # nexus information
 NEXUS_DOMAIN_NAME:=
@@ -29,8 +21,6 @@ NEXUS_PASSWORD:=
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
 PKI_URL:=
 
-ANSIBLE_OPT:=
-
 runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
@@ -38,22 +28,13 @@ runtime:
 deploy: 
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
-	@PROJECT_NAME=$(PROJECT_NAME) \
-		PROJECT_ENV=$(PROJECT_ENV) \
-		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
-		RUNTIME=$(RUNTIME) \
-		KUBE_VERSION=$(KUBE_VERSION) \
-		ETCD_VERSION=$(ETCD_VERSION) \
-		CONTAINERD_VERSION=$(CONTAINERD_VERSION) \
-		RUNC_VERSION=$(RUNC_VERSION) \
-		CRICTL_VERSION=$(CRICTL_VERSION) \
-		DOCKER_VERSION=$(DOCKER_VERSION) \
-		CNI_VERSION=$(CNI_VERSION) \
-		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
-		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
-		NEXUS_USERNAME=$(NEXUS_USERNAME) \
-		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
-		PKI_URL=$(PKI_URL) ./scripts/info.sh deploy
+	@ansible-playbook -i ./inventory/hosts ./deploy.yml \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
+    -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e KUBE_ACTION="deploy"
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
@@ -61,7 +42,7 @@ scale:
 	@PROJECT_NAME=$(PROJECT_NAME) \
 		PROJECT_ENV=$(PROJECT_ENV) \
 		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
-		RUNTIME=$(RUNTIME) \
+		KUBE_RUNTIME=$(KUBE_RUNTIME) \
 		KUBE_VERSION=$(KUBE_VERSION) \
 		ETCD_VERSION=$(ETCD_VERSION) \
 		CONTAINERD_VERSION=$(CONTAINERD_VERSION) \
@@ -80,7 +61,7 @@ upgrade:
 	@PROJECT_NAME=$(PROJECT_NAME) \
 		PROJECT_ENV=$(PROJECT_ENV) \
 		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
-		RUNTIME=$(RUNTIME) \
+		KUBE_RUNTIME=$(KUBE_RUNTIME) \
 		KUBE_VERSION=$(KUBE_VERSION) \
 		ETCD_VERSION=$(ETCD_VERSION) \
 		CONTAINERD_VERSION=$(CONTAINERD_VERSION) \

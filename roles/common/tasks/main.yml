@@ -22,6 +22,7 @@
       - IPy
       - kubernetes
       - openshift
+      - jmespath
     extra_args: "-i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed"
 
 - name: Set the Hostname

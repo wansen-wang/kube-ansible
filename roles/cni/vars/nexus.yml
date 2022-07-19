@@ -1,1 +1,1 @@
-download_url: '{{ NEXUS_DOMAIN_NAME }}/repository/{{ NEXUS_REPOSITORY }}/containernetworking/plugins/releases/download/v{{ CNI_VERSION }}/cni-plugins-linux-amd64-v{{ CNI_VERSION }}.tgz'
+download_url: '{{ NEXUS_DOMAIN_NAME }}/repository/{{ NEXUS_REPOSITORY }}/containernetworking/plugins/releases/download/v{{ KUBE_VERSION | component_version | community.general.json_query("cni") }}/cni-plugins-linux-amd64-v{{ KUBE_VERSION | component_version | community.general.json_query("cni") }}.tgz'

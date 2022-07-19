@@ -20,7 +20,7 @@
 - name: Download package
   get_url:
     url: "{{ download_url }}"
-    dest: "/usr/local/src/docker-{{ DOCKER_VERSION }}.tgz"
+    dest: "/usr/local/src/docker-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.docker') }}.tgz"
     force: true
     mode: 0644
     owner: root
@@ -35,7 +35,7 @@
 
 - name: Extract package
   ansible.builtin.unarchive:
-    src: "/usr/local/src/docker-{{ DOCKER_VERSION }}.tgz"
+    src: "/usr/local/src/docker-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.docker') }}.tgz"
     dest: /usr/local/bin
     remote_src: yes
     extra_opts:

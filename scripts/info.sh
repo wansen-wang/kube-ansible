@@ -20,7 +20,7 @@ echo -e "Kubernetes runtime mode: \t\033[32m${RUNTIME}\033[0m"
 echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
 echo -e "Etcd version: \t\t\t\033[32m${ETCD_VERSION}\033[0m"
 
-if [ ${RUNTIME} == 'docker' ]; then
+if [ ${KUBE_RUNTIME} == 'docker' ]; then
   echo -e "Docker version: \t\t\033[32m${DOCKER_VERSION}\033[0m"
   ANSIBLE_ARG="${ANSIBLE_ARG} -e DOCKER_VERSION=${DOCKER_VERSION}"
 else
@@ -58,10 +58,11 @@ case $1 in
   ansible-playbook -i ./inventory/hosts ./deploy.yml \
     -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
     -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-    -e RUNTIME=${RUNTIME} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \
+    -e CNI_PLUGIN=${CNI_PLUGIN} \
     -e motion="deploy" ${ANSIBLE_ARG}
   ;;
 "scale")
@@ -72,17 +73,18 @@ case $1 in
   ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') \
     -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
     -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-    -e RUNTIME=${RUNTIME} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \
+    -e CNI_PLUGIN=${CNI_PLUGIN} \
     -e motion="scale" ${ANSIBLE_ARG}
   ;;
 "upgrade")
   ansible-playbook -i ./inventory/hosts ./upgrade.yml \
     -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
     -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-    -e RUNTIME=${RUNTIME} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e ETCD_VERSION=${ETCD_VERSION} \
     -e CNI_VERSION=${CNI_VERSION} \

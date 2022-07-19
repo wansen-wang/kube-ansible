@@ -2,7 +2,7 @@
 Description=kubelet: The Kubernetes Node Agent
 Documentation=https://kubernetes.io/docs/home/
 Wants=network-online.target
-{% if RUNTIME == "containerd" %}
+{% if KUBE_RUNTIME == "containerd" %}
 After=containerd.service
 Requires=containerd.service
 {% else %}
@@ -22,7 +22,7 @@ ExecStart=/usr/local/bin/kubelet \
 {% if nodename is defined %}
   --hostname-override={{ nodename | lower }} \
 {% endif %}
-{% if RUNTIME == "containerd" %}
+{% if KUBE_RUNTIME == "containerd" %}
   --container-runtime=remote \
   --runtime-request-timeout=15m \
   --container-runtime-endpoint=unix:///run/containerd/containerd.sock \

@@ -6,6 +6,158 @@ from distutils.version import LooseVersion, StrictVersion
 from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
+# {{ value | component_version | community.general.json_query("etcd") }}
+# pip3 install jmespath
+def component_version(value):
+    version_map = {
+        "1.14": {
+            "etcd": "3.2.26",
+            "cni": "0.8.1",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.12.3",
+                "cilium": "1.3.0",
+                "flannel": "0.11.0",
+                "coredns": "1.3.1",
+                "metrics": "0.5.2"
+            }
+        },
+        "1.15": {
+            "etcd": "3.3.10",
+            "cni": "0.8.1",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.15.5",
+                "cilium": "1.5.5",
+                "flannel": "0.11.0",
+                "coredns": "1.6.5",
+                "metrics": "0.5.2"
+            }
+        },
+        "1.16": {
+            "etcd": "3.3.12",
+            "cni": "0.8.6",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.16.10",
+                "cilium": "1.5.5",
+                "flannel": "0.11.0",
+                "coredns": "1.6.2",
+                "metrics": "0.5.2"
+            }
+        },
+        "1.17": {
+            "etcd": "v3.3.12",
+            "cni": "0.8.6",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.17.6",
+                "cilium": "1.7.2",
+                "flannel": "0.12.0",
+                "coredns": "1.6.5",
+                "metrics": "0.5.2"
+            }
+        },
+        "1.18": {
+            "etcd": "3.4.3",
+            "cni": "0.8.6",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.18.6",
+                "cilium": "1.8.3",
+                "flannel": "0.12.0",
+                "coredns": "1.6.7",
+                "metrics": "0.5.2"
+            }
+        },
+        "1.19": {
+            "etcd": "3.4.13",
+            "cni": "0.9.0",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.20.5",
+                "cilium": "1.8.8",
+                "flannel": "0.13.0",
+                "coredns": "1.7.0",
+                "metrics": "0.6.1"
+            }
+        },
+        "1.20": {
+            "etcd": "3.4.13",
+            "cni": "0.9.0",
+            "runtime": {
+                "docker": "19.03.9"
+            },
+            "plugin": {
+                "calico": "3.21.5",
+                "cilium": "1.8.8",
+                "flannel": "0.13.0",
+                "coredns": "1.7.0",
+                "metrics": "0.6.1"
+            }
+        },
+        "1.21": {
+            "etcd": "3.4.13",
+            "cni": "0.9.1",
+            "runtime": {
+                "docker": "20.10.9"
+            },
+            "plugin": {
+                "calico": "3.23.2",
+                "cilium": "1.8.8",
+                "flannel": "0.14.0",
+                "coredns": "1.8.0",
+                "metrics": "0.6.1"
+            }
+        },
+        "1.22": {
+            "etcd": "3.5.0",
+            "cni": "1.0.1",
+            "runtime": {
+                "docker": "20.10.9"
+            },
+            "plugin": {
+                "calico": "3.23.2",
+                "cilium": "1.9.11",
+                "flannel": "0.15.1",
+                "coredns": "1.8.4",
+                "metrics": "0.6.1"
+            }
+        },
+        "1.23": {
+            "etcd": "3.5.3",
+            "cni": "1.1.1",
+            "runtime": {
+                "docker": "20.10.9"
+            },
+            "plugin": {
+                "calico": "3.23.2",
+                "cilium": "1.11.3",
+                "flannel": "0.15.1",
+                "coredns": "1.8.6",
+                "metrics": "0.6.1"
+            }
+        }
+    }
+
+    if version_map.get(value) is not None:
+        return version_map.get(value)
+    if version_map.get(value[:4]) is None:
+        raise errors.AnsibleFilterError('kubernetes version not supported')
+    return version_map.get(value[:4])
+
 
 # {{ value | ip }}
 # return 4 or 6
@@ -15,6 +167,7 @@ def ip(value):
     except Exception as e:
         raise errors.AnsibleFilterError(
             'ip failed: %s' % to_native(e))
+
 
 # {{ value | ip_format }}
 # if value is ipv4, will return ipv4. if value is ipv6 will return [value]
@@ -152,11 +305,13 @@ class FilterModule(object):
             'version': version_compare,
             'interception': interception,
             'ip_format': ip_format,
-            'ip': ip
+            'ip': ip,
+            'component_version': component_version
         }
 
 
 # if __name__ == '__main__':
+#     component_version("1.23.7")
 #     print(select("4", "eq", "4", "10.96.0.0/12","fd74:ca9b:0172:0019::/110"))
 #     a = "[fd74:ca9b:0172:0018::/64]"
 #     print(a[1:len(a) - 1])

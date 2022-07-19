@@ -3,8 +3,8 @@
   hosts: all
   become: true
   roles:
-    - motd
     - common
+    - motd
     - chrony
     - kernel
   tags:
@@ -41,7 +41,7 @@
   roles:
     - haproxy
     - keepalived
-    - "{% if RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
     - kube-apiserver
     - kube-scheduler
@@ -56,7 +56,7 @@
   hosts: worker
   become: true
   roles:
-    - "{% if RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
     - kubelet
     - kube-proxy
@@ -64,9 +64,9 @@
   tags:
     - kube-worker
 
-- name: Deployment kubernetes apps
+- name: Deployment kubernetes add-on
   hosts: master
   roles:
-    - apps
+    - add-on
   tags:
-    - apps
+    - add-on

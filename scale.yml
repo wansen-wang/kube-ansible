@@ -23,7 +23,7 @@
   roles:
     - cni
     - ipvsadm
-    - "{% if RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
     - kubelet
     - kube-proxy

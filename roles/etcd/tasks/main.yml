@@ -22,7 +22,7 @@
 - name: Download package
   get_url:
     url: "{{ download_url }}"
-    dest: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    dest: "/usr/local/src/etcd-v{{ KUBE_VERSION | component_version | community.general.json_query('etcd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
     group: root
@@ -36,7 +36,7 @@
 
 - name: Extract package
   ansible.builtin.unarchive:
-    src: "/usr/local/src/etcd-v{{ ETCD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    src: "/usr/local/src/etcd-v{{ KUBE_VERSION | component_version | community.general.json_query('etcd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
     remote_src: yes
     exclude:

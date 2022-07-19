@@ -21,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ["modifyvm", :id, "--memory", info[:mem], "--cpus", info[:cpus], "--hwvirtex", "on"]
       end # end provider
       cfg.vm.provision "shell", inline: <<-SHELL
+        set -x
         sudo mkdir -p /root/.ssh
         sudo cp /vagrant/.ssh/id_rsa /root/.ssh/id_rsa
 	      sudo cp /vagrant/.ssh/id_rsa.pub /root/.ssh/id_rsa.pub

@@ -7,7 +7,7 @@
     kubectl drain {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %} --ignore-daemonsets --delete-emptydir-data --force
   run_once: true
   delegate_to: localhost
-  when: motion | default('deploy')  == "upgrade"
+  when: KUBE_ACTION | default('deploy')  == "upgrade"
   notify: Undrain Node
 
 - name: Download package

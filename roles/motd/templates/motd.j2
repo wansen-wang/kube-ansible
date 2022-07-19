@@ -13,21 +13,19 @@ CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
 Memory:        {{ ansible_memtotal_mb }} MB
 
 Kubernetes version:         {{ KUBE_VERSION }}
-Etcd version:               {{ ETCD_VERSION }}
-{% if RUNTIME == 'docker' %} 
-Docker version:             {{ DOCKER_VERSION }}
+Etcd version:               {{ KUBE_VERSION | component_version | community.general.json_query("etcd") }}
+{% if KUBE_RUNTIME == 'docker' %}
+Docker version:             {{ KUBE_VERSION | component_version | community.general.json_query("runtime.docker") }}
 {% else %}
-Containerd version:         {{ CONTAINERD_VERSION }}
-Crictl version:             {{ CRICTL_VERSION }}
-Runc version:               {{ RUNC_VERSION }}
+Containerd version:         {{ KUBE_VERSION | component_version | community.general.json_query("runtime.containerd") }}
 {% endif %}
-CNI version:                {{ CNI_VERSION }}
+CNI version:                {{ KUBE_VERSION | component_version | community.general.json_query("cni") }}
 
 The Roles of this node are:
-{%- if inventory_hostname in groups['master'] %} 
+{%- if inventory_hostname in groups['master'] %}
   - kube-master
-{%- endif %}
-{%- if inventory_hostname in groups['worker'] %} 
+  - kube-worker
+{% else %}
   - kube-worker
 {%- endif %}
 
