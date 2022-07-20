@@ -116,6 +116,7 @@ metadata:
   name: metrics-server
   namespace: kube-system
 spec:
+  replicas: 2
   selector:
     matchLabels:
       k8s-app: metrics-server
@@ -127,7 +128,6 @@ spec:
       labels:
         k8s-app: metrics-server
     spec:
-      replicas: 2
       tolerations:
         - key: CriticalAddonsOnly
           operator: Exists

@@ -1,72 +1,76 @@
 #!/bin/bash
-set -x
-function check_new_version() {
-  COMMIT_MSG=""
-  # K8S
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/kubernetes/kubernetes/releases/latest | jq -r .tag_name)
-  grep -E "KUBE_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/KUBE_VERSION:=.*/KUBE_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update kubernetes version to ${tag_name};"
+echo '-------------------------------------------------------------------------------'
+echo ' __        ___.                                         ._____.   .__          '
+echo '|  | ____ _\_ |__   ____           _____    ____   _____|__\_ |__ |  |   ____  '
+echo '|  |/ /  |  \ __ \_/ __ \   ______ \__  \  /    \ /  ___/  || __ \|  | _/ __ \ '
+echo '|    <|  |  / \_\ \  ___/  /_____/  / __ \|   |  \\___ \|  || \_\ \  |_\  ___/ '
+echo '|__|_ \____/|___  /\___  >         (____  /___|  /____  >__||___  /____/\___  >'
+echo '     \/         \/     \/               \/     \/     \/        \/          \/ '
+echo '-------------------------------------------------------------------------------'
+ARCH=$(uname -m)
+if [ ${ARCH} != "aarch64" ] && [ ${ARCH} != "x86_64" ]; then
+  echo -e "${ARCH} architecture is not supported!"
+  exit 0
+fi
+ANSIBLE_ARG=""
+
+echo -e "Project name: \033[32m${PROJECT_NAME}\033[0m\tProject env: \033[32m${PROJECT_ENV}\033[0m"
+echo -e "Binary download mode: \t\t\033[32m${DOWNLOAD_WAY}\033[0m"
+echo -e "Kubernetes runtime mode: \t\033[32m${KUBE_RUNTIME}\033[0m"
+echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
+
+if [ ${PKI_URL} ]; then
+  echo -e "PKI Url: \t\t\t\033[32m${PKI_URL}\033[0m"
+  ANSIBLE_ARG="${ANSIBLE_ARG} -e PKI_URL=${PKI_URL}"
+fi
+
+if [ ${DOWNLOAD_WAY} == "nexus" ]; then
+  if [[ ${NEXUS_USERNAME} == "" || ${NEXUS_PASSWORD} == "" || ${NEXUS_DOMAIN_NAME} == "" || ${NEXUS_REPOSITORY} == "" ]]; then
+    echo -e "\033[31mNexus parameter error, please set NEXUS_HTTP_USERNAME, NEXUS_HTTP_PASSWORD, NEXUS_DOMAIN_NAME, NEXUS_REPOSITORY! \033[0m "
+    exit 1
+  else
+    ANSIBLE_ARG="${ANSIBLE_ARG} -e NEXUS_DOMAIN_NAME=${NEXUS_DOMAIN_NAME} -e NEXUS_REPOSITORY=${NEXUS_REPOSITORY} -e NEXUS_USERNAME=${NEXUS_USERNAME} -e NEXUS_PASSWORD=${NEXUS_PASSWORD}"
+
+    echo -e "Nexus Url: \t\t\t\033[32m${NEXUS_DOMAIN_NAME}\033[0m"
+    echo -e "Nexus repository: \t\t\033[32m${NEXUS_REPOSITORY}\033[0m"
+    echo -e "Nexus username: \t\t\033[32m${NEXUS_USERNAME}\033[0m"
+    echo -e "Nexus password: \t\t\033[32m******\033[0m"
   fi
+fi
 
-  # Etcd
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/etcd-io/etcd/releases/latest | jq -r .tag_name)
-  grep -E "ETCD_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/ETCD_VERSION:=.*/ETCD_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update etcd version to ${tag_name};"
-  fi
+sleep 3
 
-  # CNI
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/containernetworking/plugins/releases/latest | jq -r .tag_name)
-  grep -E "CNI_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/CNI_VERSION:=.*/CNI_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update cni version to ${tag_name};"
-  fi
-
-  # Docker
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/moby/moby/releases/latest | jq -r .tag_name)
-  grep -E "DOCKER_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/DOCKER_VERSION:=.*/DOCKER_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update docker version to ${tag_name};"
-  fi
-
-  # containerd
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/containerd/containerd/releases/latest | jq -r .tag_name)
-  grep -E "CONTAINERD_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/CONTAINERD_VERSION:=.*/CONTAINERD_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update containerd version to ${tag_name};"
-  fi
-
-  # crictl
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | jq -r .tag_name)
-  grep -E "CRICTL_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/CRICTL_VERSION:=.*/CRICTL_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update crictl version to ${tag_name};"
-  fi
-
-  # runc
-  export tag_name=$(curl -s -k -f --connect-timeout 20 --retry 5 --location --insecure https://api.github.com/repos/opencontainers/runc/releases/latest | jq -r .tag_name)
-  grep -E "RUNC_VERSION:=${tag_name:1}" ./Makefile
-  if [ $? -ne 0 ]; then
-    sed -i "s/RUNC_VERSION:=.*/RUNC_VERSION:=${tag_name:1}/g" ./Makefile
-    COMMIT_MSG="${COMMIT_MSG} update runc version to ${tag_name};"
-  fi
-
-  echo ${COMMIT_MSG}
-
-  if [ -n "${COMMIT_MSG}" ]; then
-    git config --local user.email "action@github.com"
-    git config --local user.name "GitHub Action"
-    git add ./Makefile
-    git commit -am "${COMMIT_MSG}"
-    git push
-  fi
-}
-
-$@
+case $1 in
+"deploy")
+  ansible-playbook -i ./inventory/hosts ./deploy.yml \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
+    -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e KUBE_ACTION="deploy" ${ANSIBLE_ARG}
+  ;;
+"scale")
+  read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
+  for host in ${SCALE_HOST_LIST_VER}; do
+    sed -i "/\[worker\]/a ${host}" ./inventory/hosts
+  done
+  ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
+    -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e KUBE_ACTION="scale" ${ANSIBLE_ARG}
+  ;;
+"upgrade")
+  ansible-playbook -i ./inventory/hosts ./upgrade.yml \
+    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
+    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
+    -e KUBE_VERSION=${KUBE_VERSION} \
+    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
+    -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e KUBE_ACTION="upgrade" ${ANSIBLE_ARG}
+  ;;
+*) ;;
+esac

@@ -18,7 +18,6 @@ def component_version(value):
             },
             "plugin": {
                 "calico": "3.12.3",
-                "cilium": "1.3.0",
                 "flannel": "0.11.0",
                 "coredns": "1.6.7",
                 "metrics": "0.5.2"
@@ -32,7 +31,6 @@ def component_version(value):
             },
             "plugin": {
                 "calico": "3.15.5",
-                "cilium": "1.5.5",
                 "flannel": "0.11.0",
                 "coredns": "1.6.7",
                 "metrics": "0.5.2"
@@ -53,7 +51,7 @@ def component_version(value):
             }
         },
         "1.17": {
-            "etcd": "v3.3.12",
+            "etcd": "3.3.12",
             "cni": "0.8.6",
             "runtime": {
                 "docker": "19.03.9"
@@ -141,6 +139,20 @@ def component_version(value):
             "cni": "1.1.1",
             "runtime": {
                 "docker": "20.10.9"
+            },
+            "plugin": {
+                "calico": "3.23.2",
+                "cilium": "1.11.3",
+                "flannel": "0.15.1",
+                "coredns": "1.8.6",
+                "metrics": "0.6.1"
+            }
+        },
+        "1.24": {
+            "etcd": "3.5.3",
+            "cni": "1.1.1",
+            "runtime": {
+                "containerd": "20.10.9"
             },
             "plugin": {
                 "calico": "3.23.2",

@@ -28,13 +28,17 @@ runtime:
 deploy: 
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
 	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
-	@ansible-playbook -i ./inventory/hosts ./deploy.yml \
-    -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
-    -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
-    -e KUBE_VERSION=${KUBE_VERSION} \
-    -e KUBE_RUNTIME=${KUBE_RUNTIME} \
-    -e KUBE_NETWORK=${KUBE_NETWORK} \
-    -e KUBE_ACTION="deploy"
+	@PROJECT_NAME=$(PROJECT_NAME) \
+		PROJECT_ENV=$(PROJECT_ENV) \
+		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
+		KUBE_VERSION=$(KUBE_VERSION) \
+		KUBE_RUNTIME=$(KUBE_RUNTIME) \
+		KUBE_NETWORK=$(KUBE_NETWORK) \
+		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
+		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
+		NEXUS_USERNAME=$(NEXUS_USERNAME) \
+		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
+		PKI_URL=$(PKI_URL) ./scripts/action.sh deploy
 	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
@@ -125,7 +129,7 @@ local: clean
 	@[ -f ./inventory/hosts ] || cp ./inventory/template/single-master.template ./inventory/hosts
 	@vagrant up
 	@vagrant ssh master -c 'cd /vagrant/ && sudo make runtime'
-	# @vagrant ssh master -c 'cd /vagrant/ && sudo make deploy RUNTIME=docker KUBE_VERSION=1.23.8 ETCD_VERSION=3.5.4'
+	@vagrant ssh master -c 'cd /vagrant/ && sudo make deploy KUBE_RUNTIME=docker KUBE_NETWORK=canal'
 	# @vagrant ssh master
 
 clean:

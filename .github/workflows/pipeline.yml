@@ -22,4 +22,4 @@ jobs:
       - name: auto update version
         run: |
           sudo apt-get install jq -y
-          ./scripts/action.sh check_new_version
+          ./scripts/pipline.sh check_new_version

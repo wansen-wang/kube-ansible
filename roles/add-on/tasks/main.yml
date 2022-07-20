@@ -8,13 +8,13 @@
 
 - name: Distribution cni to the cluster
   ansible.builtin.template:
-    src: "calico.yaml"
-    dest: "/etc/kubernetes/apps/calico.yaml"
+    src: "{{ KUBE_NETWORK | default('calico')}}.yaml"
+    dest: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('calico')}}.yaml"
 
 - name: Apply cni to the cluster
   kubernetes.core.k8s:
     state: present
-    src: "/etc/kubernetes/apps/calico.yaml"
+    src: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('calico')}}.yaml"
   run_once: true
 
 - name: Distribution manifest to the cluster
@@ -29,6 +29,8 @@
   kubernetes.core.k8s:
     state: present
     src: "/etc/kubernetes/apps/{{ item }}"
+    apply: true
+    force: true
   run_once: true
   with_items:
     - "metrics.yaml"
