@@ -43,7 +43,7 @@ ExecStart=/usr/local/bin/etcd \
   --peer-trusted-ca-file=/etc/kubernetes/pki/etcd/ca.crt \
   --peer-cert-file=/etc/kubernetes/pki/etcd/peer.crt \
   --peer-key-file=/etc/kubernetes/pki/etcd/peer.key \
-{% if KUBE_VERSION | component_version | community.general.json_query('etcd') | version_compare('3.2.26', '>') %}
+{% if KUBE_VERSION | component_version | community.general.json_query('etcd') is version("3.2.26",">") %}
   --listen-metrics-urls=http://127.0.0.1:2381 \
 {% endif %}
 {% if etcd.extraArgs is defined %}

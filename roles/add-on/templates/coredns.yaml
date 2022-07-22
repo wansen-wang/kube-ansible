@@ -59,7 +59,8 @@ data:
         health {
           lameduck 15s
         }
-        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") | version_compare('1.6.5', '>') %}
+        {{ KUBE_VERSION is  }}
+        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") is version("1.6.5",">") %}
         ready
         {% endif %}
         kubernetes cluster.local in-addr.arpa ip6.arpa {
@@ -68,7 +69,7 @@ data:
         }
         prometheus :9153
         forward . /etc/resolv.conf {
-        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") | version_compare('1.6.7', '>') %}
+        {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") is version("1.6.7",">") %}
           max_concurrent 1000
         {% endif %}
           prefer_udp

@@ -32,7 +32,7 @@ ExecStart=/usr/local/bin/kubelet \
   {{ extraArg }} \
 {% endfor %}
 {% endif %}
-{% if KUBE_VERSION | version_compare('1.19', '>') %}
+{% if KUBE_VERSION is version("1.19",">") %}
   --logging-format=json \
 {% endif %}
   --v={{ kubelet.log.level | default(1) }}

@@ -7,7 +7,7 @@ plugins:
 {% endfor %}
 
 {% if apiServer.admissionControlConfigFile is defined %}
-{% if KUBE_VERSION | version_compare('1.15', '>=') %}
+{% if KUBE_VERSION is version("1.15",">=") %}
   --admission-control-config-file=/etc/kubernetes/admission-control-config.yaml \
 {% endif %}
 {% endif %}

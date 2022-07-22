@@ -1,4 +1,4 @@
-{% if KUBE_VERSION | version_compare('1.24', '>=') %}
+{% if KUBE_VERSION is version("1.24",">=") %}
 apiVersion: audit.k8s.io/v1
 {% else%}
 apiVersion: audit.k8s.io/v1beta1
