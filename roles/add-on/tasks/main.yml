@@ -10,14 +10,14 @@
   ansible.builtin.template:
     src: "{{ KUBE_NETWORK | default('calico')}}.yaml"
     dest: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('calico')}}.yaml"
-  when: KUBE_NETWORK != none
+  when: KUBE_NETWORK != 'none'
 
 - name: Apply cni to the cluster
   kubernetes.core.k8s:
     state: present
     src: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('calico')}}.yaml"
   run_once: true
-  when: KUBE_NETWORK != none
+  when: KUBE_NETWORK != 'none'
 
 - name: Distribution manifest to the cluster
   ansible.builtin.template:
