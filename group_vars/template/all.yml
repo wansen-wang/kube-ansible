@@ -5,7 +5,7 @@ ansible_ssh_user: "root"
 # ansible_ssh_pass: "root"
 # ansible_sudo_user: "root"
 # ansible_sudo_pass: "root"
-ansible_become: "{% if ansible_ssh_user != 'root' %}yes{% else %}no{% endif %}"
+ansible_become: "yes"
 ansible_python_interpreter: "/usr/bin/python3"
 
 # Porxy Setting
