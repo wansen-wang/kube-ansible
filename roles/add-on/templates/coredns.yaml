@@ -59,7 +59,6 @@ data:
         health {
           lameduck 15s
         }
-        {{ KUBE_VERSION is  }}
         {% if KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") is version("1.6.5",">") %}
         ready
         {% endif %}
