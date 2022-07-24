@@ -8,7 +8,7 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # Binary version
-KUBE_VERSION:=1.14.3
+KUBE_VERSION:=1.24.3
 KUBE_RUNTIME:=docker
 KUBE_NETWORK:=calico
 
