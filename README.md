@@ -7,8 +7,6 @@ Read the documentation to see how the project is used
 * [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
 * [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
 
-then return here.
-
 ## Cloud Support
 
 * [x] Raspberry Pi
@@ -112,14 +110,9 @@ about Makefile parameter
 | PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
 | DOWNLOAD_WAY | Binary download mode  | official  | official or nexus |
-| RUNTIME | container runtime  | docker  | docker or containerd|
-| CONTAINERD_VERSION | containerd binary version | latest  | N/A|
-| CRICTL_VERSION | crictl binary version | latest  | N/A|
-| RUNC_VERSION | runc binary version | latest  | N/A|
 | KUBE_VERSION | Kubernetes binary version  | latest | N/A |
-| DOCKER_VERSION | Docker binary version  | latest | N/A |
-| ETCD_VERSION | Etcd binary version  | latest  | N/A |
-| CNI_VERSION | CNI binary version  | latest  | N/A |
+| KUBE_RUNTIME | Kubernetes binary version  | latest | N/A |
+| KUBE_NETWORK | Kubernetes binary version  | latest | N/A |
 | NEXUS_USERNAME | Nexus username  | N/A  | N/A |
 | NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
@@ -129,44 +122,39 @@ about Makefile parameter
 
 ##### Download the default version using official
 
-###### version < 1.24
 ```
 # 1.14
-make deploy RUNTIME=docker KUBE_VERSION=1.14.10 ETCD_VERSION=3.3.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
+make deploy KUBE_VERSION=1.14.10 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.15
-make deploy RUNTIME=docker KUBE_VERSION=1.15.12 ETCD_VERSION=3.3.10 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5 
+make deploy KUBE_VERSION=1.15.12 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.16
-make deploy RUNTIME=docker KUBE_VERSION=1.16.15 ETCD_VERSION=3.3.15 DOCKER_VERSION=18.09.9 CNI_VERSION=0.7.5
+make deploy KUBE_VERSION=1.16.15 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.17
-make deploy RUNTIME=docker KUBE_VERSION=1.17.17 ETCD_VERSION=3.4.3 DOCKER_VERSION=19.03.9 CNI_VERSION=0.7.5
+make deploy KUBE_VERSION=1.17.17 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.18
-make deploy RUNTIME=docker KUBE_VERSION=1.18.20 ETCD_VERSION=3.4.3 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.5
+make deploy KUBE_VERSION=1.18.20 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.19
-make deploy RUNTIME=docker KUBE_VERSION=1.19.16 ETCD_VERSION=3.4.9 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.6
+make deploy KUBE_VERSION=1.19.16 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.20
-make deploy RUNTIME=docker KUBE_VERSION=1.20.6 ETCD_VERSION=3.4.13 DOCKER_VERSION=19.03.9 CNI_VERSION=0.8.7
+make deploy KUBE_VERSION=1.20.6 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.21
-make deploy RUNTIME=docker KUBE_VERSION=1.21.10 ETCD_VERSION=3.4.13 DOCKER_VERSION=20.10.16 CNI_VERSION=0.8.7
+make deploy KUBE_VERSION=1.21.10 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.22
-make deploy RUNTIME=docker KUBE_VERSION=1.22.9 ETCD_VERSION=3.5.0 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
+make deploy KUBE_VERSION=1.22.9 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.23
-make deploy RUNTIME=docker KUBE_VERSION=1.23.8 ETCD_VERSION=3.5.0 DOCKER_VERSION=20.10.16 CNI_VERSION=0.9.1
-```
+make deploy KUBE_VERSION=1.23.8 KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
-###### version >= 1.24
-
-```
 # 1.24
-make deploy RUNTIME=containerd ETCD_VERSION=3.5.3 KUBE_VERSION=1.24.0 CONTAINERD_VERSION=1.4.12 RUNC_VERSION=1.1.1 CNI_VERSION=0.9.1
+make deploy KUBE_VERSION=1.24.0 KUBE_RUNTIME=containerd KUBE_NETWORK=calico
 ```
 
 ##### Download the default version using Nexus
