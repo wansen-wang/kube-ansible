@@ -1,17 +1,18 @@
 SHELL := /bin/bash
 
+# Cluster information use by pki project
 PROJECT_NAME:=kube-ansible
 PROJECT_ENV:=dev
 
-# binary file download way, official or nexus
+# Binary file download way, official or nexus
 DOWNLOAD_WAY:=official
 
-# binary version
+# Binary version
 KUBE_VERSION:=1.14.3
 KUBE_RUNTIME:=docker
 KUBE_NETWORK:=calico
 
-# nexus information
+# Nexus information
 NEXUS_DOMAIN_NAME:=
 NEXUS_REPOSITORY:=kube-ansible
 NEXUS_USERNAME:=
@@ -21,6 +22,7 @@ NEXUS_PASSWORD:=
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
 PKI_URL:=
 
+# Install ansible on depoy server
 runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
 	@scripts/runtime.sh
