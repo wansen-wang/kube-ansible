@@ -1,6 +1,8 @@
 # About group vars
 
-## `template/all.yml` file
+Executing the `make` command will copy the files in the template folder to create all.yml and kubernetes.yml
+
+## about `all.yml` file
 
 include configuration
 
@@ -12,7 +14,7 @@ include configuration
 * limits
 
 
-## `template/kubernetes.yml` file
+## about `kubernetes.yml` file
 
 include configuration
 
@@ -28,4 +30,3 @@ include configuration
 * scheduler
 * kubelet
 * proxy
-* apps
