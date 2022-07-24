@@ -11,7 +11,7 @@ from ansible.utils.version import SemanticVersion
 def component_version(value):
     version_map = {
         "1.14": {
-            "etcd": "3.2.26",
+            "etcd": "3.3.10",
             "cni": "0.8.1",
             "runtime": {
                 "docker": "19.03.9"
@@ -37,7 +37,7 @@ def component_version(value):
             }
         },
         "1.16": {
-            "etcd": "3.3.12",
+            "etcd": "3.3.15",
             "cni": "0.8.6",
             "runtime": {
                 "docker": "19.03.9"
@@ -51,7 +51,7 @@ def component_version(value):
             }
         },
         "1.17": {
-            "etcd": "3.3.12",
+            "etcd": "3.4.3",
             "cni": "0.8.6",
             "runtime": {
                 "docker": "19.03.9"
@@ -79,7 +79,7 @@ def component_version(value):
             }
         },
         "1.19": {
-            "etcd": "3.4.13",
+            "etcd": "3.4.9",
             "cni": "0.9.0",
             "runtime": {
                 "docker": "19.03.9"
@@ -135,7 +135,7 @@ def component_version(value):
             }
         },
         "1.23": {
-            "etcd": "3.5.3",
+            "etcd": "3.5.0",
             "cni": "1.1.1",
             "runtime": {
                 "docker": "20.10.9"
