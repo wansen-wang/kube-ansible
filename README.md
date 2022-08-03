@@ -111,8 +111,8 @@ about Makefile parameter
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
 | DOWNLOAD_WAY | Binary download mode  | official  | official or nexus |
 | KUBE_VERSION | Kubernetes binary version  | latest | N/A |
-| KUBE_RUNTIME | Kubernetes binary version  | latest | N/A |
-| KUBE_NETWORK | Kubernetes binary version  | latest | N/A |
+| KUBE_RUNTIME | Kubernetes container runtime  | docker | docker or containerd |
+| KUBE_NETWORK | Kubernetes network plugin  | calico | calico, canal, flannel |
 | NEXUS_USERNAME | Nexus username  | N/A  | N/A |
 | NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
