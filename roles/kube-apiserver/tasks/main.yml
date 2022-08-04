@@ -1,6 +1,6 @@
 ---
 - name: Set OS dependent variables
-  include_vars: "{{ DOWNLOAD_WAY }}.yml"
+  include_vars: "{{ DOWNLOAD_WAY | default('official') }}.yml"
 
 - name: Download package
   get_url:
