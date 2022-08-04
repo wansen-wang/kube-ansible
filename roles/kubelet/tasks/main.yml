@@ -136,6 +136,9 @@
     dest: /etc/systemd/system/kubelet.service
   register: kubelet_systemd_cfg
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: kubelet
@@ -143,7 +146,13 @@
     enabled: yes
     daemon_reload: yes
   register: kubelet_systemd
-  when: kubelet_pkg.changed or kubelet_tls_key.changed or kubelet_tls_crt.changed or kubelet_service_cfg.changed or kubelet_kubeconfig_cfg.changed or kubelet_systemd_cfg.changed
+  when: kubelet_pkg.changed or 
+        kubelet_tls_key.changed or 
+        kubelet_tls_crt.changed or 
+        kubelet_service_cfg.changed or 
+        kubelet_kubeconfig_cfg.changed or 
+        kubelet_systemd_cfg.changed or
+        ansible_facts.services['kubelet.service']['state'] != 'running'
 
 - name: Waiting for the service
   wait_for:

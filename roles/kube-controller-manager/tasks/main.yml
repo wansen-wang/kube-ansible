@@ -161,6 +161,9 @@
     dest: /etc/systemd/system/kube-controller-manager.service
   register: controller_systemd_cfg
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: kube-controller-manager
@@ -168,7 +171,13 @@
     enabled: yes
     daemon_reload: yes
   register: controller_systemd
-  when: controller_pkg.changed or controller_tls_key.changed or controller_tls_crt.changed or controller_kubeconfig_cfg.changed or controller_systemd_cfg.changed
+  when: controller_pkg.changed or 
+        controller_tls_key.changed or 
+        controller_tls_crt.changed or 
+        controller_kubeconfig_cfg.changed or 
+        controller_systemd_cfg.changed or
+        ansible_facts.services['kube-controller-manager.service']['state'] != 'running'
+
 
 - name: Waiting for the service
   wait_for:

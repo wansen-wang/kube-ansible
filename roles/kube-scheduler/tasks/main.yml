@@ -117,6 +117,9 @@
     dest: /etc/systemd/system/kube-scheduler.service
   register: scheduler_systemd_cfg
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: kube-scheduler
@@ -124,7 +127,12 @@
     enabled: yes
     daemon_reload: yes
   register: scheduler_systemd
-  when: scheduler_pkg.changed or scheduler_tls_key.changed or scheduler_tls_crt.changed or scheduler_kubeconfig_cfg.changed or scheduler_systemd_cfg.changed
+  when: scheduler_pkg.changed or 
+        scheduler_tls_key.changed or 
+        scheduler_tls_crt.changed or 
+        scheduler_kubeconfig_cfg.changed or 
+        scheduler_systemd_cfg.changed or
+        ansible_facts.services['kube-scheduler.service']['state'] != 'running'
 
 - name: Waiting for the service
   wait_for:

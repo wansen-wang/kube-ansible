@@ -285,6 +285,9 @@
     ETCDCTL_API: 3
   ignore_errors: True
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: etcd
@@ -292,7 +295,13 @@
     enabled: yes
     daemon_reload: yes
   register: etcd_systemd
-  when: etcd_pkg.changed or etcd_tls_server_key.changed or etcd_tls_server_crt.changed or etcd_tls_peer_key.changed or etcd_tls_peer_crt.changed or etcd_cfg.changed
+  when: etcd_pkg.changed or 
+        etcd_tls_server_key.changed or 
+        etcd_tls_server_crt.changed or 
+        etcd_tls_peer_key.changed or 
+        etcd_tls_peer_crt.changed or 
+        etcd_cfg.changed or
+        ansible_facts.services['etcd.service']['state'] != 'running'
 
 - name: Wait for etcd
   wait_for:

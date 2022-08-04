@@ -17,12 +17,17 @@
         - { src: "haproxy.cfg.j2", dest: "/etc/haproxy/haproxy.cfg" }
       register: haproxy_cfg
 
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
     - name: Start the service
       ansible.builtin.systemd:
         name: haproxy
         enabled: yes
         state: restarted
-      when: haproxy_pkg.changed or haproxy_cfg.changed
+      when: haproxy_pkg.changed or 
+            haproxy_cfg.changed or
+            ansible_facts.services['haproxy.service']['state'] != 'running'
 
     - name: Wait for haproxy
       wait_for:

@@ -24,10 +24,15 @@
           }
       register: keepalived_cfg
 
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
     - name: Start the service
       ansible.builtin.systemd:
         name: keepalived
         enabled: yes
         state: restarted
-      when: keepalived_pkg.changed or keepalived_cfg.changed
+      when: keepalived_pkg.changed or 
+            keepalived_cfg.changed or
+            ansible_facts.services['keepalived.service']['state'] != 'running'
   when: ha is defined and ha.type == "slb"

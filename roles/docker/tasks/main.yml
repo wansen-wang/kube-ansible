@@ -99,6 +99,9 @@
   register: docker_systemd_d
   when: proxy_env is defined
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: docker
@@ -106,7 +109,11 @@
     enabled: yes
     daemon_reload: yes
     masked: yes
-  when: docker_pkg.changed or docker_cfg.changed or docker_systemd.changed or docker_systemd_d.changed
+  when: docker_pkg.changed or 
+        docker_cfg.changed or 
+        docker_systemd.changed or 
+        docker_systemd_d.changed or
+        ansible_facts.services['docker.service']['state'] != 'running'
 
 - name: Install docker completion
   get_url:

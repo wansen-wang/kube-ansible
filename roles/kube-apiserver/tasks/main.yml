@@ -318,6 +318,9 @@
     dest: /etc/systemd/system/kube-apiserver.service
   register: apiserver_systemd_cfg
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Start the service
   ansible.builtin.systemd:
     name: kube-apiserver
@@ -325,7 +328,19 @@
     enabled: yes
     daemon_reload: yes
   register: apiserver_systemd
-  when: apiserver_pkg.changed or apiserver_tls_apiserver_key.changed or apiserver_tls_apiserver_crt.changed or apiserver_tls_frontproxyclient_key.changed or apiserver_tls_frontproxyclient_crt.changed or apiserver_tls_apiserverkubeletclient_key.changed or apiserver_tls_apiserverkubeletclient_crt.changed or apiserver_tls_apiserveretcdclient_key.changed or apiserver_tls_apiserveretcdclient_crt.changed or apiserver_encryption_config_cfg.changed or apiserver_audit_policy_cfg.changed or apiserver_systemd_cfg.changed 
+  when: apiserver_pkg.changed or 
+        apiserver_tls_apiserver_key.changed or 
+        apiserver_tls_apiserver_crt.changed or 
+        apiserver_tls_frontproxyclient_key.changed or 
+        apiserver_tls_frontproxyclient_crt.changed or 
+        apiserver_tls_apiserverkubeletclient_key.changed or 
+        apiserver_tls_apiserverkubeletclient_crt.changed or 
+        apiserver_tls_apiserveretcdclient_key.changed or 
+        apiserver_tls_apiserveretcdclient_crt.changed or 
+        apiserver_encryption_config_cfg.changed or 
+        apiserver_audit_policy_cfg.changed or 
+        apiserver_systemd_cfg.changed or
+        ansible_facts.services['kube-apiserver.service']['state'] != 'running'
 
 - name: Waiting for the service
   wait_for:
