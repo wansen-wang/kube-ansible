@@ -53,7 +53,7 @@
     - "{{ docker.datadir | default('/var/lib/docker') }}"
 
 - name: Install nvidia-container-runtime
-  include_tasks: "{{ ansible_os_family }}.yml"
+  include_tasks: "{{ ansible_distribution }}.yml"
   when: gpu | default(false)
 
 - name: Configuration daemon
