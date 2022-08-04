@@ -3,6 +3,9 @@
 - name: Set OS dependent variables
   include_vars: "{{ ansible_distribution }}.yml"
 
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
 - name: Set system time zone
   community.general.timezone:
     name: "{{ timezone }}"
