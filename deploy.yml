@@ -21,6 +21,7 @@
 - name: Deployment etcd cluster
   hosts: "{% if groups['etcd'] is not defined %}master{% else %}etcd{% endif %}"
   become: true
+  gather_facts: true
   vars:
     scale: false
   roles:
@@ -38,6 +39,7 @@
 - name: Deployment kubernetes master
   hosts: master
   become: true
+  gather_facts: true
   roles:
     - haproxy
     - keepalived
@@ -55,6 +57,7 @@
 - name: Deployment kubernetes worker
   hosts: worker
   become: true
+  gather_facts: true
   roles:
     - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
