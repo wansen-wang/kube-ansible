@@ -1,3 +1,5 @@
+svc_name: firewalld
+
 package:
   - conntrack
   - net-tools
@@ -15,10 +17,7 @@ package:
   - bash-completion
   - nfs-common
   - dnsutils
-  - python-netaddr
-  - python-setuptools
   - python3-pip
-  - python3-netaddr
   - python3-setuptools
   - jq
   - bcron

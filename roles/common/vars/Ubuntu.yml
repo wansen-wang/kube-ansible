@@ -1,4 +1,4 @@
-svc_name: firewalld
+svc_name: ufw
 
 package:
   - conntrack
@@ -15,10 +15,9 @@ package:
   - ipset
   - socat
   - bash-completion
-  - nfs-utils
-  - bind-utils
+  - nfs-common
+  - dnsutils
   - python3-pip
-  - python3-netaddr
   - python3-setuptools
   - jq
-  - cronie
+  - bcron
