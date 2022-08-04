@@ -18,7 +18,7 @@ def component_version(value):
             },
             "plugin": {
                 "calico": "3.12.3",
-                "flannel": "0.11.0",
+                "flannel": "0.10.0",
                 "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
@@ -31,7 +31,7 @@ def component_version(value):
             },
             "plugin": {
                 "calico": "3.15.5",
-                "flannel": "0.11.0",
+                "flannel": "0.10.0",
                 "coredns": "1.6.7",
                 "metrics": "0.5.2"
             }
