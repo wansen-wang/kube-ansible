@@ -6,10 +6,9 @@
 
 - name: Install some applications
   apt:
-    name: "{{ item }}"
+    name: "{{ package }}"
     state: present
     update_cache: yes
-  with_items: "{{ package }}"    
 
 - name: Add graphics drivers repository from PPA and install its signing key
   ansible.builtin.apt_repository:

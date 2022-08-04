@@ -12,6 +12,5 @@
 
 - name: Install some applications
   ansible.builtin.package:
-    name: "{{ item }}"
+    name: "{{ package }}"
     state: present
-  with_items: "{{ package }}"
