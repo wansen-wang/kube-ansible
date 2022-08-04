@@ -29,7 +29,6 @@ All node please install python3.
 * [x] Ubuntu 16.*
 * [x] Ubuntu 18.*
 * [x] Ubuntu 20.*
-* [x] Debian 10.*
 
 ## Version of the relationship
 
