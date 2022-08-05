@@ -2,6 +2,7 @@
 - name: Base environment configuration
   hosts: all
   become: true
+  any_errors_fatal: true
   roles:
     - common
     - motd
@@ -13,6 +14,7 @@
 - name: Certificate of the cluster
   hosts: all
   become: true
+  any_errors_fatal: true
   roles:
     - ca
   tags:
@@ -22,6 +24,7 @@
   hosts: "{% if groups['etcd'] is not defined %}master{% else %}etcd{% endif %}"
   become: true
   gather_facts: true
+  any_errors_fatal: true
   vars:
     scale: false
   roles:
@@ -32,6 +35,7 @@
 - name: Initialization kubernetes dependence
   hosts: kubernetes
   become: true
+  any_errors_fatal: true
   roles:
     - cni
     - ipvsadm
@@ -40,6 +44,7 @@
   hosts: master
   become: true
   gather_facts: true
+  any_errors_fatal: true
   roles:
     - haproxy
     - keepalived
@@ -58,6 +63,7 @@
   hosts: worker
   become: true
   gather_facts: true
+  any_errors_fatal: true
   roles:
     - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
@@ -70,6 +76,7 @@
 - name: Deployment kubernetes add-on
   hosts: master
   become: true
+  any_errors_fatal: true
   roles:
     - add-on
   tags:
