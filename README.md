@@ -68,7 +68,6 @@ apt-get install git make -y
 
 # centos
 yum install git make vim -y
-yum install asciinema -y
 
 # clone code
 git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
