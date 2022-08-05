@@ -158,5 +158,3 @@ proxy:
     - "--mode=ipvs"
   log:
     level: 1
-
-# 1.14, 1.15 https://docs.projectcalico.org/archive/v3.23/manifests/calico.yaml

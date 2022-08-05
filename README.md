@@ -274,7 +274,8 @@ if you want to deploy extended application, please reference [here](https://gith
 * [CoreDNS k8s version](https://github.com/coredns/deployment/blob/master/kubernetes/CoreDNS-k8s_version.md)
 
 
-<!-- network:
+<!-- 
+network:
   k8s:
     serviceSubnet: 10.96.0.0/12
     podSubnet: 10.244.0.0/16
@@ -532,23 +533,42 @@ curl -vsk --cacert /etc/pki/trust/anchors/DevOps_CA.crt \
 --key /etc/pki/kube-scheduler.key \
 https://127.0.0.1:6443/apis/coordination.k8s.io/v1/namespaces/kube-system/leases/kube-scheduler?timeout=10s
 
-# CentOS 8
+# Ubuntu 20.04
+"ansible_distribution": "Ubuntu",
+"ansible_distribution_file_parsed": true,
+"ansible_distribution_file_path": "/etc/os-release",
+"ansible_distribution_file_variety": "Debian",
+"ansible_distribution_major_version": "20",
+"ansible_distribution_release": "focal",
+"ansible_distribution_version": "20.04",
+
+# CentOS 7.9
 "ansible_distribution": "CentOS",
 "ansible_distribution_file_parsed": true,
 "ansible_distribution_file_path": "/etc/redhat-release",
 "ansible_distribution_file_variety": "RedHat",
-"ansible_distribution_major_version": "8",
-"ansible_distribution_release": "NA",
-"ansible_distribution_version": "8.5",
+"ansible_distribution_major_version": "7",
+"ansible_distribution_release": "Core",
+"ansible_distribution_version": "7.9",
 
-# Debian 1.43
+# CentOS 8
+"ansible_distribution": "CentOS",
+"ansible_distribution_file_parsed": true,
+"ansible_distribution_file_path": "/etc/centos-release",
+"ansible_distribution_file_variety": "CentOS",
+"ansible_distribution_major_version": "8",
+"ansible_distribution_release": "Stream",
+"ansible_distribution_version": "8",
+
+# Debian 11
 "ansible_distribution": "Debian",
 "ansible_distribution_file_parsed": true,
 "ansible_distribution_file_path": "/etc/os-release",
 "ansible_distribution_file_variety": "Debian",
-"ansible_distribution_major_version": "1",
-"ansible_distribution_release": "buster",
-"ansible_distribution_version": "1.43",
+"ansible_distribution_major_version": "11",
+"ansible_distribution_release": "bullseye",
+"ansible_distribution_version": "11",
+
 
 
 # master
