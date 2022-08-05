@@ -13,6 +13,7 @@ CPU:           {{ ansible_processor_vcpus }} x {{ ansible_processor[-1] }}
 Memory:        {{ ansible_memtotal_mb }} MB
 
 Kubernetes version:         {{ KUBE_VERSION }}
+Kubernetes network:         {{ KUBE_NETWORK }}
 Etcd version:               {{ KUBE_VERSION | component_version | community.general.json_query("etcd") }}
 {% if KUBE_RUNTIME == 'docker' %}
 Docker version:             {{ KUBE_VERSION | component_version | community.general.json_query("runtime.docker") }}
@@ -24,7 +25,6 @@ CNI version:                {{ KUBE_VERSION | component_version | community.gene
 The Roles of this node are:
 {% if inventory_hostname in groups['master'] %}
   - kube-master
-  - kube-worker
 {% else %}
   - kube-worker
 {% endif %}
