@@ -31,7 +31,7 @@ if [ ${DOWNLOAD_WAY} == "nexus" ]; then
     exit 1
   else
     ANSIBLE_ARG="${ANSIBLE_ARG} -e NEXUS_DOMAIN_NAME=${NEXUS_DOMAIN_NAME} -e NEXUS_REPOSITORY=${NEXUS_REPOSITORY} -e NEXUS_USERNAME=${NEXUS_USERNAME} -e NEXUS_PASSWORD=${NEXUS_PASSWORD}"
-
+    echo '-------------------------------------------------------------------------------'
     echo -e "Nexus Url: \t\t\t\033[32m${NEXUS_DOMAIN_NAME}\033[0m"
     echo -e "Nexus repository: \t\t\033[32m${NEXUS_REPOSITORY}\033[0m"
     echo -e "Nexus username: \t\t\033[32m${NEXUS_USERNAME}\033[0m"
