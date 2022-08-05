@@ -4,11 +4,11 @@ command -v apt &>/dev/null && export PKG=apt
 case ${PKG} in
 'yum')
     yum install -y epel-release
-    yum install python3 python3-pip sshpass curl rsync wget python3-netaddr -y
+    yum install python3 python3-pip sshpass curl rsync wget -y
     ;;
 'apt')
     apt-get update
-    apt-get install python3 python3-pip python3-netaddr sshpass curl rsync wget -y
+    apt-get install python3 python3-pip sshpass curl rsync wget -y
     ;;
 '*')
     echo "unknow OS version."
