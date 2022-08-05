@@ -163,15 +163,12 @@ make deploy KUBE_VERSION=1.24.0 KUBE_RUNTIME=containerd KUBE_NETWORK=calico
 
 ```
 pip3 install requests
-./scripts/upload-to-nexus.py --url http://nexus.example.com \
---repository kube-ansible --username admin --password admin123 \
---docker 20.10.12 \
---etcd 3.5.2 \
---kubernetes 1.23.4 \
---cni 1.1.0 \
---containerd 1.6.0 \
---runc 1.1.0 \
---crictl 1.23.0
+./scripts/nexus.py --kubernetes 1.14.10 \
+--url http://nexus.example.com \
+--repository kube-ansible \
+--username admin \
+--password admin123 \
+--download
 
 make deploy DOWNLOAD_WAY=nexus \
 NEXUS_DOMAIN_NAME=http://nexus.example.com \

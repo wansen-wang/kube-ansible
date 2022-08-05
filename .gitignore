@@ -1,7 +1,7 @@
 # OSX files
 .DS_Store
 __pycache__
-.tmp
+scripts/src/*
 test.md
 
 scripts/binaries
@@ -19,6 +19,7 @@ group_vars/kubernetes.yml
 .containerd
 .crictl
 .runc
+
 
 
 # terraform
