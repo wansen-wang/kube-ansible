@@ -28,10 +28,7 @@
     - "coredns.yaml"
 
 - name: Apply manifest to the cluster
-  kubernetes.core.k8s:
-    state: present
-    src: "/etc/kubernetes/apps/{{ item }}"
-    apply: true
+  ansible.builtin.command: "kubectl apply -f /etc/kubernetes/apps/{{ item }}"
   run_once: true
   with_items:
     - "metrics.yaml"
