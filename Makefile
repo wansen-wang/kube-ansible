@@ -111,6 +111,9 @@ nexus:
 		--runc=$(RUNC_VERSION) \
 		--crictl=$(CRICTL_VERSION)
 
+check:
+	@cd ./test && ./check-cluster.sh
+
 help:
 	@./scripts/help.sh
 
