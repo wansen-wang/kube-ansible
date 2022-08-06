@@ -32,7 +32,6 @@
     state: present
     src: "/etc/kubernetes/apps/{{ item }}"
     apply: true
-    force: true
   run_once: true
   with_items:
     - "metrics.yaml"
