@@ -23,7 +23,7 @@
 - name: Download Containerd package
   get_url:
     url: "{{ containerd_download_url }}"
-    dest: "/usr/local/src/containerd-{{ CONTAINERD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    dest: "/usr/local/src/containerd-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
     group: root
@@ -38,7 +38,7 @@
 
 - name: Extract Containerd package
   ansible.builtin.unarchive:
-    src: "/usr/local/src/containerd-{{ CONTAINERD_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    src: "/usr/local/src/containerd-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
     owner: root
     group: root
@@ -51,7 +51,7 @@
 - name: Download Crictl package
   get_url:
     url: "{{ crictl_download_url }}"
-    dest: "/usr/local/src/crictl-v{{ CRICTL_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    dest: "/usr/local/src/crictl-v{{ KUBE_VERSION | component_version | community.general.json_query('runtime.crictl') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
     group: root
@@ -66,7 +66,7 @@
 
 - name: Extract Crictl package
   ansible.builtin.unarchive:
-    src: "/usr/local/src/crictl-v{{ CRICTL_VERSION }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    src: "/usr/local/src/crictl-v{{ KUBE_VERSION | component_version | community.general.json_query('runtime.crictl') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
     mode: 0755
     owner: root

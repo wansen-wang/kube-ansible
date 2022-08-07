@@ -152,7 +152,9 @@ def component_version(value):
             "etcd": "3.5.3",
             "cni": "1.1.1",
             "runtime": {
-                "containerd": "20.10.9"
+                "containerd": "1.5.11",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.23.2",
