@@ -5,7 +5,6 @@
   roles:
     - common
     - chrony
-    - kernel
   tags:
     - common
 
@@ -19,10 +18,10 @@
 
 - name: Deployment kubernetes worker
   hosts: worker
-  become: yes
+  become: true
+  gather_facts: true
+  any_errors_fatal: true
   roles:
-    - cni
-    - ipvsadm
     - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kubectl
     - kubelet
