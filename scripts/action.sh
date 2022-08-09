@@ -57,7 +57,7 @@ case $1 in
     -e KUBE_NETWORK=${KUBE_NETWORK} \
     -e KUBE_ACTION="deploy" ${ANSIBLE_ARG}
   end=$(date +%s)
-  echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please check the pod status.\033[0m"
+  echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get po -A' to check the pod status.\033[0m"
   ;;
 "scale")
   read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
