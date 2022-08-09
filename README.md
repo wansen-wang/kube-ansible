@@ -72,7 +72,7 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone -b 1.14 https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
+git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
 cd /usr/local/src/kube-ansible
 ```
 
