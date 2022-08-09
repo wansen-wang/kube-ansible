@@ -96,6 +96,8 @@ make
 for example:
 
 ```
+# cd /usr/local/src/kube-ansible
+# cat inventory/hosts
 [master]
 192.168.56.10
 
@@ -117,6 +119,7 @@ For more instructions reference [inventory/README.md](https://github.com/buxiaom
 	You can run `./scripts/nexus.py` script on internet virtual machine to download pachage and then upload to nexus.
 
 ```
+cd /usr/local/src/kube-ansible
 pip3 install requests
 cd ./scripts
 
@@ -162,6 +165,8 @@ about Makefile parameter
 
 
 ```
+cd /usr/local/src/kube-ansible
+
 # download from official
 make deploy \
 DOWNLOAD_WAY=official \
@@ -183,6 +188,8 @@ NEXUS_PASSWORD=admin
 about pki server, you can reference [here](https://github.com/buxiaomo/pki-server)
 
 ```
+cd /usr/local/src/kube-ansible
+
 make deploy DOWNLOAD_WAY=official \
 PKI_URL=http://pki.example.com/v1/pki/project \
 PROJECT_NAME=kube-ansible \
@@ -195,6 +202,8 @@ KUBE_VERSION=1.14.10 KUBE_NETWORK=calico
 [![asciicast](https://asciinema.org/a/471288.svg)](https://asciinema.org/a/471288)
 
 ```
+cd /usr/local/src/kube-ansible
+
 make scale \
 DOWNLOAD_WAY=official \
 KUBE_VERSION=1.14.10 \
@@ -206,6 +215,8 @@ KUBE_NETWORK=calico
 Download new kubernetes binaries, Reference [here](#download).
 
 ```
+cd /usr/local/src/kube-ansible
+
 make upgrade KUBE_VERSION=1.14.10
 ```
 

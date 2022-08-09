@@ -19,7 +19,9 @@ echo -e "Binary download mode: \t\t\033[32m${DOWNLOAD_WAY}\033[0m"
 echo -e "Kubernetes runtime mode: \t\033[32m${KUBE_RUNTIME}\033[0m"
 echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
 echo -e "Kubernetes network: \t\t\033[32m${KUBE_NETWORK}\033[0m"
-echo -e "Private registry: \t\t\033[32m${REGISTRY_URL}\033[0m"
+if [ ${REGISTRY_URL} ]; then
+  echo -e "Private registry: \t\t\033[32m${REGISTRY_URL}\033[0m"
+fi
 
 if [ ${PKI_URL} ]; then
   echo -e "PKI Url: \t\t\t\033[32m${PKI_URL}\033[0m"
@@ -37,13 +39,15 @@ if [ ${DOWNLOAD_WAY} == "nexus" ]; then
     echo -e "Nexus repository: \t\t\033[32m${NEXUS_REPOSITORY}\033[0m"
     echo -e "Nexus username: \t\t\033[32m${NEXUS_USERNAME}\033[0m"
     echo -e "Nexus password: \t\t\033[32m******\033[0m"
+    echo '-------------------------------------------------------------------------------'
   fi
 fi
-
-sleep 3
-
 case $1 in
 "deploy")
+  if [ ${KUBE_VERSION:0:4} != $(git rev-parse --abbrev-ref HEAD) ];then
+    echo -e "\033[31mThe git branch is incorrect, deployment add-on may be incompatible, please checkout to ${KUBE_VERSION:0:4}\033[0m"
+    exit 1
+  fi
   start=$(date +%s)
   ansible-playbook -i ./inventory/hosts ./deploy.yml \
     -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
