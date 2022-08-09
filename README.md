@@ -50,6 +50,8 @@ All node please install python3.
 
 ## How to use
 
+The playbook depends on python3, all nodes need to install python3.
+
 ### Preparation work
 
 #### Clone code
@@ -70,32 +72,63 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
+git clone -b 1.14 https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
 cd /usr/local/src/kube-ansible
 ```
 
 #### Install ansible
-
-if python3 not install on other node, please run command `ansible-playbook fix-python3.yml` or `curl -s https://bootstrap.pypa.io/pip/get-pip.py | python3`.
 
 ```
 make runtime
 ```
 
 #### Configuration parameters
+
 ```
 cd group_vars
 make
 ```
 
 * [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
-* [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
+
+#### Configuration inventory
+
+for example:
+
+```
+[master]
+192.168.56.10
+
+[worker]
+192.168.56.11
+
+[kubernetes:children]
+master
+worker
+```
+
+For more instructions reference [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
+
 
 #### <span id = "download">Download the way</span>
 
 * nexus
 
-	if you don't have internet, you can run `make nexus NEXUS_DOMAIN_NAME=http://<url> NEXUS_REPOSITORY=<repository name> NEXUS_HTTP_USERNAME=<username> NEXUS_HTTP_PASSWORD=<password>` script on internet virtual machine and upload to nexus.
+	You can run `./scripts/nexus.py` script on internet virtual machine to download pachage and then upload to nexus.
+
+```
+pip3 install requests
+cd ./scripts
+
+# download
+./nexus.py download --kubernetes 1.14.10
+
+# upload
+./nexus.py upload \
+--url http://nexus.example.com \
+--repository kube-ansible \
+--username admin --password admin
+```
 
 * official
 
@@ -113,80 +146,12 @@ about Makefile parameter
 | KUBE_VERSION | Kubernetes binary version  | latest | N/A |
 | KUBE_RUNTIME | Kubernetes container runtime  | docker | docker or containerd |
 | KUBE_NETWORK | Kubernetes network plugin  | calico | calico, canal, flannel |
-| NEXUS_USERNAME | Nexus username  | N/A  | N/A |
-| NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
+| REGISTRY_URL | Private registry url | N/A | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
 | NEXUS_REPOSITORY | Nexus repository name | kube-ansible | N/A |
+| NEXUS_USERNAME | Nexus username  | N/A  | N/A |
+| NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
 
-
-
-##### Download the default version using official
-
-```
-# 1.14
-git checkout 1.14
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.15
-git checkout 1.15
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.16
-git checkout 1.16
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.17
-git checkout 1.17
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.18
-git checkout 1.18
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.19
-git checkout 1.19
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.20
-git checkout 1.20
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.21
-git checkout 1.21
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.22
-git checkout 1.22
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.23
-git checkout 1.23
-make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
-
-# 1.24
-git checkout 1.24
-make deploy KUBE_RUNTIME=containerd KUBE_NETWORK=calico
-```
-
-##### Download the default version using Nexus
-
-[![asciicast](https://asciinema.org/a/470717.svg)](https://asciinema.org/a/470717)
-
-```
-pip3 install requests
-./scripts/nexus.py --kubernetes 1.14.10 \
---url http://nexus.example.com \
---repository kube-ansible \
---username admin \
---password admin123 \
---download
-
-make deploy DOWNLOAD_WAY=nexus \
-NEXUS_DOMAIN_NAME=http://nexus.example.com \
-NEXUS_REPOSITORY=kube-ansible \
-NEXUS_USERNAME=admin \
-NEXUS_PASSWORD=admin123
-```
 
 ### Kubernetes management
 
@@ -197,27 +162,20 @@ NEXUS_PASSWORD=admin123
 
 
 ```
-# default version
-## docker runtime
-make deploy DOWNLOAD_WAY=official RUNTIME=docker
+# download from official
+make deploy \
+DOWNLOAD_WAY=official \
+KUBE_VERSION=1.14.10 \
+KUBE_NETWORK=calico
 
-## containerd runtime
-make deploy DOWNLOAD_WAY=official RUNTIME=containerd
-
-# custom version
-## docker runtime
-make deploy DOWNLOAD_WAY=official \
-RUNTIME=docker \
-KUBE_VERSION=1.14.4 \
-DOCKER_VERSION=19.03.8 \
-ETCD_VERSION=3.4.5
-
-## containerd runtime
-make deploy DOWNLOAD_WAY=official \
-RUNTIME=containerd \
-KUBE_VERSION=1.14.4 \
-DOCKER_VERSION=19.03.8 \
-ETCD_VERSION=3.4.5
+# download from nexus 
+make deploy \
+DOWNLOAD_WAY=nexus \
+KUBE_NETWORK=calico \
+NEXUS_DOMAIN_NAME=http://nexus.example.com \
+NEXUS_REPOSITORY=kube-ansible \
+NEXUS_USERNAME=admin \
+NEXUS_PASSWORD=admin
 ```
 
 ##### ca use to PKI server
@@ -226,9 +184,10 @@ about pki server, you can reference [here](https://github.com/buxiaomo/pki-serve
 
 ```
 make deploy DOWNLOAD_WAY=official \
-PKI_URL=http://pki.example.com/v1/pki/project
-PROJECT_NAME=demo
-PROJECT_ENV=dev
+PKI_URL=http://pki.example.com/v1/pki/project \
+PROJECT_NAME=kube-ansible \
+PROJECT_ENV=dev \
+KUBE_VERSION=1.14.10 KUBE_NETWORK=calico
 ```
 
 #### Scale
@@ -236,11 +195,10 @@ PROJECT_ENV=dev
 [![asciicast](https://asciinema.org/a/471288.svg)](https://asciinema.org/a/471288)
 
 ```
-# default version
-make scale
-
-# custom version
-make scale KUBE_VERSION=1.16.8 DOCKER_VERSION=19.03.8 FLANNEL_VERSION=0.12.0 ETCD_VERSION=3.4.5
+make scale \
+DOWNLOAD_WAY=official \
+KUBE_VERSION=1.14.10 \
+KUBE_NETWORK=calico
 ```
 
 #### Upgrade
@@ -248,14 +206,8 @@ make scale KUBE_VERSION=1.16.8 DOCKER_VERSION=19.03.8 FLANNEL_VERSION=0.12.0 ETC
 Download new kubernetes binaries, Reference [here](#download).
 
 ```
-make upgrade KUBE_VERSION=1.18.5
+make upgrade KUBE_VERSION=1.14.10
 ```
-
-### Kubernetes Extended application
-
-This repo only deploy a kubernetes cluster and core application like 'coredns', 'calico', 'canal', 'flannel', not support extended application, like 'jenkins', 'ingress'...
-
-if you want to deploy extended application, please reference [here](https://github.com/buxiaomo/kubernetes-sigs.git).
 
 ## Known Issues 
 
@@ -283,174 +235,8 @@ if you want to deploy extended application, please reference [here](https://gith
 
 
 <!-- 
-network:
-  k8s:
-    serviceSubnet: 10.96.0.0/12
-    podSubnet: 10.244.0.0/16
-  flannel:
-    podSubnet: 10.244.0.0/16
-    uri: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-  calico:
-    podSubnet: 192.168.0.0/16
-    uri: https://projectcalico.docs.tigera.io/manifests/calico.yaml
-  multus:
-    uri: https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/master/deployments/multus-daemonset.yml -->
-
-
-<!-- 
-openssl genrsa -out  sa.key 2048
-openssl ecparam -name secp521r1 -genkey -noout -out sa.key
-openssl ec -in sa.key -outform PEM -pubout -out sa.pub
-openssl req -new -sha256 -key sa.key -subj "/CN=system:kube-controller-manager" -out sa.csr
-openssl x509 -req -in sa.csr -CA ca.crt -CAkey ca.key -CAcreateserial -days 10000 -extensions v3_req_client -extfile openssl.cnf -out sa.crt
-
 kubectl get node -A -o=jsonpath='{range .items[*]}{.status.addresses[1].address}{":\t"}{.status.allocatable.memory}{":\t"}{.status.capacity.memory}{"\n"}{end}'
 
-
-kubectl config set-cluster kubernetes \
---certificate-authority=/etc/kubernetes/pki/ca.crt \
---embed-certs=true \
---server=https://172.16.5.11:6443 \
---kubeconfig=/tmp/admin.kubeconfig
-
-kubectl config set-credentials admin \
---client-certificate=/etc/kubernetes/pki/admin.crt \
---client-key=/etc/kubernetes/pki/admin.key \
---embed-certs=true \
---kubeconfig=/tmp/admin.kubeconfig
-
-kubectl config set-context default \
---cluster=kubernetes \
---user=admin \
---kubeconfig=/tmp/admin.kubeconfig
-
-kubectl config use-context default --kubeconfig=/tmp/admin.kubeconfig
-
-openssl_certificate                                           Generate and/...
-openssl_certificate_info                                      Provide infor...
-openssl_csr                                                   Generate Open...
-openssl_csr_info                                              Provide infor...
-openssl_dhparam                                               Generate Open...
-openssl_pkcs12                                                Generate Open...
-openssl_privatekey                                            Generate Open...
-openssl_privatekey_info                                       Provide infor...
-openssl_publickey
-
-NS
-env=
-name=
-project=
-
-
-ansible-playbook -i inventory/hosts install.yml -t kube-master --start-at-task "Install some applications"
-ansible-playbook -i inventory/hosts install.yml --list-tags
-ansible-playbook -i inventory/hosts install.yml --list-tasks
-ansible-playbook -i inventory/hosts install.yml -e force=$(force)
-ansible-playbook -i inventory/hosts install.yml -t common
-ansible-playbook -i inventory/hosts install.yml -t ca
-ansible-playbook -i inventory/hosts install.yml -t etcd
-ansible-playbook -i inventory/hosts install.yml -t kubernetes-init
-ansible-playbook -i inventory/hosts install.yml -t kube-master
-ansible-playbook -i inventory/hosts install.yml -t kube-worker
-ansible-playbook -i inventory/hosts install.yml -t cleanup
-ansible-playbook -i inventory/hosts install.yml -t addons
-ansible-playbook -i inventory/hosts install.yml -t apps
-
-Master: 
-systemctl stop kube-apiserver.service kube-scheduler.service kube-controller-manager.service kube-proxy.service kubelet.service etcd.service
-systemctl start kube-apiserver.service kube-scheduler.service kube-controller-manager.service etcd.service kube-proxy.service kubelet.service
-systemctl restart kube-apiserver.service kube-scheduler.service kube-controller-manager.service kube-proxy.service kubelet.service
-
-Minion: 
-systemctl stop kube-proxy.service kubelet.service 
-
-    {% if groups['master'] | length == 1 and kubernetes.cloud.type == "local" %}
-      {% set KUBE_APISERVER_ADDR=ansible_default_ipv4.address %}
-      {% set KUBE_APISERVER_PORT=6443 %}
-    {% elif groups['master'] | length != 1 and kubernetes.cloud.type == "local" %}
-      {% if kubernetes.ha.vip is defined and kubernetes.ha.mask is defined %}
-        {% set KUBE_APISERVER_ADDR=kubernetes.ha.vip %}
-        {% set KUBE_APISERVER_PORT=8443 %}
-      {% else %}
-        {% set KUBE_APISERVER_ADDR=ansible_default_ipv4.address %}
-        {% set KUBE_APISERVER_PORT=6443 %}
-      {% endif %}
-    {% elif groups['master'] | length == 1 and kubernetes.cloud.type != "local" %}
-      {% if kubernetes.ha.vip is defined and kubernetes.ha.mask is defined %}
-        {% set KUBE_APISERVER_ADDR=kubernetes.ha.vip %}
-        {% set KUBE_APISERVER_PORT=6443 %}
-      {% else %}
-        {% set KUBE_APISERVER_ADDR=ansible_default_ipv4.address %}
-        {% set KUBE_APISERVER_PORT=6443 %}
-      {% endif %}
-    {% elif groups['master'] | length == 1 and kubernetes.cloud.type != "local" %}
-      {% if kubernetes.ha.vip is defined and kubernetes.ha.mask is defined %}
-        {% set KUBE_APISERVER_ADDR=kubernetes.ha.vip %}
-        {% set KUBE_APISERVER_PORT=6443 %}
-      {% else %}
-        {% set KUBE_APISERVER_ADDR=ansible_default_ipv4.address %}
-        {% set KUBE_APISERVER_PORT=6443 %}
-      {% endif %}
-    {% endif %}
-    
-    {% if groups['master'] | length == 1 kubernetes.cloud.type == "local" %}
-    {% set KUBE_APISERVER_ADDR= %}
-    {% set KUBE_APISERVER_PORT=6443 %}
-    {% elif groups['master'] | length != 1 kubernetes.cloud.type == "local" and kubernetes.ha is defined %}
-    {% set KUBE_APISERVER_ADDR= %}
-    {% set KUBE_APISERVER_PORT=6443 %}
-    {% else %}
-    {% set KUBE_APISERVER_ADDR=ansible_default_ipv4.address %}
-    {% set KUBE_APISERVER_PORT=6443 %}
-    
-      --server=https://{% if groups['master'] | length !=1 %}{{ kubernetes.ha.vip }}:{% if kubernetes.cloud.type != "local" %}6443{% else %}8443{% endif %}{% else %}{{  }}:{% if kubernetes.cloud.type != "local" %}6443{% else %}8443{% endif %}{% endif %} \
-
-
-openssl genrsa -out kubelet.key 2048
-openssl req -new -key kubelet.key -subj "/CN=system:node:vm018011/O=system:nodes" -out kubelet.csr
-openssl x509 -req -in kubelet.csr -CA ca.crt -CAkey ca.key -CAcreateserial -extensions v3_req_client -extfile openssl.cnf -out kubelet.crt -days 3652
-
-kubectl config set-cluster kubernetes \
---certificate-authority=/etc/kubernetes/pki/ca.crt \
---embed-certs=true \
---server=https://172.16.18.10:8443 \
---kubeconfig=/etc/kubernetes/kubelet.kubeconfig
-
-kubectl config set-credentials system:node:vm018011 \
---client-certificate=/etc/kubernetes/pki/kubelet.crt \
---client-key=/etc/kubernetes/pki/kubelet.key \
---embed-certs=true \
---kubeconfig=/etc/kubernetes/kubelet.kubeconfig
-
-kubectl config set-context default \
---cluster=kubernetes \
---user=system:node:vm018011 \
---kubeconfig=/etc/kubernetes/kubelet.kubeconfig
-
-kubectl config use-context default --kubeconfig=/etc/kubernetes/kubelet.kubeconfig
-
-
-/usr/local/bin/kubelet \
---kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
---config=/etc/kubernetes/kubelet-conf.yml \
---pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.2 \
---image-pull-progress-deadline=2m \
---network-plugin=cni \
---cni-conf-dir=/etc/cni/net.d \
---cni-bin-dir=/opt/cni/bin \
---cert-dir=/etc/kubernetes/pki \
---register-node=true \
---feature-gates=RotateKubeletServerCertificate=true \
---tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256 \
---alsologtostderr=true \
---logtostderr=false \
---log-dir=/var/log/kubernetes/kubelet \
---v=2
--->
-
-<!-- RUNNING HANDLER -->
-
-<!-- 
 cat <<EOF | kubectl apply --kubeconfig admin.kubeconfig -f -
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -489,58 +275,6 @@ subjects:
     name: kubernetes
 EOF
 
-
-cat <<EOF | sudo tee kubelet-config.yaml
-kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
-authentication:
-  anonymous:
-    enabled: false
-  webhook:
-    enabled: true
-  x509:
-    clientCAFile: "/var/lib/kubernetes/ca.pem"
-authorization:
-  mode: Webhook
-clusterDomain: "cluster.local"
-clusterDNS:
-  - "10.32.0.10"
-podCIDR: "${POD_CIDR}"
-resolvConf: "/run/systemd/resolve/resolv.conf"
-runtimeRequestTimeout: "15m"
-tlsCertFile: "/var/lib/kubelet/${HOSTNAME}.pem"
-tlsPrivateKeyFile: "/var/lib/kubelet/${HOSTNAME}-key.pem"
-EOF
-
-cat <<EOF | sudo tee /etc/systemd/system/kubelet.service
-[Unit]
-Description=Kubernetes Kubelet
-Documentation=https://github.com/kubernetes/kubernetes
-After=containerd.service
-Requires=containerd.service
-
-[Service]
-ExecStart=/usr/local/bin/kubelet \
-  --config=/var/lib/kubelet/kubelet-config.yaml \
-  --image-pull-progress-deadline=2m \
-  --kubeconfig=/var/lib/kubelet/kubeconfig \
-  --network-plugin=cni \
-  --register-node=true \
-  --v=2
-Restart=on-failure
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-EOF 
-curl -vsk --cacert ./ca.crt --key ./admin.key --cert ./admin.crt https://172.16.5.11:10250/metrics
-
-
-curl -vsk --cacert /etc/pki/trust/anchors/DevOps_CA.crt \
---cert /etc/pki/kube-scheduler.crt \
---key /etc/pki/kube-scheduler.key \
-https://127.0.0.1:6443/apis/coordination.k8s.io/v1/namespaces/kube-system/leases/kube-scheduler?timeout=10s
-
 # Ubuntu 20.04
 "ansible_distribution": "Ubuntu",
 "ansible_distribution_file_parsed": true,
@@ -577,8 +311,6 @@ https://127.0.0.1:6443/apis/coordination.k8s.io/v1/namespaces/kube-system/leases
 "ansible_distribution_release": "bullseye",
 "ansible_distribution_version": "11",
 
-
-
 # master
 firewall-cmd --permanent --add-port=6443/tcp
 firewall-cmd --permanent --add-port=2379-2380/tcp
@@ -593,7 +325,6 @@ firewall-cmd --permanent --add-port=10250/tcp
 firewall-cmd --permanent --add-port=10255/tcp
 firewall-cmd --permanent --add-port=8472/udp
 firewall-cmd --permanent --add-port=30000-32767/tcp
-
 
 ## Size of master and master components
 
