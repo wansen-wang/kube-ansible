@@ -43,6 +43,7 @@ sleep 3
 
 case $1 in
 "deploy")
+  start=$(date +%s)
   ansible-playbook -i ./inventory/hosts ./deploy.yml \
     -e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} \
     -e DOWNLOAD_WAY=${DOWNLOAD_WAY} \
@@ -50,6 +51,8 @@ case $1 in
     -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_NETWORK=${KUBE_NETWORK} \
     -e KUBE_ACTION="deploy" ${ANSIBLE_ARG}
+  end=$(date +%s)
+  echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please check the pod status.\033[0m"
   ;;
 "scale")
   read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER

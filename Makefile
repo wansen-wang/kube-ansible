@@ -41,7 +41,6 @@ deploy:
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
 		PKI_URL=$(PKI_URL) ./scripts/action.sh deploy
-	@echo -e "\033[32mDeploy kubernetes done, please check the pod status.\033[0m"
 
 scale: 
 	@echo -e "\033[32mScale kubernetes node...\033[0m"

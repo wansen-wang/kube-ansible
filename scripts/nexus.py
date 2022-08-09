@@ -107,24 +107,70 @@ if __name__ == "__main__":
     kubeVersion = options.kubernetes[:4]
 
     version = version_map.get(kubeVersion).get('runtime').get('docker')
-    url = "https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % version
-    Download(url, "docker-%s.tgz" % version)
-    upload.append(
-        {
-            'src': "./src/docker-%s.tgz" % version,
-            'dest': "/linux/static/stable/x86_64"
-        }
-    )
+    if version is not None:
+        url = "https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % version
+        Download(url, "docker-%s.tgz" % version)
+        upload.append(
+            {
+                'src': "./src/docker-%s.tgz" % version,
+                'dest': "/linux/static/stable/x86_64"
+            }
+        )
+
+    version = version_map.get(kubeVersion).get('runtime').get('crio')
+    if version is not None:
+        url = "https://github.com/cri-o/cri-o/releases/download/v%s/cri-o.amd64.v%s.tar.gz" % (version, version)
+        Download(url, "cri-o.amd64.v%s.tar.gz" % version)
+        upload.append(
+            {
+                'src': "./src/cri-o.amd64.v%s.tar.gz" % version,
+                'dest': "/cri-o/cri-o/releases/download/v%s" % version
+            }
+        )
+
+    version = version_map.get(kubeVersion).get('runtime').get('containerd')
+    if version is not None:
+        url = "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s-linux-amd64.tar.gz" % (version, version)
+        Download(url, "containerd-%s-linux-amd64.tar.gz" % version)
+        upload.append(
+            {
+                'src': "./src/containerd-%s-linux-amd64.tar.gz" % version,
+                'dest': "/containerd/containerd/releases/download/v%s" % version
+            }
+        )
+
+    version = version_map.get(kubeVersion).get('runtime').get('runc')
+    if version is not None:
+        url = "https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (version)
+        Download(url, "runc.amd64")
+        upload.append(
+            {
+                'src': "./src/runc.amd64",
+                'dest': "/opencontainers/runc/releases/download/v%s" % version
+            }
+        )
+
+    version = version_map.get(kubeVersion).get('runtime').get('crictl')
+    if version is not None:
+        url = "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (version, version)
+        Download(url, "crictl-v%s-linux-amd64.tar.gz" % version)
+        upload.append(
+            {
+                'src': "./src/crictl-v%s-linux-amd64.tar.gz" % version,
+                'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
+            }
+        )
 
     version = version_map.get(kubeVersion).get('etcd')
-    url = "https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (version, version)
-    Download(url, "etcd-v%s-linux-amd64.tar.gz" % version)
-    upload.append(
-        {
-            'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
-            'dest': "/coreos/etcd/releases/download/v%s" % version
-        }
-    )
+    if version is not None:
+        url = "https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (version, version)
+        Download(url, "etcd-v%s-linux-amd64.tar.gz" % version)
+        upload.append(
+            {
+                'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
+                'dest': "/coreos/etcd/releases/download/v%s" % version
+            }
+        )
 
     file_list = [
         "kube-apiserver",
@@ -152,52 +198,18 @@ if __name__ == "__main__":
         )
 
     version = version_map.get(kubeVersion).get('cni')
-    url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
-        version, version)
-    Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version)
-    upload.append(
-        {
-            'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
-            'dest': "/containernetworking/plugins/releases/download/v%s" % version
-        }
-    )
+    if version is not None:
+        url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
+            version, version)
+        Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version)
+        upload.append(
+            {
+                'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
+                'dest': "/containernetworking/plugins/releases/download/v%s" % version
+            }
+        )
 
     with open("./src/upload.json", "w") as f:
         json.dump(upload, f)
 
     print("files is save on src directory")
-
-    # if options.containerd != "" and options.containerd is not None:
-    #     if options.download:
-    #         print("Download containerd package...")
-    #         Download(
-    #             "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s.linux-amd64.tar.gz" % (
-    #                 options.containerd, options.containerd), "containerd-%s.linux-amd64.tar.gz" % options.containerd)
-    #     if options.upload:
-    #         print("Upload containerd package...")
-    #         nexus.Upload(src="./src/containerd-%s.linux-amd64.tar.gz" % options.containerd,
-    #                      directory="/containerd/containerd/releases/download/v%s" % options.containerd)
-    #
-    # if options.runc != "" and options.runc is not None:
-    #     if options.download:
-    #         print("Download runc package...")
-    #         Download("https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" %
-    #                  (options.runc), "runc.amd64")
-    #     if options.upload:
-    #         print("Upload runc package...")
-    #         nexus.Upload(src="./src/runc.amd64",
-    #                      directory="/opencontainers/runc/releases/download/v%s" % options.runc)
-    #
-    # if options.crictl != "" and options.crictl is not None:
-    #     if options.download:
-    #         print("Download crictl package...")
-    #         Download(
-    #             "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (
-    #                 options.crictl, options.crictl), "crictl-v%s-linux-amd64.tar.gz" % options.crictl)
-    #
-    #     if options.upload:
-    #         print("Upload crictl package...")
-    #         nexus.Upload(src="./src/crictl-v%s-linux-amd64.tar.gz" % options.crictl,
-    #                      directory="/kubernetes-sigs/cri-tools/releases/download/v%s" % options.crictl)
-    #
-    # print("files is save on .tmp directory")

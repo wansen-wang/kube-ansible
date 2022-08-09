@@ -6,6 +6,7 @@ from distutils.version import LooseVersion, StrictVersion
 from ansible.module_utils._text import to_native, to_text
 from ansible.utils.version import SemanticVersion
 
+
 # {{ value | component_version | community.general.json_query("etcd") }}
 # pip3 install jmespath
 def component_version(value):
@@ -14,7 +15,11 @@ def component_version(value):
             "etcd": "3.3.10",
             "cni": "0.8.1",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.14.12",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.12.3",
@@ -27,7 +32,11 @@ def component_version(value):
             "etcd": "3.3.10",
             "cni": "0.8.1",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.15.4",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.15.5",
@@ -40,7 +49,11 @@ def component_version(value):
             "etcd": "3.3.15",
             "cni": "0.8.6",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.16.6",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.16.10",
@@ -54,7 +67,11 @@ def component_version(value):
             "etcd": "3.4.3",
             "cni": "0.8.6",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.17.5",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.17.6",
@@ -68,7 +85,11 @@ def component_version(value):
             "etcd": "3.4.3",
             "cni": "0.8.6",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.18.6",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.18.6",
@@ -82,7 +103,11 @@ def component_version(value):
             "etcd": "3.4.9",
             "cni": "0.9.0",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.11",
+                "crio": "1.19.6",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.20.5",
@@ -96,7 +121,11 @@ def component_version(value):
             "etcd": "3.4.13",
             "cni": "0.9.0",
             "runtime": {
-                "docker": "19.03.9"
+                "docker": "19.03.9",
+                "containerd": "1.5.0",
+                "crio": "1.20.9",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.21.5",
@@ -110,7 +139,11 @@ def component_version(value):
             "etcd": "3.4.13",
             "cni": "0.9.1",
             "runtime": {
-                "docker": "20.10.9"
+                "docker": "20.10.9",
+                "containerd": "1.5.0",
+                "crio": "1.21.7",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.23.2",
@@ -124,7 +157,11 @@ def component_version(value):
             "etcd": "3.5.0",
             "cni": "1.0.1",
             "runtime": {
-                "docker": "20.10.9"
+                "docker": "20.10.9",
+                "containerd": "1.5.13",
+                "crio": "1.22.5",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.23.2",
@@ -138,7 +175,11 @@ def component_version(value):
             "etcd": "3.5.0",
             "cni": "1.1.1",
             "runtime": {
-                "docker": "20.10.9"
+                "docker": "20.10.9",
+                "containerd": "1.6.0",
+                "crio": "1.23.3",
+                "runc": "1.0.1",
+                "crictl": "1.24.2"
             },
             "plugin": {
                 "calico": "3.23.2",
@@ -152,7 +193,8 @@ def component_version(value):
             "etcd": "3.5.3",
             "cni": "1.1.1",
             "runtime": {
-                "containerd": "1.5.11",
+                "crio": "1.24.2",
+                "containerd": "1.6.8",
                 "runc": "1.0.1",
                 "crictl": "1.24.2"
             },
@@ -322,7 +364,6 @@ class FilterModule(object):
             'ip': ip,
             'component_version': component_version
         }
-
 
 # if __name__ == '__main__':
 #     component_version("1.23.7")

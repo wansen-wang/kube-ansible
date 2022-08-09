@@ -3,7 +3,11 @@ version_map = {
         "etcd": "3.3.10",
         "cni": "0.8.1",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.14.12",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.12.3",
@@ -16,7 +20,11 @@ version_map = {
         "etcd": "3.3.10",
         "cni": "0.8.1",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.15.4",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.15.5",
@@ -29,7 +37,11 @@ version_map = {
         "etcd": "3.3.15",
         "cni": "0.8.6",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.16.6",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.16.10",
@@ -43,7 +55,11 @@ version_map = {
         "etcd": "3.4.3",
         "cni": "0.8.6",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.17.5",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.17.6",
@@ -57,7 +73,11 @@ version_map = {
         "etcd": "3.4.3",
         "cni": "0.8.6",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.18.6",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.18.6",
@@ -71,7 +91,11 @@ version_map = {
         "etcd": "3.4.9",
         "cni": "0.9.0",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.19.6",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.20.5",
@@ -85,7 +109,11 @@ version_map = {
         "etcd": "3.4.13",
         "cni": "0.9.0",
         "runtime": {
-            "docker": "19.03.9"
+            "docker": "19.03.9",
+            "containerd": "1.5.0",
+            "crio": "1.20.9",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.21.5",
@@ -99,7 +127,11 @@ version_map = {
         "etcd": "3.4.13",
         "cni": "0.9.1",
         "runtime": {
-            "docker": "20.10.9"
+            "docker": "20.10.9",
+            "containerd": "1.5.0",
+            "crio": "1.21.7",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.23.2",
@@ -113,7 +145,11 @@ version_map = {
         "etcd": "3.5.0",
         "cni": "1.0.1",
         "runtime": {
-            "docker": "20.10.9"
+            "docker": "20.10.9",
+            "containerd": "1.5.13",
+            "crio": "1.22.5",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.23.2",
@@ -127,7 +163,11 @@ version_map = {
         "etcd": "3.5.0",
         "cni": "1.1.1",
         "runtime": {
-            "docker": "20.10.9"
+            "docker": "20.10.9",
+            "containerd": "1.6.0",
+            "crio": "1.23.3",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.23.2",
@@ -141,7 +181,10 @@ version_map = {
         "etcd": "3.5.3",
         "cni": "1.1.1",
         "runtime": {
-            "containerd": "20.10.9"
+            "crio": "1.24.2",
+            "containerd": "1.6.8",
+            "runc": "1.0.1",
+            "crictl": "1.24.2"
         },
         "plugin": {
             "calico": "3.23.2",
