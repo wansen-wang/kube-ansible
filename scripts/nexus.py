@@ -71,46 +71,18 @@ class Nexus:
             return True
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Download package and upload to nexus.')
-    action = parser.add_mutually_exclusive_group(required=True)
-    parser.add_argument('--kubernetes', metavar='kubernetes', required=True, help='kubernetes version')
-    parser.add_argument('--url', metavar='url', help='nexus url', required=True, type=str)
-    parser.add_argument('--repository', metavar='repository', help='nexus repository name', required=True, type=str)
-    parser.add_argument('--username', default=None, metavar='username', help='nexus username')
-    parser.add_argument('--password', default=None, metavar='password', help='nexus password')
-    action.add_argument('--download', metavar='download', type=bool, help='download or upload file',
-                        action=argparse.BooleanOptionalAction)
-    # action.add_argument('--upload', metavar='upload', type=bool, help='only upload file to nexus',
-    #                     action=argparse.BooleanOptionalAction)
-    options = parser.parse_args()
-
-    if options.url == "" or options.repository == "" or options.kubernetes == "":
-        parser.print_help()
-        sys.exit(1)
-
+def downloadToLocal(arg):
     if not os.path.exists("src"):
         os.makedirs("src")
 
-    if not options.download:
-        nexus = Nexus(options.url, options.repository, options.username, options.password)
-        if not nexus.Auth():
-            print("Username or Password is error!")
-            sys.exit(2)
-        print("Upload package to nexus...")
-        with open("./src/upload.json", "r") as f:
-            for item in json.load(f):
-                nexus.Upload(src=item.get('src'), directory=item.get('dest'))
-        sys.exit(0)
-
-    upload = []
-    kubeVersion = options.kubernetes[:4]
+    jsonFile = []
+    kubeVersion = arg.kubernetes[:4]
 
     version = version_map.get(kubeVersion).get('runtime').get('docker')
     if version is not None:
         url = "https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % version
         Download(url, "docker-%s.tgz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/docker-%s.tgz" % version,
                 'dest': "/linux/static/stable/x86_64"
@@ -121,7 +93,7 @@ if __name__ == "__main__":
     if version is not None:
         url = "https://github.com/cri-o/cri-o/releases/download/v%s/cri-o.amd64.v%s.tar.gz" % (version, version)
         Download(url, "cri-o.amd64.v%s.tar.gz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/cri-o.amd64.v%s.tar.gz" % version,
                 'dest': "/cri-o/cri-o/releases/download/v%s" % version
@@ -130,9 +102,10 @@ if __name__ == "__main__":
 
     version = version_map.get(kubeVersion).get('runtime').get('containerd')
     if version is not None:
-        url = "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s-linux-amd64.tar.gz" % (version, version)
+        url = "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s-linux-amd64.tar.gz" % (
+            version, version)
         Download(url, "containerd-%s-linux-amd64.tar.gz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/containerd-%s-linux-amd64.tar.gz" % version,
                 'dest': "/containerd/containerd/releases/download/v%s" % version
@@ -143,7 +116,7 @@ if __name__ == "__main__":
     if version is not None:
         url = "https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (version)
         Download(url, "runc.amd64")
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/runc.amd64",
                 'dest': "/opencontainers/runc/releases/download/v%s" % version
@@ -152,9 +125,10 @@ if __name__ == "__main__":
 
     version = version_map.get(kubeVersion).get('runtime').get('crictl')
     if version is not None:
-        url = "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (version, version)
+        url = "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (
+            version, version)
         Download(url, "crictl-v%s-linux-amd64.tar.gz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/crictl-v%s-linux-amd64.tar.gz" % version,
                 'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
@@ -165,7 +139,7 @@ if __name__ == "__main__":
     if version is not None:
         url = "https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (version, version)
         Download(url, "etcd-v%s-linux-amd64.tar.gz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
                 'dest': "/coreos/etcd/releases/download/v%s" % version
@@ -188,12 +162,12 @@ if __name__ == "__main__":
     ]
     for f in file_list:
         url = "https://storage.googleapis.com/kubernetes-release/release/v%s/bin/linux/amd64/%s" % (
-            options.kubernetes, f)
+            arg.kubernetes, f)
         Download(url, f)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/%s" % f,
-                'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % options.kubernetes
+                'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
             }
         )
 
@@ -202,7 +176,7 @@ if __name__ == "__main__":
         url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
             version, version)
         Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version)
-        upload.append(
+        jsonFile.append(
             {
                 'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
                 'dest': "/containernetworking/plugins/releases/download/v%s" % version
@@ -210,6 +184,40 @@ if __name__ == "__main__":
         )
 
     with open("./src/upload.json", "w") as f:
-        json.dump(upload, f)
+        json.dump(jsonFile, f)
 
     print("files is save on src directory")
+
+
+def uploadToNexus(arg):
+    nexus = Nexus(arg.url, arg.repository, arg.username, arg.password)
+    if not nexus.Auth():
+        print("Username or Password is error!")
+        sys.exit(2)
+    print("Upload package to nexus...")
+    with open("./src/upload.json", "r") as f:
+        for item in json.load(f):
+            nexus.Upload(src=item.get('src'), directory=item.get('dest'))
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Download package and upload to nexus.')
+    subparsers = parser.add_subparsers(
+        title='commands',
+        description='download or upload',
+        help='download or upload'
+    )
+    download = subparsers.add_parser('download')
+    download.add_argument('--kubernetes', metavar='kubernetes', required=True, help='kubernetes version')
+    download.set_defaults(func=downloadToLocal)
+
+    upload = subparsers.add_parser('upload')
+    upload.add_argument('--url', metavar='url', help='nexus url', required=True)
+    upload.add_argument('--repository', metavar='repository', help='nexus repository name', required=True)
+    upload.add_argument('--username', default=None, metavar='username', help='nexus username', required=True)
+    upload.add_argument('--password', default=None, metavar='password', help='nexus password', required=True)
+    upload.set_defaults(func=uploadToNexus)
+
+    args = parser.parse_args()
+    args.func(args)
