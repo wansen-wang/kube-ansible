@@ -124,37 +124,48 @@ about Makefile parameter
 
 ```
 # 1.14
-make deploy KUBE_VERSION=1.14.10 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.14
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.15
-make deploy KUBE_VERSION=1.15.12 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.15
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.16
-make deploy KUBE_VERSION=1.16.15 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.16
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.17
-make deploy KUBE_VERSION=1.17.17 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.17
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.18
-make deploy KUBE_VERSION=1.18.20 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.18
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.19
-make deploy KUBE_VERSION=1.19.16 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.19
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.20
-make deploy KUBE_VERSION=1.20.6 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.20
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.21
-make deploy KUBE_VERSION=1.21.10 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.21
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.22
-make deploy KUBE_VERSION=1.22.9 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.22
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.23
-make deploy KUBE_VERSION=1.23.8 KUBE_RUNTIME=docker KUBE_NETWORK=calico
+git checkout 1.23
+make deploy KUBE_RUNTIME=docker KUBE_NETWORK=calico
 
 # 1.24
-make deploy KUBE_VERSION=1.24.0 KUBE_RUNTIME=containerd KUBE_NETWORK=calico
+git checkout 1.24
+make deploy KUBE_RUNTIME=containerd KUBE_NETWORK=calico
 ```
 
 ##### Download the default version using Nexus
