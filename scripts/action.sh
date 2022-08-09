@@ -19,6 +19,7 @@ echo -e "Binary download mode: \t\t\033[32m${DOWNLOAD_WAY}\033[0m"
 echo -e "Kubernetes runtime mode: \t\033[32m${KUBE_RUNTIME}\033[0m"
 echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
 echo -e "Kubernetes network: \t\t\033[32m${KUBE_NETWORK}\033[0m"
+echo -e "Private registry: \t\t\033[32m${REGISTRY_URL}\033[0m"
 
 if [ ${PKI_URL} ]; then
   echo -e "PKI Url: \t\t\t\033[32m${PKI_URL}\033[0m"

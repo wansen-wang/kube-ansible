@@ -144,7 +144,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
         - name: metrics-server
-          image: k8s.gcr.io/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}
+          image: {{ REGISTRY_URL | default(k8s.gcr.io) }}/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}
           imagePullPolicy: IfNotPresent
           args:
             - --cert-dir=/tmp

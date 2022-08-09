@@ -8,9 +8,13 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # Binary version
-KUBE_VERSION:=1.14.10
-KUBE_RUNTIME:=docker
-KUBE_NETWORK:=calico
+KUBE_VERSION:=none
+KUBE_RUNTIME:=none
+KUBE_NETWORK:=none
+
+# Private registry
+# eg: 192.168.119.20/infra
+REGISTRY_URL:=
 
 # Nexus information
 NEXUS_DOMAIN_NAME:=
@@ -36,6 +40,7 @@ deploy:
 		KUBE_VERSION=$(KUBE_VERSION) \
 		KUBE_RUNTIME=$(KUBE_RUNTIME) \
 		KUBE_NETWORK=$(KUBE_NETWORK) \
+		REGISTRY_URL=$(REGISTRY_URL) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
@@ -50,6 +55,7 @@ scale:
 		KUBE_VERSION=$(KUBE_VERSION) \
 		KUBE_RUNTIME=$(KUBE_RUNTIME) \
 		KUBE_NETWORK=$(KUBE_NETWORK) \
+		REGISTRY_URL=$(REGISTRY_URL) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
@@ -64,6 +70,7 @@ upgrade:
 		KUBE_VERSION=$(KUBE_VERSION) \
 		KUBE_RUNTIME=$(KUBE_RUNTIME) \
 		KUBE_NETWORK=$(KUBE_NETWORK) \
+		REGISTRY_URL=$(REGISTRY_URL) \
 		NEXUS_DOMAIN_NAME=$(NEXUS_DOMAIN_NAME) \
 		NEXUS_REPOSITORY=$(NEXUS_REPOSITORY) \
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
@@ -98,17 +105,12 @@ version:
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
 
 nexus:
-	@./scripts/upload-nexus.py --url=$(NEXUS_DOMAIN_NAME) \
+	@./scripts/nexus.py --download \
+		--kubernetes=$(KUBE_VERSION) \
+		--url=$(NEXUS_DOMAIN_NAME) \
 		--repository=$(NEXUS_REPOSITORY) \
 		--username=$(NEXUS_HTTP_USERNAME) \
-		--password=$(NEXUS_HTTP_PASSWORD) \
-		--docker=$(DOCKER_VERSION) \
-		--etcd=$(ETCD_VERSION) \
-		--kubernetes=$(KUBE_VERSION) \
-		--cni=$(CNI_VERSION) \
-		--containerd=$(CONTAINERD_VERSION) \
-		--runc=$(RUNC_VERSION) \
-		--crictl=$(CRICTL_VERSION)
+		--password=$(NEXUS_HTTP_PASSWORD)
 
 check:
 	@cd ./test && ./check-cluster.sh
