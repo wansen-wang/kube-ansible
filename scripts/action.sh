@@ -44,9 +44,13 @@ if [ ${DOWNLOAD_WAY} == "nexus" ]; then
 fi
 case $1 in
 "deploy")
-  if [ ${KUBE_VERSION:0:4} != $(git rev-parse --abbrev-ref HEAD) ];then
-    echo -e "\033[31mThe git branch is incorrect, deployment add-on may be incompatible, please checkout to ${KUBE_VERSION:0:4}\033[0m"
-    exit 1
+  if [ $(git rev-parse --abbrev-ref HEAD) != 'main' ];then
+    if [ ${KUBE_VERSION:0:4} != $(git rev-parse --abbrev-ref HEAD) ];then
+      echo -e "\033[31mMessage: The git branch is incorrect, deployment add-on may be incompatible, please checkout to ${KUBE_VERSION:0:4}\033[0m"
+      exit 1
+    fi
+  else
+    echo -e "\033[31mMessage: main branch is develop, Please do not use in production.\033[0m"
   fi
   start=$(date +%s)
   ansible-playbook -i ./inventory/hosts ./deploy.yml \
@@ -55,9 +59,12 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e REGISTRY_URL=${REGISTRY_URL} \
     -e KUBE_ACTION="deploy" ${ANSIBLE_ARG}
-  end=$(date +%s)
-  echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get po -A' to check the pod status.\033[0m"
+  if [ $? -eq 0 ];then
+    end=$(date +%s)
+    echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get po -A' to check the pod status.\033[0m"
+  fi
   ;;
 "scale")
   read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
@@ -70,6 +77,7 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e REGISTRY_URL=${REGISTRY_URL} \
     -e KUBE_ACTION="scale" ${ANSIBLE_ARG}
   ;;
 "upgrade")
@@ -79,6 +87,7 @@ case $1 in
     -e KUBE_VERSION=${KUBE_VERSION} \
     -e KUBE_RUNTIME=${KUBE_RUNTIME} \
     -e KUBE_NETWORK=${KUBE_NETWORK} \
+    -e REGISTRY_URL=${REGISTRY_URL} \
     -e KUBE_ACTION="upgrade" ${ANSIBLE_ARG}
   ;;
 *) ;;
