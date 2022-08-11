@@ -17,8 +17,7 @@ def Download(url, path):
             print('=> start download {name} {size:.2f} MB'.format(
                 name=os.path.basename(path), size=content_size / chunk_size / 1024)
             )
-            filepath = "./src/%s" % path
-            with open(filepath, 'wb') as file:
+            with open(path, 'wb') as file:
                 for data in response.iter_content(chunk_size=chunk_size):
                     file.write(data)
                     size += len(data)
@@ -29,8 +28,8 @@ def Download(url, path):
         else:
             raise Exception(response.status_code)
     except Exception as e:
+        print("Exception occurs in Downloading, status code: %s..." % e)
         return False
-        print("Exception occurs in Downloading: %s..." % e)
 
 
 class Nexus:
@@ -74,19 +73,21 @@ class Nexus:
 
 
 def downloadToLocal(arg):
-    if not os.path.exists("src"):
-        os.makedirs("src")
-
-    jsonFile = []
     kubeVersion = arg.kubernetes[:4]
 
+    basePath = os.path.split(os.path.realpath(__file__))[0]
+    basePath = basePath + "/src/" + arg.kubernetes
+    if not os.path.exists(basePath):
+        os.makedirs(basePath)
+
+    jsonFile = []
     version = version_map.get(kubeVersion).get('runtime').get('docker')
     if version is not None:
         url = "https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % version
-        if Download(url, "docker-%s.tgz" % version):
+        if Download(url, "%s/docker-%s.tgz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/docker-%s.tgz" % version,
+                    'src': "./src/%s/docker-%s.tgz" % (arg.kubernetes, version),
                     'dest': "/linux/static/stable/x86_64"
                 }
             )
@@ -94,10 +95,10 @@ def downloadToLocal(arg):
     version = version_map.get(kubeVersion).get('runtime').get('crio')
     if version is not None:
         url = "https://github.com/cri-o/cri-o/releases/download/v%s/cri-o.amd64.v%s.tar.gz" % (version, version)
-        if Download(url, "cri-o.amd64.v%s.tar.gz" % version):
+        if Download(url, "%s/cri-o.amd64.v%s.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/cri-o.amd64.v%s.tar.gz" % version,
+                    'src': "./src/%s/cri-o.amd64.v%s.tar.gz" % (arg.kubernetes, version),
                     'dest': "/cri-o/cri-o/releases/download/v%s" % version
                 }
             )
@@ -106,10 +107,10 @@ def downloadToLocal(arg):
     if version is not None:
         url = "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s-linux-amd64.tar.gz" % (
             version, version)
-        if Download(url, "containerd-%s-linux-amd64.tar.gz" % version):
+        if Download(url, "%s/containerd-%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/containerd-%s-linux-amd64.tar.gz" % version,
+                    'src': "./src/%s/containerd-%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/containerd/containerd/releases/download/v%s" % version
                 }
             )
@@ -117,10 +118,10 @@ def downloadToLocal(arg):
     version = version_map.get(kubeVersion).get('runtime').get('runc')
     if version is not None:
         url = "https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (version)
-        if Download(url, "runc.amd64"):
+        if Download(url, "%s/runc.amd64" % basePath):
             jsonFile.append(
                 {
-                    'src': "./src/runc.amd64",
+                    'src': "./src/%s/runc.amd64" % arg.kubernetes,
                     'dest': "/opencontainers/runc/releases/download/v%s" % version
                 }
             )
@@ -129,10 +130,10 @@ def downloadToLocal(arg):
     if version is not None:
         url = "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (
             version, version)
-        if Download(url, "crictl-v%s-linux-amd64.tar.gz" % version):
+        if Download(url, "%s/crictl-v%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/crictl-v%s-linux-amd64.tar.gz" % version,
+                    'src': "./src/%s/crictl-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
                 }
             )
@@ -140,35 +141,29 @@ def downloadToLocal(arg):
     version = version_map.get(kubeVersion).get('etcd')
     if version is not None:
         url = "https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (version, version)
-        if Download(url, "etcd-v%s-linux-amd64.tar.gz" % version):
+        if Download(url, "%s/etcd-v%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
+                    'src': "./src/%s/etcd-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/coreos/etcd/releases/download/v%s" % version
                 }
             )
 
     file_list = [
         "kube-apiserver",
-        "kube-apiserver.sha256",
         "kube-controller-manager",
-        "kube-controller-manager.sha256",
         "kube-scheduler",
-        "kube-scheduler.sha256",
         "kubectl",
-        "kubectl.sha256",
         "kube-proxy",
-        "kube-proxy.sha256",
         "kubelet",
-        "kubelet.sha256"
     ]
     for f in file_list:
         url = "https://storage.googleapis.com/kubernetes-release/release/v%s/bin/linux/amd64/%s" % (
             arg.kubernetes, f)
-        if Download(url, f):
+        if Download(url, "%s/%s" % (basePath, f)):
             jsonFile.append(
                 {
-                    'src': "./src/%s" % f,
+                    'src': "./src/%s/%s" % (arg.kubernetes, f),
                     'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
                 }
             )
@@ -177,15 +172,15 @@ def downloadToLocal(arg):
     if version is not None:
         url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
             version, version)
-        if Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version):
+        if Download(url, "%s/cni-plugins-linux-amd64-v%s.tgz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
+                    'src': "./src/%s/cni-plugins-linux-amd64-v%s.tgz" % (arg.kubernetes, version),
                     'dest': "/containernetworking/plugins/releases/download/v%s" % version
                 }
             )
 
-    with open("./src/upload.json", "w") as f:
+    with open("./src/%s.json" % arg.kubernetes, "w") as f:
         json.dump(jsonFile, f)
 
     print("files is save on src directory")
@@ -197,7 +192,7 @@ def uploadToNexus(arg):
         print("Username or Password is error!")
         sys.exit(2)
     print("Upload package to nexus...")
-    with open("./src/upload.json", "r") as f:
+    with open("./src/%s.json" % arg.kubernetes, "r") as f:
         for item in json.load(f):
             nexus.Upload(src=item.get('src'), directory=item.get('dest'))
     sys.exit(0)
@@ -215,6 +210,7 @@ if __name__ == "__main__":
     download.set_defaults(func=downloadToLocal)
 
     upload = subparsers.add_parser('upload')
+    upload.add_argument('--kubernetes', metavar='kubernetes', required=True, help='kubernetes version')
     upload.add_argument('--url', metavar='url', help='nexus url', required=True)
     upload.add_argument('--repository', metavar='repository', help='nexus repository name', required=True)
     upload.add_argument('--username', default=None, metavar='username', help='nexus username', required=True)

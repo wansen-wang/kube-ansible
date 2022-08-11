@@ -128,6 +128,7 @@ cd ./scripts
 
 # upload
 ./nexus.py upload \
+--kubernetes 1.14.10 \
 --url http://nexus.example.com \
 --repository kube-ansible \
 --username admin --password admin
