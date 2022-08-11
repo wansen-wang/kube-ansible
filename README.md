@@ -72,7 +72,7 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
+git clone -b 1.14 https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
 cd /usr/local/src/kube-ansible
 ```
 
@@ -159,56 +159,32 @@ about Makefile parameter
 ### Kubernetes management
 
 #### Deploy
-##### ca save to deployment server
-
-[![asciicast](https://asciinema.org/a/471287.svg)](https://asciinema.org/a/471287)
-
 
 ```
 cd /usr/local/src/kube-ansible
 
 # download from official
-make deploy \
-DOWNLOAD_WAY=official \
-KUBE_VERSION=1.14.10 \
-KUBE_NETWORK=calico
+make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.14.10 KUBE_NETWORK=calico
 
 # download from nexus 
-make deploy \
-DOWNLOAD_WAY=nexus \
-KUBE_NETWORK=calico \
+make deploy DOWNLOAD_WAY=nexus KUBE_VERSION=1.14.10 KUBE_NETWORK=calico \
 NEXUS_DOMAIN_NAME=http://nexus.example.com \
 NEXUS_REPOSITORY=kube-ansible \
 NEXUS_USERNAME=admin \
 NEXUS_PASSWORD=admin
 ```
 
-##### ca use to PKI server
-
-about pki server, you can reference [here](https://github.com/buxiaomo/pki-server)
-
-```
-cd /usr/local/src/kube-ansible
-
-make deploy DOWNLOAD_WAY=official \
-PKI_URL=http://pki.example.com/v1/pki/project \
-PROJECT_NAME=kube-ansible \
-PROJECT_ENV=dev \
-KUBE_VERSION=1.14.10 KUBE_NETWORK=calico
-```
+[![asciicast](https://asciinema.org/a/514169.svg)](https://asciinema.org/a/514169)
 
 #### Scale
 
-[![asciicast](https://asciinema.org/a/471288.svg)](https://asciinema.org/a/471288)
-
 ```
 cd /usr/local/src/kube-ansible
 
-make scale \
-DOWNLOAD_WAY=official \
-KUBE_VERSION=1.14.10 \
-KUBE_NETWORK=calico
+make scale
 ```
+
+[![asciicast](https://asciinema.org/a/NfYKR4PEimGQSKIjR0eKkSeOo.svg)](https://asciinema.org/a/NfYKR4PEimGQSKIjR0eKkSeOo)
 
 #### Upgrade
 
