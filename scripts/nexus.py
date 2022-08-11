@@ -87,7 +87,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/docker-%s.tgz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/docker-%s.tgz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/docker-%s.tgz" % (arg.kubernetes, version),
                     'dest': "/linux/static/stable/x86_64"
                 }
             )
@@ -98,7 +98,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/cri-o.amd64.v%s.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/cri-o.amd64.v%s.tar.gz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/cri-o.amd64.v%s.tar.gz" % (arg.kubernetes, version),
                     'dest': "/cri-o/cri-o/releases/download/v%s" % version
                 }
             )
@@ -110,7 +110,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/containerd-%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/containerd-%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/containerd-%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/containerd/containerd/releases/download/v%s" % version
                 }
             )
@@ -121,7 +121,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/runc.amd64" % basePath):
             jsonFile.append(
                 {
-                    'src': "./src/%s/runc.amd64" % arg.kubernetes,
+                    'src': "./scripts/src/%s/runc.amd64" % arg.kubernetes,
                     'dest': "/opencontainers/runc/releases/download/v%s" % version
                 }
             )
@@ -133,7 +133,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/crictl-v%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/crictl-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/crictl-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
                 }
             )
@@ -144,7 +144,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/etcd-v%s-linux-amd64.tar.gz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/etcd-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/etcd-v%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/coreos/etcd/releases/download/v%s" % version
                 }
             )
@@ -163,7 +163,7 @@ def downloadToLocal(arg):
         if Download(url, "%s/%s" % (basePath, f)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/%s" % (arg.kubernetes, f),
+                    'src': "./scripts/src/%s/%s" % (arg.kubernetes, f),
                     'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
                 }
             )
@@ -175,24 +175,27 @@ def downloadToLocal(arg):
         if Download(url, "%s/cni-plugins-linux-amd64-v%s.tgz" % (basePath, version)):
             jsonFile.append(
                 {
-                    'src': "./src/%s/cni-plugins-linux-amd64-v%s.tgz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/cni-plugins-linux-amd64-v%s.tgz" % (arg.kubernetes, version),
                     'dest': "/containernetworking/plugins/releases/download/v%s" % version
                 }
             )
 
-    with open("./src/%s.json" % arg.kubernetes, "w") as f:
+    with open("%s/%s.json" % (basePath, arg.kubernetes), "w") as f:
         json.dump(jsonFile, f)
 
     print("files is save on src directory")
 
 
 def uploadToNexus(arg):
+    basePath = os.path.split(os.path.realpath(__file__))[0]
+    basePath = basePath + "/src/" + arg.kubernetes
+
     nexus = Nexus(arg.url, arg.repository, arg.username, arg.password)
     if not nexus.Auth():
         print("Username or Password is error!")
         sys.exit(2)
     print("Upload package to nexus...")
-    with open("./src/%s.json" % arg.kubernetes, "r") as f:
+    with open("%s/%s.json" % (basePath, arg.kubernetes), "r") as f:
         for item in json.load(f):
             nexus.Upload(src=item.get('src'), directory=item.get('dest'))
     sys.exit(0)

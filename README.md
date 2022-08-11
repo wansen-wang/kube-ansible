@@ -119,17 +119,17 @@ For more instructions reference [inventory/README.md](https://github.com/buxiaom
 	You can run `./scripts/nexus.py` script on internet virtual machine to download pachage and then upload to nexus.
 
 ```
+# download
 cd /usr/local/src/kube-ansible
 pip3 install requests
-cd ./scripts
-
-# download
-./nexus.py download --kubernetes 1.14.10
+./scripts/nexus.py download --kubernetes 1.14.10
 
 # upload
-./nexus.py upload \
+cd /usr/local/src/kube-ansible
+pip3 install requests
+./scripts/nexus.py upload \
 --kubernetes 1.14.10 \
---url http://nexus.example.com \
+--url http://192.168.119.20:8081 \
 --repository kube-ansible \
 --username admin --password admin
 ```
