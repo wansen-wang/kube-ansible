@@ -25,9 +25,11 @@ def Download(url, path):
                     print('\r' + '%s %.2f%%' % (
                         '*' * int(size * 50 / content_size), float(size / content_size * 100)), end=' ')
             print()
+            return True
         else:
             raise Exception(response.status_code)
     except Exception as e:
+        return False
         print("Exception occurs in Downloading: %s..." % e)
 
 
@@ -81,70 +83,70 @@ def downloadToLocal(arg):
     version = version_map.get(kubeVersion).get('runtime').get('docker')
     if version is not None:
         url = "https://download.docker.com/linux/static/stable/x86_64/docker-%s.tgz" % version
-        Download(url, "docker-%s.tgz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/docker-%s.tgz" % version,
-                'dest': "/linux/static/stable/x86_64"
-            }
-        )
+        if Download(url, "docker-%s.tgz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/docker-%s.tgz" % version,
+                    'dest': "/linux/static/stable/x86_64"
+                }
+            )
 
     version = version_map.get(kubeVersion).get('runtime').get('crio')
     if version is not None:
         url = "https://github.com/cri-o/cri-o/releases/download/v%s/cri-o.amd64.v%s.tar.gz" % (version, version)
-        Download(url, "cri-o.amd64.v%s.tar.gz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/cri-o.amd64.v%s.tar.gz" % version,
-                'dest': "/cri-o/cri-o/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "cri-o.amd64.v%s.tar.gz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/cri-o.amd64.v%s.tar.gz" % version,
+                    'dest': "/cri-o/cri-o/releases/download/v%s" % version
+                }
+            )
 
     version = version_map.get(kubeVersion).get('runtime').get('containerd')
     if version is not None:
         url = "https://github.com/containerd/containerd/releases/download/v%s/containerd-%s-linux-amd64.tar.gz" % (
             version, version)
-        Download(url, "containerd-%s-linux-amd64.tar.gz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/containerd-%s-linux-amd64.tar.gz" % version,
-                'dest': "/containerd/containerd/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "containerd-%s-linux-amd64.tar.gz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/containerd-%s-linux-amd64.tar.gz" % version,
+                    'dest': "/containerd/containerd/releases/download/v%s" % version
+                }
+            )
 
     version = version_map.get(kubeVersion).get('runtime').get('runc')
     if version is not None:
         url = "https://github.com/opencontainers/runc/releases/download/v%s/runc.amd64" % (version)
-        Download(url, "runc.amd64")
-        jsonFile.append(
-            {
-                'src': "./src/runc.amd64",
-                'dest': "/opencontainers/runc/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "runc.amd64"):
+            jsonFile.append(
+                {
+                    'src': "./src/runc.amd64",
+                    'dest': "/opencontainers/runc/releases/download/v%s" % version
+                }
+            )
 
     version = version_map.get(kubeVersion).get('runtime').get('crictl')
     if version is not None:
         url = "https://github.com/kubernetes-sigs/cri-tools/releases/download/v%s/crictl-v%s-linux-amd64.tar.gz" % (
             version, version)
-        Download(url, "crictl-v%s-linux-amd64.tar.gz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/crictl-v%s-linux-amd64.tar.gz" % version,
-                'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "crictl-v%s-linux-amd64.tar.gz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/crictl-v%s-linux-amd64.tar.gz" % version,
+                    'dest': "/kubernetes-sigs/cri-tools/releases/download/v%s" % version
+                }
+            )
 
     version = version_map.get(kubeVersion).get('etcd')
     if version is not None:
         url = "https://github.com/coreos/etcd/releases/download/v%s/etcd-v%s-linux-amd64.tar.gz" % (version, version)
-        Download(url, "etcd-v%s-linux-amd64.tar.gz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
-                'dest': "/coreos/etcd/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "etcd-v%s-linux-amd64.tar.gz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/etcd-v%s-linux-amd64.tar.gz" % version,
+                    'dest': "/coreos/etcd/releases/download/v%s" % version
+                }
+            )
 
     file_list = [
         "kube-apiserver",
@@ -163,25 +165,25 @@ def downloadToLocal(arg):
     for f in file_list:
         url = "https://storage.googleapis.com/kubernetes-release/release/v%s/bin/linux/amd64/%s" % (
             arg.kubernetes, f)
-        Download(url, f)
-        jsonFile.append(
-            {
-                'src': "./src/%s" % f,
-                'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
-            }
-        )
+        if Download(url, f):
+            jsonFile.append(
+                {
+                    'src': "./src/%s" % f,
+                    'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
+                }
+            )
 
     version = version_map.get(kubeVersion).get('cni')
     if version is not None:
         url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
             version, version)
-        Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version)
-        jsonFile.append(
-            {
-                'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
-                'dest': "/containernetworking/plugins/releases/download/v%s" % version
-            }
-        )
+        if Download(url, "cni-plugins-linux-amd64-v%s.tgz" % version):
+            jsonFile.append(
+                {
+                    'src': "./src/cni-plugins-linux-amd64-v%s.tgz" % version,
+                    'dest': "/containernetworking/plugins/releases/download/v%s" % version
+                }
+            )
 
     with open("./src/upload.json", "w") as f:
         json.dump(jsonFile, f)
