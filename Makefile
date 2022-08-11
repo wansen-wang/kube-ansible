@@ -48,7 +48,6 @@ deploy:
 		PKI_URL=$(PKI_URL) ./scripts/action.sh deploy
 
 scale: 
-	@echo -e "\033[32mScale kubernetes node...\033[0m"
 	@PROJECT_NAME=$(PROJECT_NAME) \
 		PROJECT_ENV=$(PROJECT_ENV) \
 		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
@@ -63,7 +62,6 @@ scale:
 		PKI_URL=$(PKI_URL) ./scripts/action.sh scale
 
 upgrade: 
-	@echo -e "\033[32mUpgrade kubernetes...\033[0m"
 	@PROJECT_NAME=$(PROJECT_NAME) \
 		PROJECT_ENV=$(PROJECT_ENV) \
 		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
@@ -76,13 +74,6 @@ upgrade:
 		NEXUS_USERNAME=$(NEXUS_USERNAME) \
 		NEXUS_PASSWORD=$(NEXUS_PASSWORD) \
 		PKI_URL=$(PKI_URL) ./scripts/action.sh upgrade
-
-uninstall:
-	@echo -e "\033[32mUninstall kubernetes...\033[0m"
-	@ansible-playbook -i ./inventory/hosts uninstall.yml
-
-fix:
-	@ansible-playbook -i ./inventory/hosts fix-python3.yml
 
 version: 
 	@command -v jq > /dev/null 2>&1 || ( echo -e "\033[32mPlease install jq\033[0m" &&  exit 1)
@@ -104,13 +95,8 @@ version:
 	@paste -d '|' .etcd .docker .kubernetes .containerd .crictl .runc .cni | column -t -s '|'
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
 
-nexus:
-	@./scripts/nexus.py --download \
-		--kubernetes=$(KUBE_VERSION) \
-		--url=$(NEXUS_DOMAIN_NAME) \
-		--repository=$(NEXUS_REPOSITORY) \
-		--username=$(NEXUS_HTTP_USERNAME) \
-		--password=$(NEXUS_HTTP_PASSWORD)
+offline:
+	@cd ./scripts && KUBE_VERSION=$(KUBE_VERSION) ./make-offline-package.sh
 
 check:
 	@cd ./test && ./check-cluster.sh
