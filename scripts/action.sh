@@ -18,8 +18,8 @@ echo -e "Binary download mode: \t\t\033[32m${DOWNLOAD_WAY}\033[0m"
 echo -e "Kubernetes runtime mode: \t\033[32m${KUBE_RUNTIME}\033[0m"
 echo -e "Kubernetes version: \t\t\033[32m${KUBE_VERSION}\033[0m"
 echo -e "Kubernetes network: \t\t\033[32m${KUBE_NETWORK}\033[0m"
-
 ANSIBLE_ENV="-e PROJECT_NAME=${PROJECT_NAME} -e PROJECT_ENV=${PROJECT_ENV} -e DOWNLOAD_WAY=${DOWNLOAD_WAY} -e KUBE_VERSION=${KUBE_VERSION} -e KUBE_RUNTIME=${KUBE_RUNTIME} -e KUBE_NETWORK=${KUBE_NETWORK}"
+
 if [ ${REGISTRY_URL} ]; then
   echo -e "Private registry: \t\t\033[32m${REGISTRY_URL}\033[0m"
   ANSIBLE_ENV="${ANSIBLE_ENV} -e REGISTRY_URL=${REGISTRY_URL}"
