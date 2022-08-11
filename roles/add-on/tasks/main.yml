@@ -28,20 +28,10 @@
     - "coredns.yaml"
 
 - name: Apply manifest to the cluster
-  ansible.builtin.command: "kubectl apply -f /etc/kubernetes/apps/{{ item }}"
+  kubernetes.core.k8s:
+    state: present
+    src: "/etc/kubernetes/apps/{{ item }}"
   run_once: true
   with_items:
     - "metrics.yaml"
     - "coredns.yaml"
-
-# - name: Download manifest to the cluster
-#   get_url:
-#     url: "{{ item.url }}"
-#     dest: '{{ apps.location | default("/etc/kubernetes/apps") }}/{{ item.name }}'
-#   with_items: "{{ apps.files }}"
-#   register: manifests
-#   until: manifests is succeeded
-#   retries: 10
-#   environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
-
-
