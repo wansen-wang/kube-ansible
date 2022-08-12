@@ -104,6 +104,3 @@ docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
-
-mv /etc/docker/daemon.json.bak /etc/docker/daemon.json
-systemctl restart docker.service
