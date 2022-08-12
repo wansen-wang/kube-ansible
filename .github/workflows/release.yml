@@ -16,7 +16,7 @@ jobs:
         run: |
           zip -qr ./kube-ansible-online.zip ../kube-ansible
           export GIT_TAG=${{ github.ref_name }}
-          ./scripts/nexus.py download --kubernetes ${GIT_TAG:1}
+          ./scripts/nexus.py download --quiet --kubernetes ${GIT_TAG:1}
           rm -rf ./scripts/__pycache__
           zip -qr ./kube-ansible-offline.zip ../kube-ansible
           ls -lha
