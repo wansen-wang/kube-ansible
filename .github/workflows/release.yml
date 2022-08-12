@@ -15,7 +15,10 @@ jobs:
       - name: Setup environment
         run: |
           echo ${{ github.ref }}
+          echo ${{ github.ref_name }}
+          echo "${GITHUB_REF##*/}"
           ls -l
+          # ./scripts/nexus.py download --kubernetes
 
       # - name: Create Release
       #   id: create_release
