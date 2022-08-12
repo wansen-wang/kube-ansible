@@ -1,6 +1,7 @@
 #!/bin/bash
-curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+command -v docker || curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 mkdir -p /etc/docker
+[ -f /etc/docker/daemon.json ] && mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
 cat > /etc/docker/daemon.json << EOF
 {
     "builder": {
@@ -57,10 +58,12 @@ cat > /etc/docker/daemon.json << EOF
 }
 EOF
 systemctl restart docker.service
+sleep 5
 
-docker run -d --name registry-v2 \
+docker rm -f registry
+docker run -d --name registry \
 -p 5000:5000 --restart always \
--v ./src/registry:/var/lib/registry \
+-v `pwd`/src/registry:/var/lib/registry \
 registry:2.8.1
 
 REGISTRY_URL="127.0.0.1:5000/infra"
@@ -102,4 +105,6 @@ docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
 
-./nexus.py --download --kubernetes ${KUBE_VERSION}
+mv /etc/docker/daemon.json.bak /etc/docker/daemon.json
+systemctl restart docker.service
+# ./nexus.py --download --kubernetes ${KUBE_VERSION}

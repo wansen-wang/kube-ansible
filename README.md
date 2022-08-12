@@ -129,7 +129,7 @@ cd /usr/local/src/kube-ansible
 pip3 install requests
 ./scripts/nexus.py upload \
 --kubernetes 1.14.10 \
---url http://192.168.119.20:8081 \
+--url http://nexus.example.com \
 --repository kube-ansible \
 --username admin --password admin
 ```
