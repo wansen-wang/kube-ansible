@@ -221,4 +221,9 @@ if __name__ == "__main__":
     upload.set_defaults(func=uploadToNexus)
 
     args = parser.parse_args()
-    args.func(args)
+
+    try:
+        args.func(args)
+    except AttributeError:
+        parser.print_help()
+        parser.exit()
