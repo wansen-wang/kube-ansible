@@ -1,7 +1,7 @@
 #!/bin/bash
-command -v docker || curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+command -v docker &> /dev/null || curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 mkdir -p /etc/docker
-[ -f /etc/docker/daemon.json ] && mv /etc/docker/daemon.json /etc/docker/daemon.json.bak
 cat > /etc/docker/daemon.json << EOF
 {
     "builder": {
@@ -63,7 +63,7 @@ sleep 5
 docker rm -f registry
 docker run -d --name registry \
 -p 5000:5000 --restart always \
--v `pwd`/src/registry:/var/lib/registry \
+-v ${SHELL_FOLDER}/src/registry:/var/lib/registry \
 registry:2.8.1
 
 REGISTRY_URL="127.0.0.1:5000/infra"
@@ -107,4 +107,3 @@ docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metri
 
 mv /etc/docker/daemon.json.bak /etc/docker/daemon.json
 systemctl restart docker.service
-# ./nexus.py --download --kubernetes ${KUBE_VERSION}
