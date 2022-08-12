@@ -14,11 +14,11 @@ jobs:
 
       - name: Setup environment
         run: |
-          zip -r ./kube-ansible-online.zip ../kube-ansible
+          zip -qr ./kube-ansible-online.zip ../kube-ansible
           export GIT_TAG=${{ github.ref_name }}
           ./scripts/nexus.py download --kubernetes ${GIT_TAG:1}
-          find . -name __pycache__ -print -exec rm -rf {} \;
-          zip -r ./kube-ansible-offline.zip ../kube-ansible
+          rm -rf ./scripts/__pycache__
+          zip -qr ./kube-ansible-offline.zip ../kube-ansible
           ls -lha
 
       # - name: Create Release
