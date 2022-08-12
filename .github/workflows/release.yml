@@ -14,11 +14,11 @@ jobs:
 
       - name: Setup environment
         run: |
-          zip -qr /tmp/kube-ansible-online.zip ../kube-ansible
+          tar -zcf /tmp/kube-ansible-online.tar.gz ../kube-ansible
           export GIT_TAG=${{ github.ref_name }}
           ./scripts/nexus.py download --quiet --kubernetes ${GIT_TAG:1}
           rm -rf ./scripts/__pycache__
-          zip -qr /tmp/kube-ansible-offline.zip ../kube-ansible
+          tar -zcf /tmp/kube-ansible-offline.tar.gz ../kube-ansible
           ls -lha
 
       - name: Create Release
@@ -38,9 +38,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/kube-ansible-online.zip
-          asset_name: kube-ansible-online.zip
-          asset_content_type: application/zip
+          asset_path: /tmp/kube-ansible-online.tar.gz
+          asset_name: kube-ansible-online.tar.gz
+          asset_content_type: application/gzip
 
       - name: Upload Release Asset(kube-ansible-offline)
         uses: actions/upload-release-asset@v1
@@ -48,6 +48,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/kube-ansible-offline.zip
-          asset_name: kube-ansible-offline.zip
-          asset_content_type: application/zip
+          asset_path: /tmp/kube-ansible-offline.tar.gz
+          asset_name: kube-ansible-offline.tar.gz
+          asset_content_type: application/gzip
