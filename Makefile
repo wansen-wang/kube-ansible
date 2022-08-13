@@ -117,3 +117,8 @@ local: clean
 clean:
 	@rm -rf .ssh
 	@vagrant destroy -f
+
+e2e:
+	@wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.56.9/sonobuoy_0.56.9_linux_amd64.tar.gz -O /usr/local/src/sonobuoy_0.56.9_linux_amd64.tar.gz
+	@tar -zvxf /usr/local/src/sonobuoy_0.56.9_linux_amd64.tar.gz -C /usr/local/bin --exclude=LICENSE
+	@sonobuoy run --mode=certified-conformance --wait
