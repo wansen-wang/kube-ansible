@@ -4,7 +4,7 @@
   become: true
   any_errors_fatal: true
   roles:
-    - common
+    - prepare
     - motd
     - chrony
   tags:

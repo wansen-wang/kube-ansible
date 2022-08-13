@@ -2,7 +2,8 @@
 - name: Base environment configuration
   hosts: all
   roles:
-    - common
+    - prepare
+    - motd
     - chrony
   tags:
     - common

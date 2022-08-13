@@ -3,7 +3,8 @@
   hosts: worker
   become: yes
   roles:
-    - common
+    - prepare
+    - motd
     - chrony
   tags:
     - common
