@@ -47,10 +47,10 @@ class Nexus:
         if self.username is not None and self.password is not None:
             auth = (self.username, self.password)
             resp = requests.put(
-                "%s/%s/%s" % (url, directory, src.replace("./scripts/src/", "")), data=content, auth=auth)
+                "%s/%s/%s" % (url, directory, os.path.basename(src)), data=content, auth=auth)
         else:
             resp = requests.put(
-                "%s/%s/%s" % (url, directory, src.replace("./scripts/src/", "")), data=content)
+                "%s/%s/%s" % (url, directory, os.path.basename(src)), data=content)
         if resp.status_code != 201:
             print("Upload failed, status code: %d" % resp.status_code)
             return False
