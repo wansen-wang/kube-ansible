@@ -107,6 +107,15 @@ for example:
 [kubernetes:children]
 master
 worker
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_port=22
+ansible_ssh_user=root
+# ansible_ssh_pass=root
+# ansible_sudo_user=root
+# ansible_sudo_pass=root
+
 ```
 
 For more instructions reference [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)

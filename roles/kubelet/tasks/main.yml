@@ -4,10 +4,12 @@
 
 - name: Drain Node
   ansible.builtin.shell: |
-    kubectl drain {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %} --ignore-daemonsets --delete-emptydir-data --force
+    kubectl drain {% if nodename is defined %}{{ nodename | lower }}{% else %}{{ hostvars[inventory_hostname].ansible_hostname | lower }}{% endif %} --ignore-daemonsets --force
   run_once: true
-  delegate_to: localhost
-  when: KUBE_ACTION | default('deploy')  == "upgrade"
+  delegate_to: "{{ groups['master'][0] }}"
+  when: 
+    - KUBE_ACTION | default('deploy')  == "upgrade"
+    - inventory_hostname in groups['worker']
   notify: Undrain Node
 
 - name: Download package

@@ -58,3 +58,12 @@
     - cleanup
   tags:
     - kube-worker
+
+- name: Deployment kubernetes add-on
+  hosts: master
+  become: true
+  any_errors_fatal: true
+  roles:
+    - add-on
+  tags:
+    - add-on

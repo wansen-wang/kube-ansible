@@ -26,6 +26,9 @@ NEXUS_PASSWORD:=
 # PKI_URL:=http://127.0.0.1:8080/v1/pki/project
 PKI_URL:=
 
+# e2e test software version
+SONOBUOY_VERSION:=0.17.2
+
 # Install ansible on depoy server
 runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
@@ -119,6 +122,11 @@ clean:
 	@vagrant destroy -f
 
 e2e:
-	@wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v0.56.9/sonobuoy_0.56.9_linux_amd64.tar.gz -O /usr/local/src/sonobuoy_0.56.9_linux_amd64.tar.gz
-	@tar -zvxf /usr/local/src/sonobuoy_0.56.9_linux_amd64.tar.gz -C /usr/local/bin --exclude=LICENSE
-	@sonobuoy run --mode=certified-conformance --wait
+	@wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v$(SONOBUOY_VERSION)/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz -O /usr/local/src/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz
+	@tar -zxf /usr/local/src/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz -C /usr/local/bin --exclude=LICENSE
+	@sonobuoy run --image-pull-policy=IfNotPresent --mode=certified-conformance --wait
+	@rm -rf test/sonobuoy && mkdir -p ./test/sonobuoy
+	@tar -zxf `sonobuoy retrieve /tmp` --strip-components=4 -C ./test/sonobuoy plugins/e2e/results/global/e2e.log plugins/e2e/results/global/junit_01.xml
+	@kubectl get nodes -o wide
+	@sonobuoy results `sonobuoy retrieve /tmp`
+	@sonobuoy delete --all
