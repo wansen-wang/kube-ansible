@@ -17,7 +17,7 @@ jobs:
           export GIT_TAG=${{ github.ref_name }}
           tar -zcf /tmp/kube-ansible-online.tar.gz ../kube-ansible
           ./scripts/nexus.py download --quiet --kubernetes ${GIT_TAG:1}
-          ./scripts/make-offline-registry.sh
+          sudo ./scripts/make-offline-registry.sh
           rm -rf ./scripts/__pycache__
           tar -zcf /tmp/kube-ansible-offline.tar.gz ../kube-ansible
 

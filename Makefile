@@ -125,8 +125,7 @@ e2e:
 	@wget https://github.com/vmware-tanzu/sonobuoy/releases/download/v$(SONOBUOY_VERSION)/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz -O /usr/local/src/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz
 	@tar -zxf /usr/local/src/sonobuoy_$(SONOBUOY_VERSION)_linux_amd64.tar.gz -C /usr/local/bin --exclude=LICENSE
 	@sonobuoy run --image-pull-policy=IfNotPresent --mode=certified-conformance --wait
-	@rm -rf test/sonobuoy && mkdir -p ./test/sonobuoy
-	@tar -zxf `sonobuoy retrieve /tmp` --strip-components=4 -C ./test/sonobuoy plugins/e2e/results/global/e2e.log plugins/e2e/results/global/junit_01.xml
+	@tar -zxf `sonobuoy retrieve /tmp` --strip-components=4 -C ./test/k8s-conformance plugins/e2e/results/global/e2e.log plugins/e2e/results/global/junit_01.xml
 	@kubectl get nodes -o wide
 	@sonobuoy results `sonobuoy retrieve /tmp`
 	@sonobuoy delete --all

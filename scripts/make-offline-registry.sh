@@ -4,57 +4,9 @@ command -v docker &> /dev/null || curl -fsSL https://get.docker.com | bash -s do
 mkdir -p /etc/docker
 cat > /etc/docker/daemon.json << EOF
 {
-    "builder": {
-        "gc": {
-            "defaultKeepStorage": "20GB",
-            "enabled": true
-        }
-    },
-    "data-root": "/var/lib/docker",
-    "debug": false,
-    "default-ulimits": {
-        "core": {
-            "Hard": -1,
-            "Name": "core",
-            "Soft": -1
-        },
-        "nofile": {
-            "Hard": 65535,
-            "Name": "nofile",
-            "Soft": 65535
-        },
-        "nproc": {
-            "Hard": 65535,
-            "Name": "nproc",
-            "Soft": 65535
-        }
-    },
-    "exec-opts": [
-        "native.cgroupdriver=systemd"
-    ],
-    "experimental": false,
-    "features": {
-        "buildkit": false
-    },
-    "icc": false,
     "insecure-registries": [
         "0.0.0.0/0"
-    ],
-    "log-driver": "json-file",
-    "log-opts": {
-        "max-file": "5",
-        "max-size": "100m"
-    },
-    "max-concurrent-downloads": 20,
-    "max-concurrent-uploads": 10,
-    "registry-mirrors": [
-        "https://i3jtbyvy.mirror.aliyuncs.com"
-    ],
-    "storage-driver": "overlay2",
-    "storage-opts": [
-        "overlay2.override_kernel_check=true"
-    ],
-    "userland-proxy": false
+    ]
 }
 EOF
 systemctl restart docker.service
@@ -104,3 +56,4 @@ docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
+docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
