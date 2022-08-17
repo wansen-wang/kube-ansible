@@ -4,6 +4,8 @@ This project will used ansible to deployment kubernetes.
 
 Read the documentation to see how the project is used
 
+kube-ansible passed the [cncf conformance](https://github.com/cncf/k8s-conformance) test [details](test/k8s-conformance/README.md)
+
 * [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
 * [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
 
