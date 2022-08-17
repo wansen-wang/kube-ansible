@@ -107,6 +107,7 @@ for example:
 
 [worker]
 192.168.56.11
+192.168.56.12
 
 [kubernetes:children]
 master
@@ -119,7 +120,6 @@ ansible_ssh_user=root
 # ansible_ssh_pass=root
 # ansible_sudo_user=root
 # ansible_sudo_pass=root
-
 ```
 
 For more instructions reference [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
