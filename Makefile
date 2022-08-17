@@ -8,9 +8,9 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # Binary version
-KUBE_VERSION:=1.14.0
+KUBE_VERSION:=1.14.10
 KUBE_RUNTIME:=docker
-KUBE_NETWORK:=calico
+KUBE_NETWORK:=flannel
 
 # Private registry
 # eg: 192.168.119.20/infra
