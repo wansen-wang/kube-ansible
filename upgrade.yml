@@ -51,8 +51,8 @@
   serial: 1
   hosts: worker
   roles:
-    - kubelet
     - kubectl
+    - kubelet
     - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kube-proxy
     - cleanup
