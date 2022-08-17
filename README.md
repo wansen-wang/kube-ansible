@@ -85,9 +85,10 @@ make runtime
 
 #### Configuration parameters
 
+Please modify the parameters on group_vars directory if  you need
+
 ```
-cd group_vars
-make
+make -C group_vars/
 ```
 
 * [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
