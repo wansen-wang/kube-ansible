@@ -19,12 +19,12 @@ def component_version(value):
                 "containerd": "1.5.11",
                 "crio": "1.14.12",
                 "runc": "1.0.1",
-                "crictl": "1.24.2"
+                "crictl": "1.12.0"
             },
             "plugin": {
                 "calico": "3.12.3",
                 "flannel": "0.10.0",
-                "coredns": "1.6.7",
+                "coredns": "1.3.1",
                 "metrics": "0.5.2"
             }
         },
@@ -59,7 +59,7 @@ def component_version(value):
                 "calico": "3.16.10",
                 "cilium": "1.5.5",
                 "flannel": "0.11.0",
-                "coredns": "1.6.7",
+                "coredns": "1.6.2",
                 "metrics": "0.5.2"
             }
         },
@@ -77,7 +77,7 @@ def component_version(value):
                 "calico": "3.17.6",
                 "cilium": "1.7.2",
                 "flannel": "0.12.0",
-                "coredns": "1.6.7",
+                "coredns": "1.6.5",
                 "metrics": "0.5.2"
             }
         },
