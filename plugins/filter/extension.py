@@ -15,7 +15,7 @@ def component_version(value):
             "etcd": "3.3.10",
             "cni": "0.8.1",
             "runtime": {
-                "docker": "18.09.9",
+                "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.14.12",
                 "runc": "1.0.1",
@@ -32,7 +32,7 @@ def component_version(value):
             "etcd": "3.3.10",
             "cni": "0.8.1",
             "runtime": {
-                "docker": "18.09.9",
+                "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.15.4",
                 "runc": "1.0.1",
