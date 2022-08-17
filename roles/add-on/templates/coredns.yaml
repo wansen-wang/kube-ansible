@@ -62,8 +62,9 @@ data:
         kubernetes cluster.local in-addr.arpa ip6.arpa {
           pods verified
           fallthrough in-addr.arpa ip6.arpa
+          ttl 30
         }
-        prometheus :9153
+        prometheus 0.0.0.0:9153
         forward . /etc/resolv.conf
         cache 30
         loop
@@ -153,11 +154,6 @@ spec:
           timeoutSeconds: 5
           successThreshold: 1
           failureThreshold: 5
-        readinessProbe:
-          httpGet:
-            path: /ready
-            port: 8181
-            scheme: HTTP
       dnsPolicy: Default
       volumes:
         - name: config-volume
