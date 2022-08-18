@@ -13,7 +13,7 @@ def component_version(value):
     version_map = {
         "1.14": {
             "etcd": "3.3.10",
-            "cni": "0.8.1",
+            "cni": "0.7.5",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
@@ -30,7 +30,7 @@ def component_version(value):
         },
         "1.15": {
             "etcd": "3.3.10",
-            "cni": "0.8.1",
+            "cni": "0.7.5",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
@@ -47,7 +47,7 @@ def component_version(value):
         },
         "1.16": {
             "etcd": "3.3.15",
-            "cni": "0.8.6",
+            "cni": "0.7.5",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
