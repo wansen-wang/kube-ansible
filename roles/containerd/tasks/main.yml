@@ -3,26 +3,9 @@
 - name: Set OS dependent variables
   include_vars: "{{ DOWNLOAD_WAY | default('official') }}.yml"
 
-- name: Download RunC package
+- name: Download package
   get_url:
-    url: "{{ runc_download_url }}"
-    dest: /usr/local/bin/runc
-    force: true
-    mode: 0755
-    owner: root
-    group: root
-    url_username: "{{ NEXUS_USERNAME | default('') }}"
-    url_password: "{{ NEXUS_PASSWORD | default('') }}"
-    timeout: 3
-  register: runc_pkg
-  until: runc_pkg is succeeded
-  retries: 10
-  notify: Start Containerd
-  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
-
-- name: Download Containerd package
-  get_url:
-    url: "{{ containerd_download_url }}"
+    url: "{{ download_url }}"
     dest: "/usr/local/src/containerd-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
@@ -45,33 +28,8 @@
     mode: 0755
     remote_src: yes
     extra_opts:
-      - --strip-components=1
+      - --strip-components=1 --exclude=opt --exclude=etc
   notify: Start Containerd
-
-- name: Download Crictl package
-  get_url:
-    url: "{{ crictl_download_url }}"
-    dest: "/usr/local/src/crictl-v{{ KUBE_VERSION | component_version | community.general.json_query('runtime.crictl') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
-    mode: 0644
-    owner: root
-    group: root
-    url_username: "{{ NEXUS_USERNAME | default('') }}"
-    url_password: "{{ NEXUS_PASSWORD | default('') }}"
-    timeout: 3
-  register: crictl_pkg
-  until: crictl_pkg is succeeded
-  retries: 10
-  notify: Start Containerd
-  environment: "{{ proxy_env | default({'http_proxy': '', 'https_proxy': '', 'no_proxy': ''}) }}"
-
-- name: Extract Crictl package
-  ansible.builtin.unarchive:
-    src: "/usr/local/src/crictl-v{{ KUBE_VERSION | component_version | community.general.json_query('runtime.crictl') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
-    dest: /usr/local/bin
-    mode: 0755
-    owner: root
-    group: root
-    remote_src: yes
 
 - name: Configuration Crictl
   ansible.builtin.template:
