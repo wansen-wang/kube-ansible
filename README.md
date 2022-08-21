@@ -178,10 +178,10 @@ about Makefile parameter
 cd /usr/local/src/kube-ansible
 
 # download from official
-make deploy DOWNLOAD_WAY=official KUBE_VERSION=1.14.10 KUBE_NETWORK=calico
+make deploy DOWNLOAD_WAY=official
 
 # download from nexus 
-make deploy DOWNLOAD_WAY=nexus KUBE_VERSION=1.14.10 KUBE_NETWORK=calico \
+make deploy DOWNLOAD_WAY=nexus \
 NEXUS_DOMAIN_NAME=http://nexus.example.com \
 NEXUS_REPOSITORY=kube-ansible \
 NEXUS_USERNAME=admin \
