@@ -8,6 +8,7 @@ import json
 from version import version_map
 from distutils.version import LooseVersion
 
+
 def Download(url, path, quiet):
     response = requests.get(url, stream=True)
     size = 0
@@ -107,13 +108,13 @@ def downloadToLocal(arg):
 
     version = version_map.get(kubeVersion).get('runtime').get('containerd')
     if version is not None:
-        
-        url = "https://github.com/containerd/containerd/releases/download/v%s/cri-containerd-%s-linux-amd64.tar.gz" % (
+
+        url = "https://github.com/containerd/containerd/releases/download/v%s/cri-containerd-cni-%s-linux-amd64.tar.gz" % (
             version, version)
-        if Download(url, "%s/cri-containerd-%s-linux-amd64.tar.gz" % (basePath, version), arg.quiet):
+        if Download(url, "%s/cri-containerd-cni-%s-linux-amd64.tar.gz" % (basePath, version), arg.quiet):
             jsonFile.append(
                 {
-                    'src': "./scripts/src/%s/cri-containerd-%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/cri-containerd-cni-%s-linux-amd64.tar.gz" % (arg.kubernetes, version),
                     'dest': "/containerd/containerd/releases/download/v%s" % version
                 }
             )
@@ -131,17 +132,21 @@ def downloadToLocal(arg):
 
     version = version_map.get(kubeVersion).get('cni')
     if version is not None:
-        if version >= 0.8.0
-        url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
-            version, version)
-        if Download(url, "%s/cni-plugins-linux-amd64-v%s.tgz" % (basePath, version), arg.quiet):
+        if LooseVersion(version) >= LooseVersion('0.8.0'):
+            url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
+                version, version)
+            filename = "cni-plugins-linux-amd64-v%s.tgz" % (version)
+        else:
+            url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-amd64-v%s.tgz" % (
+                version, version)
+            filename = "cni-plugins-amd64-v%s.tgz" % (version)
+        if Download(url, "%s/%s" % (basePath, filename), arg.quiet):
             jsonFile.append(
                 {
-                    'src': "./scripts/src/%s/cni-plugins-linux-amd64-v%s.tgz" % (arg.kubernetes, version),
+                    'src': "./scripts/src/%s/%s" % (arg.kubernetes, filename),
                     'dest': "/containernetworking/plugins/releases/download/v%s" % version
                 }
             )
-
 
     file_list = [
         "kube-apiserver",
@@ -161,8 +166,6 @@ def downloadToLocal(arg):
                     'dest': "/kubernetes-release/release/v%s/bin/linux/amd64" % arg.kubernetes
                 }
             )
-
-
 
     with open("%s/%s.json" % (basePath, arg.kubernetes), "w") as f:
         json.dump(jsonFile, f)
@@ -193,7 +196,7 @@ if __name__ == "__main__":
         help='download or upload'
     )
     download = subparsers.add_parser('download')
-    download.add_argument('--quiet', action='store_true',  help='silent download')
+    download.add_argument('--quiet', action='store_true', help='quiet download')
     download.add_argument('--kubernetes', metavar='kubernetes', required=True, help='kubernetes version')
     download.set_defaults(func=downloadToLocal)
 
