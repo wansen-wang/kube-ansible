@@ -6,7 +6,7 @@
 - name: Download package
   get_url:
     url: "{{ download_url }}"
-    dest: "cri-containerd-cni-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    dest: "/usr/local/src/cri-containerd-cni-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     mode: 0644
     owner: root
     group: root
@@ -21,14 +21,17 @@
 
 - name: Extract Containerd package
   ansible.builtin.unarchive:
-    src: "cri-containerd-cni-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
+    src: "/usr/local/src/cri-containerd-cni-{{ KUBE_VERSION | component_version | community.general.json_query('runtime.containerd') }}-{{ ansible_system | lower }}-{% if ansible_architecture == 'aarch64' %}arm64{% elif ansible_architecture == 'x86_64' %}amd64{% endif %}.tar.gz"
     dest: /usr/local/bin
     owner: root
     group: root
     mode: 0755
     remote_src: yes
     extra_opts:
-      - --strip-components=3 --exclude=opt --exclude=etc
+      - --strip-components=3
+    exclude:
+      - "opt"
+      - "etc"
   notify: Start Containerd
 
 - name: Configuration Crictl
