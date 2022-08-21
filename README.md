@@ -36,19 +36,19 @@ All node please install python3.
 
 ## kube-ansible installs the version corresponding to the k8s component
 
-| Kubernetes | Etcd    | Docker  | CNI    | CoreDNS | Calico | Crictl | metrics-server | 
+| Kubernetes | Etcd    | Docker  | CNI    | CoreDNS | Calico  | metrics-server | pause |
 |---|---|---|---|---|---|---|---|
-| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10 | v19.03.9 | v0.7.5 | v1.3.1 | v3.12 | v1.12.0 | v0.3.1 |
-| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10 | v19.03.9 | v0.7.5 | v1.3.1 | v3.13 | v1.14.0 | v0.3.3 |
-| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15 | v19.03.9 | v0.7.5 | v1.6.2 | v3.16 | v1.14.0 | v0.3.4 |
-| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3 | v19.03.9 | v0.7.5 | v1.6.5 | v3.17 | v1.14.0 | v0.3.4 |
-| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3 | v19.03.9 | v0.8.5 | v1.6.7 | v3.18 | v1.17.0 | v0.3.4 |
-| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.9 | v19.03.9 | v0.8.6 | v1.7.0 | v3.20 | v1.17.0 | v0.3.4 |
-| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md) | v3.4.13 | v19.03.9 | v0.8.7 | v1.7.0 | v3.21 | v1.19.0 | v0.3.4 |
-| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md) | v3.4.13 | v20.10.16 | v0.8.7 | v1.8.0 | v3.23 | v1.20.0 | v0.3.4 |
-| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | v20.10.16 | v0.9.1 | v1.8.4 | v3.23 | v1.21.0 | v0.4.4 |
-| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.0 | v20.10.16 | v0.9.1 | v1.8.6 | v3.23 | v1.22.0 | v0.4.4 |
-| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3 | v20.10.16 | v0.9.1 | v1.8.6 | v3.23 | v1.22.0 | v0.4.4 |
+| [1.14.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.14.md) | v3.3.10 | v19.03.9 | v0.7.5 | v1.3.1 | v3.12 | v0.5.2 | 3.1 |
+| [1.15.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.15.md) | v3.3.10 | v19.03.9 | v0.7.5 | v1.3.1 | v3.13 | v0.5.2 | 3.1 |
+| [1.16.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md) | v3.3.15 | v19.03.9 | v0.7.5 | v1.6.2 | v3.16 | v0.5.2 | 3.1 |
+| [1.17.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md) | v3.4.3 | v19.03.9 | v0.7.5 | v1.6.5 | v3.17 | v0.5.2 | 3.1 |
+| [1.18.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md) | v3.4.3 | v19.03.9 | v0.8.5 | v1.6.7 | v3.18 | v0.5.2 | 3.2 |
+| [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.13 | v19.03.9 | v0.8.6 | v1.7.0 | v3.20 | v0.5.2 | 3.2 |
+| [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md) | v3.4.13 | v19.03.9 | v0.8.7 | v1.7.0 | v3.21 | v0.6.1 | 3.2 |
+| [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md) | v3.4.13 | v20.10.16 | v0.8.7 | v1.8.0 | v3.23 | v0.6.1 | 3.4.1 |
+| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | v20.10.16 | v0.9.1 | v1.8.4 | v3.23| v0.6.1 | 3.5 |
+| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.1 | v20.10.16 | v0.9.1 | v1.8.6 | v3.23| v0.6.1 | 3.6 |
+| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3 | v20.10.16 | v0.9.1 | v1.8.6 | v3.23| v0.6.1 | 3.6 |
 
 
 ## How to use

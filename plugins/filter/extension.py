@@ -18,14 +18,11 @@ def component_version(value):
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.14.12",
-                "runc": "1.0.1",
-                "crictl": "1.12.0"
             },
             "plugin": {
-                "calico": "3.12.3",
-                "flannel": "0.10.0",
                 "coredns": "1.3.1",
-                "metrics": "0.5.2"
+                "metrics": "0.5.2",
+                "pause": "3.1"
             }
         },
         "1.15": {
@@ -35,14 +32,11 @@ def component_version(value):
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.15.4",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.15.5",
-                "flannel": "0.10.0",
-                "coredns": "1.6.7",
-                "metrics": "0.5.2"
+                "coredns": "1.3.1",
+                "metrics": "0.5.2",
+                "pause": "3.1"
             }
         },
         "1.16": {
@@ -52,158 +46,122 @@ def component_version(value):
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.16.6",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.16.10",
-                "cilium": "1.5.5",
-                "flannel": "0.11.0",
                 "coredns": "1.6.2",
-                "metrics": "0.5.2"
+                "metrics": "0.5.2",
+                "pause": "3.1"
             }
         },
         "1.17": {
             "etcd": "3.4.3",
-            "cni": "0.8.6",
+            "cni": "0.7.5",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.17.5",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.17.6",
-                "cilium": "1.7.2",
-                "flannel": "0.12.0",
                 "coredns": "1.6.5",
-                "metrics": "0.5.2"
+                "metrics": "0.5.2",
+                "pause": "3.1"
             }
         },
         "1.18": {
             "etcd": "3.4.3",
-            "cni": "0.8.6",
+            "cni": "0.8.5",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.18.6",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.18.6",
-                "cilium": "1.8.3",
-                "flannel": "0.12.0",
                 "coredns": "1.6.7",
-                "metrics": "0.5.2"
+                "metrics": "0.5.2",
+                "pause": "3.2"
             }
         },
         "1.19": {
-            "etcd": "3.4.9",
-            "cni": "0.9.0",
+            "etcd": "3.4.13",
+            "cni": "0.8.6",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.11",
                 "crio": "1.19.6",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.20.5",
-                "cilium": "1.8.8",
-                "flannel": "0.13.0",
                 "coredns": "1.7.0",
-                "metrics": "0.6.1"
+                "metrics": "0.5.2",
+                "pause": "3.2"
             }
         },
         "1.20": {
             "etcd": "3.4.13",
-            "cni": "0.9.0",
+            "cni": "0.8.7",
             "runtime": {
                 "docker": "19.03.9",
                 "containerd": "1.5.0",
                 "crio": "1.20.9",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.21.5",
-                "cilium": "1.8.8",
-                "flannel": "0.13.0",
                 "coredns": "1.7.0",
-                "metrics": "0.6.1"
+                "metrics": "0.6.1",
+                "pause": "3.2"
             }
         },
         "1.21": {
             "etcd": "3.4.13",
             "cni": "0.9.1",
             "runtime": {
-                "docker": "20.10.9",
+                "docker": "20.10.16",
                 "containerd": "1.5.0",
                 "crio": "1.21.7",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.23.2",
-                "cilium": "1.8.8",
-                "flannel": "0.14.0",
                 "coredns": "1.8.0",
-                "metrics": "0.6.1"
+                "metrics": "0.6.1",
+                "pause": "3.4.1"
             }
         },
         "1.22": {
             "etcd": "3.5.0",
-            "cni": "1.0.1",
+            "cni": "0.9.1",
             "runtime": {
-                "docker": "20.10.9",
+                "docker": "20.10.16",
                 "containerd": "1.5.13",
                 "crio": "1.22.5",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.23.2",
-                "cilium": "1.9.11",
-                "flannel": "0.15.1",
                 "coredns": "1.8.4",
-                "metrics": "0.6.1"
+                "metrics": "0.6.1",
+                "pause": "3.5"
             }
         },
         "1.23": {
-            "etcd": "3.5.0",
-            "cni": "1.1.1",
+            "etcd": "3.5.1",
+            "cni": "0.9.1",
             "runtime": {
-                "docker": "20.10.9",
+                "docker": "20.10.16",
                 "containerd": "1.6.0",
                 "crio": "1.23.3",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.23.2",
-                "cilium": "1.11.3",
-                "flannel": "0.15.1",
                 "coredns": "1.8.6",
-                "metrics": "0.6.1"
+                "metrics": "0.6.1",
+                "pause": "3.6"
             }
         },
         "1.24": {
             "etcd": "3.5.3",
-            "cni": "1.1.1",
+            "cni": "0.9.1",
             "runtime": {
                 "crio": "1.24.2",
                 "containerd": "1.6.8",
-                "runc": "1.0.1",
-                "crictl": "1.24.2"
             },
             "plugin": {
-                "calico": "3.23.2",
-                "cilium": "1.11.3",
-                "flannel": "0.15.1",
                 "coredns": "1.8.6",
-                "metrics": "0.6.1"
+                "metrics": "0.6.1",
+                "pause": "3.6"
             }
         }
     }
@@ -293,7 +251,7 @@ def split_regex(string, separator_pattern='\s+'):
         raise errors.AnsibleFilterError(
             'split plugin error: %s, provided string: "%s"' % str(e), str(string))
 
-
+# {{ value | version("0.8.0",">=") }}
 def version_compare(value, version, operator='eq', strict=None, version_type=None):
     ''' Perform a version comparison on a value '''
     op_map = {
@@ -366,8 +324,9 @@ class FilterModule(object):
         }
 
 # if __name__ == '__main__':
-#     component_version("1.23.7")
-#     print(select("4", "eq", "4", "10.96.0.0/12","fd74:ca9b:0172:0019::/110"))
-#     a = "[fd74:ca9b:0172:0018::/64]"
-#     print(a[1:len(a) - 1])
-#     print()
+    # component_version("1.23.7")
+    # print(select("4", "eq", "4", "10.96.0.0/12","fd74:ca9b:0172:0019::/110"))
+    # a = "[fd74:ca9b:0172:0018::/64]"
+    # print(a[1:len(a) - 1])
+    # print()
+    # version_compare("","0.8.0",">=")
