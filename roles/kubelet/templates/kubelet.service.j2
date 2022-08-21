@@ -14,6 +14,7 @@ Requires=docker.service
 ExecStart=/usr/local/bin/kubelet \
   --kubeconfig=/etc/kubernetes/kubelet.kubeconfig \
   --config=/etc/kubernetes/kubelet.yaml \
+  --pod-infra-container-image={{ REGISTRY_URL | default('registry.aliyuncs.com') }}/google_containers/pause:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.pause") }} \
 {% if ipv6 is defined %}
   --node-ip={{ inventory_hostname }},{{ ipv6 }} \
 {% else %}
