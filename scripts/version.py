@@ -3,9 +3,9 @@ version_map = {
         "etcd": "3.3.10",
         "cni": "0.7.5",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.14.12",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.14.12",
         },
         "plugin": {
             "coredns": "1.3.1",
@@ -17,9 +17,9 @@ version_map = {
         "etcd": "3.3.10",
         "cni": "0.7.5",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.15.4",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.15.4",
         },
         "plugin": {
             "coredns": "1.3.1",
@@ -31,9 +31,9 @@ version_map = {
         "etcd": "3.3.15",
         "cni": "0.7.5",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.16.6",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.16.6",
         },
         "plugin": {
             "coredns": "1.6.2",
@@ -45,9 +45,9 @@ version_map = {
         "etcd": "3.4.3",
         "cni": "0.7.5",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.17.5",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.17.5",
         },
         "plugin": {
             "coredns": "1.6.5",
@@ -59,9 +59,9 @@ version_map = {
         "etcd": "3.4.3",
         "cni": "0.8.5",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.18.6",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.18.6",
         },
         "plugin": {
             "coredns": "1.6.7",
@@ -73,9 +73,9 @@ version_map = {
         "etcd": "3.4.13",
         "cni": "0.8.6",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.11",
-                "crio": "1.19.6",
+            "docker": "19.03.9",
+            "containerd": "1.5.11",
+            "crio": "1.19.6",
         },
         "plugin": {
             "coredns": "1.7.0",
@@ -87,9 +87,9 @@ version_map = {
         "etcd": "3.4.13",
         "cni": "0.8.7",
         "runtime": {
-                "docker": "19.03.9",
-                "containerd": "1.5.0",
-                "crio": "1.20.9",
+            "docker": "19.03.9",
+            "containerd": "1.5.0",
+            "crio": "1.20.9",
         },
         "plugin": {
             "coredns": "1.7.0",
@@ -101,9 +101,9 @@ version_map = {
         "etcd": "3.4.13",
         "cni": "0.9.1",
         "runtime": {
-                "docker": "20.10.16",
-                "containerd": "1.5.0",
-                "crio": "1.21.7",
+            "docker": "20.10.17",
+            "containerd": "1.5.0",
+            "crio": "1.21.7",
         },
         "plugin": {
             "coredns": "1.8.0",
@@ -115,9 +115,9 @@ version_map = {
         "etcd": "3.5.0",
         "cni": "0.9.1",
         "runtime": {
-                "docker": "20.10.16",
-                "containerd": "1.5.13",
-                "crio": "1.22.5",
+            "docker": "20.10.17",
+            "containerd": "1.5.13",
+            "crio": "1.22.5",
         },
         "plugin": {
             "coredns": "1.8.4",
@@ -129,9 +129,9 @@ version_map = {
         "etcd": "3.5.1",
         "cni": "0.9.1",
         "runtime": {
-                "docker": "20.10.16",
-                "containerd": "1.6.0",
-                "crio": "1.23.3",
+            "docker": "20.10.17",
+            "containerd": "1.6.0",
+            "crio": "1.23.3",
         },
         "plugin": {
             "coredns": "1.8.6",
@@ -143,8 +143,8 @@ version_map = {
         "etcd": "3.5.3",
         "cni": "0.9.1",
         "runtime": {
-                "crio": "1.24.2",
-                "containerd": "1.6.8",
+            "crio": "1.24.2",
+            "containerd": "1.6.8",
         },
         "plugin": {
             "coredns": "1.8.6",
