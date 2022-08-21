@@ -7,9 +7,13 @@ PROJECT_ENV:=dev
 # Binary file download way, official or nexus
 DOWNLOAD_WAY:=official
 
-# Binary version
+# kubernetes version
 KUBE_VERSION:=1.14.10
+# kubernetes container runtime
+# docker, containerd
 KUBE_RUNTIME:=docker
+# kubernetes network plugin,
+# flannel, calico, canal
 KUBE_NETWORK:=flannel
 
 # Private registry
