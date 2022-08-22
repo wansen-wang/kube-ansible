@@ -57,3 +57,7 @@ docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
 docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
+
+docker pull registry.aliyuncs.com/google_containers/pause:3.1
+docker tag registry.aliyuncs.com/google_containers/pause:3.1 ${REGISTRY_URL}/google_containers/pause:3.1
+docker push ${REGISTRY_URL}/google_containers/pause:3.1
