@@ -5,7 +5,6 @@ import os
 import sys
 import requests
 import json
-import docker
 from version import version_map
 from distutils.version import LooseVersion
 
@@ -171,9 +170,6 @@ def downloadToLocal(arg):
     with open("%s/%s.json" % (basePath, arg.kubernetes), "w") as f:
         json.dump(jsonFile, f)
 
-    print("download registry")
-    client = docker.from_env()
-    registry = client.containers.run('registry:2.8.1')
     print("files is save on src directory")
 
 
