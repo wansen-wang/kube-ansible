@@ -24,9 +24,11 @@ kube-ansible passed the [cncf conformance](https://github.com/cncf/k8s-conforman
 
 ## OS Support
 
-All node please install python3.
+all node please install python3.
 
-* [x] CentOS 7.*
+if you want use containerd for container runtime, make sure the `libseccomp` >= 2.4
+
+* [x] CentOS 7.* (not support containerd)
 * [x] CentOS 8.*
 * [x] Ubuntu 16.*
 * [x] Ubuntu 18.*
