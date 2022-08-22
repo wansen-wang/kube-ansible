@@ -5,15 +5,11 @@
     - prepare
     - motd
     - chrony
-  tags:
-    - common
 
 - name: Certificate of the cluster
   hosts: all
   become: yes
   roles:
-    - ca
-  tags:
     - ca
 
 - name: Deployment etcd cluster
@@ -21,8 +17,6 @@
   hosts: "{% if groups['etcd'] is not defined %}master{% else %}etcd{% endif %}"
   become: yes
   roles:
-    - etcd
-  tags:
     - etcd
 
 - name: Initialization kubernetes dependence
@@ -44,8 +38,6 @@
     - kubelet
     - kube-proxy
     - cleanup
-  tags:
-    - kube-master
 
 - name: Deployment kube worker
   serial: 1
@@ -56,14 +48,10 @@
     - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
     - kube-proxy
     - cleanup
-  tags:
-    - kube-worker
 
 - name: Deployment kubernetes add-on
   hosts: master
   become: true
   any_errors_fatal: true
   roles:
-    - add-on
-  tags:
     - add-on

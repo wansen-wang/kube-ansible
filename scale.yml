@@ -6,16 +6,20 @@
     - prepare
     - motd
     - chrony
-  tags:
-    - common
 
 - name: Certificate of the cluster
   hosts: all
   become: yes
   roles:
     - ca
-  tags:
-    - ca
+
+- name: Initialization kubernetes dependence
+  hosts: kubernetes
+  become: true
+  any_errors_fatal: true
+  roles:
+    - cni
+    - ipvsadm
 
 - name: Deployment kubernetes worker
   hosts: worker
@@ -28,5 +32,3 @@
     - kubelet
     - kube-proxy
     - cleanup
-  tags:
-    - kube-worker

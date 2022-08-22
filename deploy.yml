@@ -7,16 +7,12 @@
     - prepare
     - motd
     - chrony
-  tags:
-    - init
 
 - name: Certificate of the cluster
   hosts: all
   become: true
   any_errors_fatal: true
   roles:
-    - ca
-  tags:
     - ca
 
 - name: Deployment etcd cluster
@@ -27,8 +23,6 @@
   vars:
     scale: false
   roles:
-    - etcd
-  tags:
     - etcd
 
 - name: Initialization kubernetes dependence
@@ -55,8 +49,6 @@
     - kubelet
     - kube-proxy
     - cleanup
-  tags:
-    - kube-master
 
 - name: Deployment kubernetes worker
   hosts: worker
@@ -69,14 +61,10 @@
     - kubelet
     - kube-proxy
     - cleanup
-  tags:
-    - kube-worker
 
 - name: Deployment kubernetes add-on
   hosts: master
   become: true
   any_errors_fatal: true
   roles:
-    - add-on
-  tags:
     - add-on

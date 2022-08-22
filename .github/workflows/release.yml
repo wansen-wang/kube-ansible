@@ -14,6 +14,7 @@ jobs:
 
       - name: Setup environment
         run: |
+          git fetch
           export GIT_TAG=${{ github.ref_name }}
           tar -zcf /tmp/kube-ansible-online.tar.gz ../kube-ansible
           ./scripts/nexus.py download --quiet --kubernetes ${GIT_TAG:1}
