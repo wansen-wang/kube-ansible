@@ -197,10 +197,6 @@ def ip_format(value):
             'ip failed: %s' % to_native(e))
 
 
-def interception(value, x, y):
-    return value[x:len(value) - y]
-
-
 def split_string(string, separator=' '):
     try:
         return string.split(separator)
