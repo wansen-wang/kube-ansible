@@ -1,2 +1,11 @@
 ---
 # defaults file for crio
+crio:
+  datadir: /var/lib/containers/storage
+  # auto create containerd primary partition
+  # device: /dev/sdb
+  daemon:
+    cgroup_manager: "systemd"
+    read_only: false
+    log_level: "info"
+    enable_metrics: false
