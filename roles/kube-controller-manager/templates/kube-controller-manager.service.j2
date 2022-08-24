@@ -10,6 +10,7 @@ ExecStart=/usr/local/bin/kube-controller-manager \
   --authorization-kubeconfig=/etc/kubernetes/kube-controller-manager.kubeconfig \
   --bind-address={{ controllerManager.bindAddress | default('127.0.0.1') }} \
   --client-ca-file=/etc/kubernetes/pki/ca.crt \
+  --node-cidr-mask-size={{ (inventory_hostname | ip == 4) | ternary('24', '64') }} \
   --cluster-cidr={{ networking.podSubnet | default('10.244.0.0/16')  }} \
   --cluster-name=kubernetes \
   --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt \
