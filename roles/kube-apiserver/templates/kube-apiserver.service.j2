@@ -15,7 +15,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \
-  --bind-address={{ inventory_hostname }} \
+  --bind-address={{ (inventory_hostname | ip == 4) | ternary('0.0.0.0', '::') }} \
   --allow-privileged=true \
   --client-ca-file=/etc/kubernetes/pki/ca.crt \
   --enable-bootstrap-token-auth \
