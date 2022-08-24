@@ -16,6 +16,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 [Service]
 ExecStart=/usr/local/bin/kube-apiserver \
   --bind-address={{ (inventory_hostname | ip == 4) | ternary('0.0.0.0', '::') }} \
+  --advertise-address={{ inventory_hostname }} \
   --allow-privileged=true \
   --client-ca-file=/etc/kubernetes/pki/ca.crt \
   --enable-bootstrap-token-auth \
@@ -23,7 +24,6 @@ ExecStart=/usr/local/bin/kube-apiserver \
   --etcd-cafile=/etc/kubernetes/pki/etcd/ca.crt \
   --etcd-certfile=/etc/kubernetes/pki/apiserver-etcd-client.crt \
   --etcd-keyfile=/etc/kubernetes/pki/apiserver-etcd-client.key \
-  --advertise-address={{ inventory_hostname }} \
   --etcd-servers={% for host in etcdnode %}https://{{ host | ip_format }}:2379{% if not loop.last %},{% endif %}{% endfor %} \
   --kubelet-client-certificate=/etc/kubernetes/pki/apiserver-kubelet-client.crt \
   --kubelet-client-key=/etc/kubernetes/pki/apiserver-kubelet-client.key \
