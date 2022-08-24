@@ -1,7 +1,6 @@
 ---
 # defaults file for kube-apiserver
 apiServer:
-  bindAddress: "0.0.0.0"
   encryption: Tsg7sO4Ki/W3s9bfwGfTi8ECcp+/3uDedQMq6rLQTIY= # head -c 32 /dev/urandom | base64
   certSANs:
     - "DNS:*.kubernetes.local"

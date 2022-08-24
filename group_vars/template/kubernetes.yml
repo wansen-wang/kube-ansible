@@ -109,7 +109,6 @@ networking:
 
 # kube-apiserver config
 apiServer:
-  bindAddress: "0.0.0.0"
   encryption: Tsg7sO4Ki/W3s9bfwGfTi8ECcp+/3uDedQMq6rLQTIY= # head -c 32 /dev/urandom | base64
   certSANs:
     - "DNS:*.kubernetes.local"
@@ -129,7 +128,6 @@ apiServer:
 
 # kube-controller-manager config
 controllerManager:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--terminated-pod-gc-threshold=12500"
@@ -145,7 +143,6 @@ controllerManager:
 
 # kube-scheduler config
 scheduler:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--profiling=false"
@@ -156,7 +153,6 @@ scheduler:
 
 # kubelet config
 kubelet:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--allowed-unsafe-sysctls=net.*"
     - "--network-plugin=cni"
@@ -165,7 +161,6 @@ kubelet:
 
 # kube-proxy config
 proxy:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256"
     - "--mode=ipvs"

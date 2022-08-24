@@ -1,7 +1,6 @@
 ---
 # defaults file for kubelet
 kubelet:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--pod-infra-container-image=registry.aliyuncs.com/google_containers/pause:3.5"
     - "--allowed-unsafe-sysctls=net.*"

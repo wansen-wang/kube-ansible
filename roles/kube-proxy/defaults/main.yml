@@ -1,7 +1,6 @@
 ---
 # defaults file for kube-proxy
 proxy:
-  bindAddress: "0.0.0.0"
   extraArgs:
     - "--mode=ipvs"
   log:
