@@ -5,9 +5,9 @@ After=network.target
 
 [Service]
 ExecStart=/usr/local/bin/kube-scheduler \
+  --bind-address={{ inventory_hostname }} \
   --authentication-kubeconfig=/etc/kubernetes/kube-scheduler.kubeconfig \
   --authorization-kubeconfig=/etc/kubernetes/kube-scheduler.kubeconfig \
-  --bind-address={{ scheduler.bindAddress | default('127.0.0.1') }} \
   --kubeconfig=/etc/kubernetes/kube-scheduler.kubeconfig \
   --leader-elect=true \
   --secure-port=10259 \
