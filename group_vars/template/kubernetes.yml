@@ -60,6 +60,7 @@ crio:
   # auto create containerd primary partition
   # device: /dev/sdb
   daemon:
+    runroot: "/var/run/containers/storage"
     cgroup_manager: "systemd"
     read_only: "false"
     log_level: "info"

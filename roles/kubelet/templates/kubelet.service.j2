@@ -5,6 +5,9 @@ Wants=network-online.target
 {% if KUBE_RUNTIME == "containerd" %}
 After=containerd.service
 Requires=containerd.service
+{% elif KUBE_RUNTIME == "crio"  %}
+After=crio.service
+Requires=crio.service
 {% else %}
 After=docker.service
 Requires=docker.service
