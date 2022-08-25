@@ -215,7 +215,7 @@ container_attach_socket_dir = "/var/run/crio"
 bind_mount_prefix = ""
 
 # If set to true, all containers will run in read-only mode.
-read_only = "{{ crio.daemon.read_only | default('false') }}"
+read_only = {{ crio.daemon.read_only | default('false') }}
 
 # Changes the verbosity of the logs based on the level it is set to. Options
 # are fatal, panic, error, warn, info, debug and trace. This option supports
@@ -372,7 +372,7 @@ plugin_dirs = [
 [crio.metrics]
 
 # Globally enable or disable metrics support.
-enable_metrics = "{{ crio.daemon.log_level | default('false') }}"
+enable_metrics = {{ crio.daemon.log_level | default('false') }}
 
 
 # The port on which the metrics server will listen.
