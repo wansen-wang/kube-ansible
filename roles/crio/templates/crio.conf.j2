@@ -372,7 +372,7 @@ plugin_dirs = [
 [crio.metrics]
 
 # Globally enable or disable metrics support.
-enable_metrics = {{ crio.daemon.log_level | default('false') }}
+enable_metrics = {{ crio.daemon.enable_metrics | default('false') }}
 
 
 # The port on which the metrics server will listen.
