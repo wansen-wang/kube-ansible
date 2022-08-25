@@ -101,3 +101,10 @@
         policy_cfg.changed or 
         crio_systemd.changed or 
         ansible_facts.services['crio.service']['state'] != 'running'
+
+- name: Install crictl completion
+  ansible.builtin.copy:
+    src: crictl.sh
+    dest: /etc/bash_completion.d/crictl
+    owner: root
+    group: root
