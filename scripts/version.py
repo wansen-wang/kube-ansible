@@ -130,7 +130,7 @@ version_map = {
         "cni": "0.9.1",
         "runtime": {
             "docker": "20.10.17",
-            "containerd": "1.6.0",
+            "containerd": "1.6.8",
             "crio": "1.23.3",
         },
         "plugin": {
@@ -150,6 +150,19 @@ version_map = {
             "coredns": "1.8.6",
             "metrics": "0.6.1",
             "pause": "3.6"
+        }
+    },
+    "1.25": {
+        "etcd": "3.5.4",
+        "cni": "0.9.1",
+        "runtime": {
+            "crio": "",
+            "containerd": "1.6.8",
+        },
+        "plugin": {
+            "coredns": "1.9.3",
+            "metrics": "0.6.1",
+            "pause": "3.8"
         }
     }
 }
