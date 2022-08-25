@@ -61,9 +61,9 @@ crio:
   # device: /dev/sdb
   daemon:
     cgroup_manager: "systemd"
-    read_only: false
+    read_only: "false"
     log_level: "info"
-    enable_metrics: false
+    enable_metrics: "false"
 
 # etcd config
 etcd:
