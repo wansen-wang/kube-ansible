@@ -103,7 +103,7 @@ version_map = {
         "runtime": {
             "docker": "20.10.17",
             "containerd": "1.5.0",
-            "crio": "1.21.7",
+            "crio": "1.21.5",
         },
         "plugin": {
             "coredns": "1.8.0",
@@ -117,7 +117,7 @@ version_map = {
         "runtime": {
             "docker": "20.10.17",
             "containerd": "1.5.13",
-            "crio": "1.22.5",
+            "crio": "1.22.3",
         },
         "plugin": {
             "coredns": "1.8.4",

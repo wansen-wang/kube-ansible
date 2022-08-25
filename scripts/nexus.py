@@ -6,7 +6,7 @@ import sys
 import requests
 import json
 from version import version_map
-from distutils.version import LooseVersion
+from packaging.version import Version
 
 
 def Download(url, path, quiet):
@@ -132,7 +132,7 @@ def downloadToLocal(arg):
 
     version = version_map.get(kubeVersion).get('cni')
     if version is not None:
-        if LooseVersion(version) >= LooseVersion('0.8.0'):
+        if Version(version) >= Version('0.8.0'):
             url = "https://github.com/containernetworking/plugins/releases/download/v%s/cni-plugins-linux-amd64-v%s.tgz" % (
                 version, version)
             filename = "cni-plugins-linux-amd64-v%s.tgz" % (version)
