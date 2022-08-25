@@ -30,7 +30,7 @@
   serial: 1
   hosts: master
   roles:
-    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{{ KUBE_RUNTIME }}"
     - kubectl
     - kube-apiserver
     - kube-scheduler
@@ -45,7 +45,7 @@
   roles:
     - kubectl
     - kubelet
-    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{{ KUBE_RUNTIME }}"
     - kube-proxy
     - cleanup
 

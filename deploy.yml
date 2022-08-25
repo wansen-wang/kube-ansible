@@ -41,7 +41,7 @@
   roles:
     - haproxy
     - keepalived
-    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{{ KUBE_RUNTIME }}"
     - kubectl
     - kube-apiserver
     - kube-scheduler
@@ -56,7 +56,7 @@
   gather_facts: true
   any_errors_fatal: true
   roles:
-    - "{% if KUBE_RUNTIME == 'docker' %}docker{% else %}containerd{% endif %}"
+    - "{{ KUBE_RUNTIME }}"
     - kubectl
     - kubelet
     - kube-proxy
