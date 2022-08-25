@@ -65,6 +65,10 @@ crio:
     read_only: "false"
     log_level: "info"
     enable_metrics: "false"
+    registries: 
+      - "docker.io"
+      - "quay.io"
+      - "i3jtbyvy.mirror.aliyuncs.com"
 
 # etcd config
 etcd:
