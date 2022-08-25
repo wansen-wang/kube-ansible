@@ -44,11 +44,17 @@
     - /etc/crio
     - "{{ crio.datadir | default('/var/lib/containers/storage') }}"
 
-- name: Configuration file
+- name: Configuration file of crio
   ansible.builtin.template:
     src: crio.conf.j2
     dest: /etc/crio/crio.conf
   register: crio_cfg
+
+- name: Configuration file of crictl
+  ansible.builtin.template:
+    src: crictl.yaml.j2
+    dest: /etc/crictl.yaml
+  register: crictl_cfg
 
 - name: Create a crio primary partition
   community.general.filesystem:
@@ -84,5 +90,6 @@
     masked: yes
   when: crio_pkg.changed or 
         crio_cfg.changed or 
+        crictl_cfg.changed or
         crio_systemd.changed or 
         ansible_facts.services['crio.service']['state'] != 'running'
