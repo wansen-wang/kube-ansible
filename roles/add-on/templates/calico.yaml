@@ -30,7 +30,19 @@ data:
           "nodename": "__KUBERNETES_NODE_NAME__",
           "mtu": __CNI_MTU__,
           "ipam": {
-              "type": "calico-ipam"
+              "type": "calico-ipam",
+{% if networking.podSubnet.split(',') | length == 2 and networking.serviceSubnet.split(',') | length == 2 %}
+              "assign_ipv4": "true",
+              "assign_ipv6": "true"
+{% else %}
+  {% if inventory_hostname | ip == 4 %}
+              "assign_ipv4": "true",
+              "assign_ipv6": "false"
+  {% elif inventory_hostname | ip == 6 %}
+              "assign_ipv4": "false",
+              "assign_ipv6": "true"
+  {% endif %}
+{% endif %}
           },
           "policy": {
               "type": "k8s"
@@ -648,9 +660,58 @@ spec:
             # Cluster type to identify the deployment type
             - name: CLUSTER_TYPE
               value: "k8s,bgp"
+{% if networking.podSubnet.split(',') | length == 2 %}
             # Auto-detect the BGP IP address.
             - name: IP
               value: "autodetect"
+            - name: IP6
+              value: "autodetect"
+            # Disable IPv6 on Kubernetes.
+            - name: FELIX_IPV6SUPPORT
+              value: "true"
+            # The default IPv4 pool to create on startup if none exists. Pod IPs will be
+            # chosen from this range. Changing this value after installation will have
+            # no effect. This should fall within `--cluster-cidr`.
+  {% if networking.podSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) | ip == 4 %}
+            - name: CALICO_IPV4POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[0] }}"
+            - name: CALICO_IPV6POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[1] }}"
+  {% else %}
+            - name: CALICO_IPV4POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[1] }}"
+            - name: CALICO_IPV6POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[0] }}"
+  {% endif %}
+{% else %}
+  {% if inventory_hostname | ip == 6 %}
+            # Auto-detect the BGP IP address.
+            - name: IP
+              value: "none"
+            - name: IP6
+              value: "autodetect"
+            # Disable IPv6 on Kubernetes.
+            - name: FELIX_IPV6SUPPORT
+              value: "true"
+            - name: CALICO_IPV6POOL_CIDR
+              value: "{{ networking.podSubnet | default('2402:db8:42:d700::/64') }}"
+            - name: CALICO_ROUTER_ID
+              value: "hash"
+  {% endif %}
+  {% if inventory_hostname | ip == 4 %}
+            # Auto-detect the BGP IP address.
+            - name: IP
+              value: "autodetect"
+            # Disable IPv6 on Kubernetes.
+            - name: FELIX_IPV6SUPPORT
+              value: "false"
+            # The default IPv4 pool to create on startup if none exists. Pod IPs will be
+            # chosen from this range. Changing this value after installation will have
+            # no effect. This should fall within `--cluster-cidr`.
+            - name: CALICO_IPV4POOL_CIDR
+              value: "{{ networking.podSubnet | default('10.244.0.0/16') }}"
+  {% endif %}
+{% endif %}
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "Always"
@@ -669,20 +730,12 @@ spec:
                 configMapKeyRef:
                   name: calico-config
                   key: veth_mtu
-            # The default IPv4 pool to create on startup if none exists. Pod IPs will be
-            # chosen from this range. Changing this value after installation will have
-            # no effect. This should fall within `--cluster-cidr`.
-            - name: CALICO_IPV4POOL_CIDR
-              value: "{{ networking.podSubnet | default('10.244.0.0/16') }}"
             # Disable file logging so `kubectl logs` works.
             - name: CALICO_DISABLE_FILE_LOGGING
               value: "true"
             # Set Felix endpoint to host default action to ACCEPT.
             - name: FELIX_DEFAULTENDPOINTTOHOSTACTION
               value: "ACCEPT"
-            # Disable IPv6 on Kubernetes.
-            - name: FELIX_IPV6SUPPORT
-              value: "false"
             # Set Felix logging to "info"
             - name: FELIX_LOGSEVERITYSCREEN
               value: "info"
