@@ -103,7 +103,30 @@ version:
 	@rm -rf .etcd .docker .kubernetes .containerd .crictl .runc .cni
 
 offline:
-	@cd ./scripts && KUBE_VERSION=$(KUBE_VERSION) ./make-offline-package.sh
+	@echo -e "\033[32m-> Sync files.\033[0m"
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kube-apiserver ./roles/kube-apiserver/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kube-controller-manager ./roles/kube-controller-manager/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kube-proxy ./roles/kube-proxy/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kube-scheduler ./roles/kube-scheduler/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kubectl ./roles/kubectl/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/kubelet ./roles/kubelet/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/cni-plugins* ./roles/cni/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/cri-containerd* ./roles/containerd/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/docker-* ./roles/docker/files/ --delete
+	@rsync -a ./scripts/src/$(KUBE_VERSION)/etcd-* ./roles/etcd/files/ --delete
+	@echo -e "\033[32m-> Install docker.\033[0m"
+	@find ./scripts/src/ -name '*docker-*.tgz' | xargs tar -zx --strip-components=1 -C /usr/local/bin/ -f
+	@cp roles/docker/templates/docker.service.j2 /etc/systemd/system/docker.service
+	@systemctl daemon-reload
+	@systemctl restart docker.service
+	@sleep 10
+	@echo -e "\033[32m-> Install registry.\033[0m"
+	@gunzip -c ./scripts/src/images/registry.tar.gz | docker load &> /dev/null
+	@docker rm -f registry &> /dev/null
+	@docker run -d --name registry -p 5000:5000 --restart always -v `pwd`/scripts/src/registry:/var/lib/registry registry:2.8.1 &> /dev/null
+	@echo -e "\033[32mYou can run 'docker ps' and view the registry container status, \033[0m"
+	@echo -e "\033[32mthen setting REGISTRY_URL on make command, \033[0m"
+	@echo -e "\033[32meg: make deploy REGISTRY_URL=http://<VM IP>:5000/infra\033[0m"
 
 check:
 	@cd ./test && ./check-cluster.sh

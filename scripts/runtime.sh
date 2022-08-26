@@ -20,4 +20,4 @@ case ${PKG} in
     ;;
 esac
 pip3 install --no-cache-dir --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple pip
-pip3 install --no-cache-dir --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed "ansible>=4.10.0" IPy requests kubernetes openshift jmespath netaddr
+pip3 install --no-cache-dir --upgrade -i https://pypi.tuna.tsinghua.edu.cn/simple --ignore-installed "ansible>=4.10.0" IPy requests kubernetes openshift jmespath netaddr packaging
