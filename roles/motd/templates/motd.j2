@@ -17,6 +17,8 @@ Kubernetes network:         {{ KUBE_NETWORK }}
 Etcd version:               {{ KUBE_VERSION | component_version | community.general.json_query("etcd") }}
 {% if KUBE_RUNTIME == 'docker' %}
 Docker version:             {{ KUBE_VERSION | component_version | community.general.json_query("runtime.docker") }}
+{% elif KUBE_RUNTIME == 'crio' %}
+CRI-O version:              {{ KUBE_VERSION | component_version | community.general.json_query("runtime.crio") }}
 {% else %}
 Containerd version:         {{ KUBE_VERSION | component_version | community.general.json_query("runtime.containerd") }}
 {% endif %}
