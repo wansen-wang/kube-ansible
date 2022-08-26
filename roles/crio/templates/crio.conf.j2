@@ -24,13 +24,11 @@ runroot = "{{ crio.daemon.runroot | default('/var/run/containers/storage') }}"
 
 # Storage driver used to manage the storage of images and containers. Please
 # refer to containers-storage.conf(5) to see all available storage drivers.
-storage_driver = "overlay"
+storage_driver = "{{ crio.daemon.storage_driver | default('overlay') }}"
 
 # List to pass options to the storage driver. Please refer to
 # containers-storage.conf(5) to see all available storage options.
-storage_option = [
-	"overlay.override_kernel_check=1",
-]
+storage_option = "{{ crio.daemon.storage_option | list }}"
 
 # The default log directory where all logs will go unless directly specified by
 # the kubelet. The log directory specified must be an absolute directory.

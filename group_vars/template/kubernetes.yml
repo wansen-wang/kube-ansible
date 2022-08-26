@@ -65,6 +65,9 @@ crio:
     read_only: "false"
     log_level: "info"
     enable_metrics: "false"
+    storage_driver: "overlay"
+    storage_option: 
+      - "overlay.override_kernel_check=1"
     registries: 
       - "docker.io"
       - "quay.io"
