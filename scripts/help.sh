@@ -43,6 +43,6 @@ echo '    kube-ansible is an easy tool for deploying kubernetes, you can run the
 echo 'following commands to deploy or manage the cluster.'
 echo ''
 echo 'make runtime, will install the ansible runtime environment'
-echo 'make install, will install kubernetes components'
+echo 'make deploy, will install kubernetes components'
 echo 'make scale, will expansion worker node'
 echo 'make upgrade, will upgrade kubernetes version'
