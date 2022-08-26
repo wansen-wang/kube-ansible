@@ -61,3 +61,7 @@ docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
 docker pull registry.aliyuncs.com/google_containers/pause:3.1
 docker tag registry.aliyuncs.com/google_containers/pause:3.1 ${REGISTRY_URL}/google_containers/pause:3.1
 docker push ${REGISTRY_URL}/google_containers/pause:3.1
+
+
+mkdir ${SHELL_FOLDER}/src/images
+docker save registry:2.8.1 | gzip > ${SHELL_FOLDER}/src/images/registry.tar.gz
