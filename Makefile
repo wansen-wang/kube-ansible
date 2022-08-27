@@ -21,6 +21,7 @@ KUBE_NETWORK:=flannel
 REGISTRY_URL:=
 
 # Nexus information
+# eg: http://192.168.119.20:8081
 NEXUS_DOMAIN_NAME:=
 NEXUS_REPOSITORY:=kube-ansible
 NEXUS_USERNAME:=
