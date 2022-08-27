@@ -66,3 +66,6 @@ docker push ${REGISTRY_URL}/google_containers/pause:3.1
 mkdir ${SHELL_FOLDER}/src/images
 docker pull registry:2.8.1
 docker save registry:2.8.1 | gzip > ${SHELL_FOLDER}/src/images/registry.tar.gz
+
+docker pull docker.io/buxiaomo/staticfile:1.0
+docker save docker.io/buxiaomo/staticfile:1.0 | gzip > ${SHELL_FOLDER}/src/images/staticfile.tar.gz
