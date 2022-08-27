@@ -14,7 +14,7 @@ vrrp_script haproxy-check {
 vrrp_instance haproxy-vip {
     state BACKUP
     priority 101
-    interface {{ inventory_hostname | ip | select('eq', '4', ansible_default_ipv4.interface, ansible_default_ipv6.interface) }}
+    interface {{ (inventory_hostname | ip == 4) | ternary(ansible_default_ipv4.interface, ansible_default_ipv6.interface) }} 
     virtual_router_id 47
     advert_int 3
     unicast_src_ip {{ inventory_hostname | ip_format }}
