@@ -64,7 +64,7 @@ class Nexus:
             resp = requests.request("POST", url, data=payload, files=files, auth=auth)
         else:
             resp = requests.request("POST", url, data=payload, files=files)
-        if resp.status_code != 201:
+        if resp.status_code != 204:
             print("Upload failed, status code: %d" % resp.status_code)
             return False
         else:
