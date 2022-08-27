@@ -43,16 +43,27 @@ class Nexus:
         self.password = password
 
     def Upload(self, src, directory):
-        url = '%s/repository/%s' % (self.url, self.repository)
+        url = "%s/service/rest/v1/components?repository=%s" % (self.url, self.repository)
         resp = None
         content = open(src, 'rb').read()
+        payload = {
+            'raw.directory': directory,
+            'raw.asset1.filename': os.path.basename(src)
+        }
+        files = [
+            (
+                'raw.asset1', (
+                    os.path.basename(src),
+                    content,
+                    'application/octet-stream'
+                )
+            )
+        ]
         if self.username is not None and self.password is not None:
             auth = (self.username, self.password)
-            resp = requests.put(
-                "%s/%s/%s" % (url, directory, os.path.basename(src)), data=content, auth=auth)
+            resp = requests.request("POST", url, data=payload, files=files, auth=auth)
         else:
-            resp = requests.put(
-                "%s/%s/%s" % (url, directory, os.path.basename(src)), data=content)
+            resp = requests.request("POST", url, data=payload, files=files)
         if resp.status_code != 201:
             print("Upload failed, status code: %d" % resp.status_code)
             return False
