@@ -111,12 +111,10 @@ offline:
 	@sleep 10
 	@echo -e "\033[32m-> Install registry.\033[0m"
 	@gunzip -c ./scripts/src/images/registry.tar.gz | docker load &> /dev/null
-	@docker rm -f registry &> /dev/null
 	@docker run -d --name registry -p 5000:5000 --restart always -v `pwd`/scripts/src/registry:/var/lib/registry registry:2.8.1 &> /dev/null
 	@echo -e "\033[32m-> Install staticFile server.\033[0m"
 	@gunzip -c ./scripts/src/images/staticfile.tar.gz | docker load &> /dev/null
-	@docker rm -f staticfile &> /dev/null
-	@docker run -d --name staticfile -p 8081:8081 --restart always -v /tmp/staticfile:/data docker.io/buxiaomo/staticfile:1.0 &> /dev/null
+	@docker run -d --name staticfile -p 8081:8081 --restart always -v staticfile:/data docker.io/buxiaomo/staticfile:1.0 &> /dev/null
 	@echo -e "\033[32mYou can run 'docker ps' and view the container status, \033[0m"
 	@echo -e "\033[32mrun ./scripts/nexus.py upload\033[0m"
 	@echo -e "\033[32mthen setting REGISTRY_URL, NEXUS_* on make command\033[0m"

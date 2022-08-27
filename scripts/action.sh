@@ -47,7 +47,7 @@ fi
 case $1 in
 "deploy")
   if [ $(git rev-parse --abbrev-ref HEAD) != 'main' ];then
-    if [ "v${KUBE_VERSION:0:4}" != $(git rev-parse --abbrev-ref HEAD) ];then
+    if [ "v${KUBE_VERSION:0:4}" != $(git rev-parse --abbrev-ref HEAD) ] && [ "v${KUBE_VERSION}" != $(git tag) ];then
       echo -e "\033[31mMessage: The git branch is incorrect, deployment add-on may be incompatible, please checkout to ${KUBE_VERSION:0:4}\033[0m"
       exit 1
     fi
