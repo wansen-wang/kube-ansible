@@ -12,7 +12,6 @@
     dest: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('flannel')}}.yaml"
   when: 
     - KUBE_NETWORK != 'none'
-    - inventory_hostname | ip == 6 and KUBE_NETWORK == 'calico'
 
 - name: Apply cni to the cluster
   kubernetes.core.k8s:
@@ -21,7 +20,6 @@
   run_once: true
   when: 
     - KUBE_NETWORK != 'none'
-    - inventory_hostname | ip == 6 and KUBE_NETWORK == 'calico'
 
 - name: Distribution manifest to the cluster
   ansible.builtin.template:
