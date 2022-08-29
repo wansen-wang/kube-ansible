@@ -28,7 +28,7 @@ storage_driver = "{{ crio.daemon.storage_driver | default('overlay') }}"
 
 # List to pass options to the storage driver. Please refer to
 # containers-storage.conf(5) to see all available storage options.
-storage_option = "{{ crio.daemon.storage_option | list }}"
+storage_option = {{ crio.daemon.storage_option | list }}
 
 # The default log directory where all logs will go unless directly specified by
 # the kubelet. The log directory specified must be an absolute directory.
@@ -313,8 +313,7 @@ global_auth_file = ""
 
 # The image used to instantiate infra containers.
 # This option supports live configuration reload.
-pause_image = "{{ REGISTRY_URL | default('registry.aliyuncs.com') }}/google_containers/pause:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.pause") }}"
-
+pause_image = "{{ REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('path') }}{% endif %}/google_containers/pause:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.pause") }}"
 # The path to a file containing credentials specific for pulling the pause_image from
 # above. The file is similar to that of /var/lib/kubelet/config.json
 # This option supports live configuration reload.
@@ -336,7 +335,9 @@ signature_policy = ""
 # List of registries to skip TLS verification for pulling images. Please
 # consider configuring the registries via /etc/containers/registries.conf before
 # changing them here.
-#insecure_registries = "[]"
+{% if REGISTRY_URL is defined %}
+insecure_registries = [ "{{ REGISTRY_URL | urlsplit('hostname') }}:{{ REGISTRY_URL | urlsplit('port') }}" ]
+{% endif %}
 
 # Controls how image volumes are handled. The valid values are mkdir, bind and
 # ignore; the latter will ignore volumes entirely.
@@ -347,8 +348,7 @@ image_volumes = "mkdir"
 # compatibility reasons. Depending on your workload and usecase you may add more
 # registries (e.g., "quay.io", "registry.fedoraproject.org",
 # "registry.opensuse.org", etc.).
-registries = {{ registries | list }}
-
+registries = {{ crio.registries | list }}
 
 # The crio.network table containers settings pertaining to the management of
 # CNI plugins.

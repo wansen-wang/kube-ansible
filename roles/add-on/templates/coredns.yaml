@@ -113,7 +113,7 @@ spec:
              topologyKey: kubernetes.io/hostname
       containers:
       - name: coredns
-        image: {{ REGISTRY_URL | default('docker.io') }}/coredns/coredns:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") }}
+        image: {{ REGISTRY_URL | default('https://docker.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://docker.io') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://docker.io') | urlsplit('path') }}{% endif %}/coredns/coredns:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.coredns") }}
         imagePullPolicy: IfNotPresent
         resources:
           limits:

@@ -17,7 +17,13 @@ KUBE_RUNTIME:=docker
 KUBE_NETWORK:=flannel
 
 # Private registry
-# eg: 192.168.119.20/infra
+# eg: 
+# https://192.168.119.20:5000/infra
+# http://192.168.119.20:5000/infra
+# https://192.168.119.20/infra
+# http://192.168.119.20/infra
+# http://192.168.119.20
+# https://192.168.119.20
 REGISTRY_URL:=
 
 # Nexus information

@@ -1,5 +1,13 @@
 {% if gpu | default(false) %}
-{{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | combine({'default-runtime': 'nvidia'} , recursive=True) | combine({'runtimes': {'nvidia': {'path': '/usr/bin/nvidia-container-runtime', 'runtimeArgs':[]}}} , recursive=True) | to_nice_json }}
+    {% set cfg = docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | combine({'default-runtime': 'nvidia'} , recursive=True) | combine({'runtimes': {'nvidia': {'path': '/usr/bin/nvidia-container-runtime', 'runtimeArgs':[]}}} , recursive=True) %}
 {% else %}
-{{ docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) | to_nice_json }}
+    {% set cfg = docker.daemon | combine({'data-root': docker.datadir | default('/var/lib/docker')}) %}
 {% endif %}
+{% if REGISTRY_URL is defined %}
+    {% if REGISTRY_URL | urlsplit('port') is not none %}
+        {% set cfg = cfg | combine({'insecure-registries': [ REGISTRY_URL | urlsplit('hostname'):REGISTRY_URL | urlsplit('port') ]}, recursive=True) %}
+    {% else %}
+        {% set cfg = cfg | combine({'insecure-registries': [ REGISTRY_URL | urlsplit('hostname') ]}, recursive=True) %}
+    {% endif %}
+{% endif %}
+{{ cfg | to_nice_json }}

@@ -58,7 +58,7 @@ required_plugins = ["io.containerd.grpc.v1.cri"]
     max_container_log_line_size = 16384
     netns_mounts_under_state_dir = false
     restrict_oom_score_adj = false
-    sandbox_image = "{{ REGISTRY_URL | default('registry.aliyuncs.com') }}/google_containers/pause:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.pause") }}"
+    sandbox_image = "{{ REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://registry.aliyuncs.com') | urlsplit('path') }}{% endif %}/google_containers/pause:{{ KUBE_VERSION | component_version | community.general.json_query("plugin.pause") }}"
     selinux_category_range = 1024
     stats_collect_period = 10
     stream_idle_timeout = "4h0m0s"
@@ -142,6 +142,11 @@ required_plugins = ["io.containerd.grpc.v1.cri"]
       [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
         [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
           endpoint = [ "https://registry-1.docker.io", "https://i3jtbyvy.mirror.aliyuncs.com" ]
+{% if REGISTRY_URL is defined %}
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."{{ REGISTRY_URL | default('https://docker.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://docker.io') | urlsplit('port')}}{% endif %}"]
+          endpoint = [ "{{ REGISTRY_URL | urlsplit('scheme') }}://{{ REGISTRY_URL | default('https://docker.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://docker.io') | urlsplit('port')}}{% endif %}" ]
+          insecure_skip_verify = true
+{% endif %}
 
     [plugins."io.containerd.grpc.v1.cri".x509_key_pair_streaming]
       tls_cert_file = ""
