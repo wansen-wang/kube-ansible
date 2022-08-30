@@ -40,9 +40,9 @@ docker pull calico/kube-controllers:v3.12.3
 docker tag calico/kube-controllers:v3.12.3 ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
 docker push ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
 
-docker pull coredns/coredns:1.6.7
-docker tag coredns/coredns:1.6.7 ${REGISTRY_URL}/coredns/coredns:1.6.7
-docker push ${REGISTRY_URL}/coredns/coredns:1.6.7
+docker pull coredns/coredns:1.3.1
+docker tag coredns/coredns:1.3.1 ${REGISTRY_URL}/coredns/coredns:1.3.1
+docker push ${REGISTRY_URL}/coredns/coredns:1.3.1
 
 
 docker pull rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0

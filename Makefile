@@ -114,6 +114,7 @@ offline:
 	@find ./scripts/src/ -name '*docker-*.tgz' | xargs tar -zx --strip-components=1 -C /usr/local/bin/ -f
 	@cp roles/docker/templates/docker.service.j2 /etc/systemd/system/docker.service
 	@systemctl daemon-reload
+	@systemctl enable docker.service
 	@systemctl restart docker.service
 	@sleep 10
 	@echo -e "\033[32m-> Install registry.\033[0m"

@@ -5,7 +5,9 @@
 {% endif %}
 {% if REGISTRY_URL is defined %}
     {% if REGISTRY_URL | urlsplit('port') is not none %}
-        {% set cfg = cfg | combine({'insecure-registries': [ REGISTRY_URL | urlsplit('hostname'):REGISTRY_URL | urlsplit('port') ]}, recursive=True) %}
+        {% set host = [  ] %}
+        {% set _ = host.append("%s:%s" % (REGISTRY_URL | urlsplit('hostname'), REGISTRY_URL | urlsplit('port'))) %}
+        {% set cfg = cfg | combine({'insecure-registries': host }, recursive=True) %}
     {% else %}
         {% set cfg = cfg | combine({'insecure-registries': [ REGISTRY_URL | urlsplit('hostname') ]}, recursive=True) %}
     {% endif %}
