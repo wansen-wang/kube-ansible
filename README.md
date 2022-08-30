@@ -4,7 +4,7 @@ This project will used ansible to deployment kubernetes.
 
 Read the documentation to see how the project is used
 
-`kubeasy` passed the [cncf conformance](https://github.com/cncf/k8s-conformance) test [details](test/k8s-conformance/README.md)
+`kubeasy` passed the [cncf conformance test](https://github.com/cncf/k8s-conformance), because k8s-conformance does not allow submission of personal projects, please check here for [details](https://github.com/buxiaomo/k8s-conformance)
 
 * [group_vars/README.md](group_vars/README.md)
 * [inventory/README.md](inventory/README.md)
