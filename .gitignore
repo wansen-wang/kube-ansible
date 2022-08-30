@@ -1,9 +1,10 @@
 # OSX files
 .DS_Store
+
 __pycache__
 scripts/src/*
 test.md
-
+tests/k8s-conformance
 scripts/binaries
 roles/apps/files/*.yaml
 
@@ -23,9 +24,10 @@ group_vars/kubernetes.yml
 
 
 # terraform
-test/terraform/*/.terraform
-test/terraform/*/*.tfstate
-test/terraform/*/*.backup
+tests/terraform/*/.terraform
+tests/terraform/*/*.tfstate
+tests/terraform/*/*.backup
+
 
 # vagrant
 .vagrant
