@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 
 # Cluster information use by pki project
-PROJECT_NAME:=kube-ansible
+PROJECT_NAME:=kubeasy
 PROJECT_ENV:=dev
 
 # Binary file download way, official or nexus
@@ -29,7 +29,7 @@ REGISTRY_URL:=
 # Nexus information
 # eg: http://192.168.119.20:8081
 NEXUS_DOMAIN_NAME:=
-NEXUS_REPOSITORY:=kube-ansible
+NEXUS_REPOSITORY:=kubeasy
 NEXUS_USERNAME:=
 NEXUS_PASSWORD:=
 

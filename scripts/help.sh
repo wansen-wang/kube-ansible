@@ -39,7 +39,7 @@ echo '|    <|  |  / \_\ \  ___/  /_____/  / __ \|   |  \\___ \|  || \_\ \  |_\  
 echo '|__|_ \____/|___  /\___  >         (____  /___|  /____  >__||___  /____/\___  >'
 echo '     \/         \/     \/               \/     \/     \/        \/          \/ '
 echo '-------------------------------------------------------------------------------'
-echo '    kube-ansible is an easy tool for deploying kubernetes, you can run the'
+echo '    kubeasy is an easy tool for deploying kubernetes, you can run the'
 echo 'following commands to deploy or manage the cluster.'
 echo ''
 echo 'make runtime, will install the ansible runtime environment'
