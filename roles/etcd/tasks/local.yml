@@ -1,0 +1,15 @@
+- name: Distribution CA certificate
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+  with_items:
+    - {
+        src: "/etc/ssl/kubernetes/etcd/ca.crt",
+        dest: "/etc/kubernetes/pki/etcd/ca.crt"
+      }
+    - {
+        src: "/etc/ssl/kubernetes/etcd/ca.key",
+        dest: "/etc/kubernetes/pki/etcd/ca.key"
+      }

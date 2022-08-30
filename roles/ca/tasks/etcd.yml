@@ -1,51 +1,49 @@
-- block:
-  - name: Create etcd certificate directory
-    ansible.builtin.file:
-      name: "/etc/ssl/kubernetes/etcd"
-      state: directory
-      mode: 0755
-    delegate_to: localhost
-    run_once: true
+- name: Create etcd certificate directory
+  ansible.builtin.file:
+    name: "/etc/ssl/kubernetes/etcd"
+    state: directory
+    mode: 0755
+  delegate_to: localhost
+  run_once: true
 
-  - name: Generate an etcd ca private key
-    community.crypto.openssl_privatekey:
-      path: /etc/ssl/kubernetes/etcd/ca.key
-      size: 2048
-      mode: 0600
-    delegate_to: localhost
-    run_once: true
+- name: Generate an etcd ca private key
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/kubernetes/etcd/ca.key
+    size: 2048
+    mode: 0600
+  delegate_to: localhost
+  run_once: true
 
-  - name: Generate an etcd ca csr
-    community.crypto.openssl_csr:
-      path: /etc/ssl/kubernetes/etcd/ca.csr
-      privatekey_path: /etc/ssl/kubernetes/etcd/ca.key
-      common_name: etcd-ca
-      basic_constraints: "CA:TRUE"
-      basic_constraints_critical: true
-      key_usage_critical: true
-      key_usage:
-        - digitalSignature
-        - keyEncipherment
-        - keyCertSign
-    delegate_to: localhost
-    run_once: true
+- name: Generate an etcd ca csr
+  community.crypto.openssl_csr:
+    path: /etc/ssl/kubernetes/etcd/ca.csr
+    privatekey_path: /etc/ssl/kubernetes/etcd/ca.key
+    common_name: etcd-ca
+    basic_constraints: "CA:TRUE"
+    basic_constraints_critical: true
+    key_usage_critical: true
+    key_usage:
+      - digitalSignature
+      - keyEncipherment
+      - keyCertSign
+  delegate_to: localhost
+  run_once: true
 
-  # - name: Valid the etcd ca certificate
-  #   community.crypto.x509_certificate_info:
-  #     path: /etc/ssl/kubernetes/etcd/ca.crt
-  #   register: result
-  #   ignore_errors: True
-  #   delegate_to: localhost
-  #   run_once: true
+# - name: Valid the etcd ca certificate
+#   community.crypto.x509_certificate_info:
+#     path: /etc/ssl/kubernetes/etcd/ca.crt
+#   register: result
+#   ignore_errors: True
+#   delegate_to: localhost
+#   run_once: true
 
-  - name: Sign etcd ca certificate
-    community.crypto.x509_certificate:
-      path: /etc/ssl/kubernetes/etcd/ca.crt
-      csr_path: /etc/ssl/kubernetes/etcd/ca.csr
-      privatekey_path: /etc/ssl/kubernetes/etcd/ca.key
-      mode: 0644
-      provider: selfsigned
-      force: "{{ result.expired | default(false) }}"
-    run_once: true
-    delegate_to: localhost
-  when: not PKI_URL is defined
+- name: Sign etcd ca certificate
+  community.crypto.x509_certificate:
+    path: /etc/ssl/kubernetes/etcd/ca.crt
+    csr_path: /etc/ssl/kubernetes/etcd/ca.csr
+    privatekey_path: /etc/ssl/kubernetes/etcd/ca.key
+    mode: 0644
+    provider: selfsigned
+    force: "{{ result.expired | default(false) }}"
+  run_once: true
+  delegate_to: localhost

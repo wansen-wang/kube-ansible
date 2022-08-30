@@ -24,50 +24,8 @@
     name: /etc/kubernetes/pki
     state: directory
 
-- name: Distribution certificate by local
-  ansible.builtin.copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: "{{ item.mode }}"
-  with_items:
-    - {
-        src: "/etc/ssl/kubernetes/ca.crt",
-        dest: "/etc/kubernetes/pki/ca.crt",
-        mode: 644,
-      }
-    - {
-        src: "/etc/ssl/kubernetes/ca.key",
-        dest: "/etc/kubernetes/pki/ca.key",
-        mode: 600,
-      }
-  when: not PKI_URL is defined
-
-- name: Distribution certificate by pki server
-  get_url:
-    url: "{{ item.url }}"
-    dest: "{{ item.dest }}"
-    mode: "{{ item.mode }}"
-    checksum: "{{ item.checksum }}"
-    owner: root
-    group: root
-    timeout: 3
-  retries: 3
-  with_items:
-    - {
-        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt",
-        dest: "/etc/kubernetes/pki/ca.crt",
-        checksum: "sha256:{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.crt.sha256sum",
-        mode: 644,
-      }
-    - {
-        url: "{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key",
-        dest: "/etc/kubernetes/pki/ca.key",
-        checksum: "sha256:{{ PKI_URL }}/{{ PROJECT_NAME }}/{{ PROJECT_ENV }}/ca.key.sha256sum",
-        mode: 600,
-      }
-  when: PKI_URL is defined
+- name: Distribution certificate
+  include_tasks: "{% if PKI_URL is defined %}pki{% else %}local{% endif %}.yml"
 
 - name: Generate kube-scheduler private key
   community.crypto.openssl_privatekey:

@@ -2,7 +2,8 @@
 # tasks file for ca
 - name: Kubernetes ca
   include_tasks: kubernetes.yml
+  when: not PKI_URL is defined
 
 - name: Etcd ca
   include_tasks: etcd.yml
-
+  when: not PKI_URL is defined

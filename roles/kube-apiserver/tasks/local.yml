@@ -1,0 +1,48 @@
+- name: Distribution certificate
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: "{{ item.mode }}"
+  with_items:
+    - {
+        src: "/etc/ssl/kubernetes/etcd/ca.crt",
+        dest: "/etc/kubernetes/pki/etcd/ca.crt",
+        mode: 644,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/etcd/ca.key",
+        dest: "/etc/kubernetes/pki/etcd/ca.key",
+        mode: 600,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/ca.crt",
+        dest: "/etc/kubernetes/pki/ca.crt",
+        mode: 644,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/ca.key",
+        dest: "/etc/kubernetes/pki/ca.key",
+        mode: 600,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/front-proxy-ca.crt",
+        dest: "/etc/kubernetes/pki/front-proxy-ca.crt",
+        mode: 644,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/front-proxy-ca.key",
+        dest: "/etc/kubernetes/pki/front-proxy-ca.key",
+        mode: 600,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/sa.key",
+        dest: "/etc/kubernetes/pki/sa.key",
+        mode: 644,
+      }
+    - {
+        src: "/etc/ssl/kubernetes/sa.pub",
+        dest: "/etc/kubernetes/pki/sa.pub",
+        mode: 600,
+      }

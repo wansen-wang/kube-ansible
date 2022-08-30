@@ -1,94 +1,92 @@
-- block:
-  - name: Create kubernetes certificate directory
-    ansible.builtin.file:
-      name: /etc/ssl/kubernetes
-      state: directory
-      mode: 0755
-    delegate_to: localhost
-    run_once: true
+- name: Create kubernetes certificate directory
+  ansible.builtin.file:
+    name: /etc/ssl/kubernetes
+    state: directory
+    mode: 0755
+  delegate_to: localhost
+  run_once: true
 
-  # Kubernetes CA
-  - name: Generate an kubernetes ca private key
-    community.crypto.openssl_privatekey:
-      path: /etc/ssl/kubernetes/ca.key
-      size: 2048
-      mode: 0600
-    delegate_to: localhost
-    run_once: true
+# Kubernetes CA
+- name: Generate an kubernetes ca private key
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/kubernetes/ca.key
+    size: 2048
+    mode: 0600
+  delegate_to: localhost
+  run_once: true
 
-  - name: Generate an kubernetes ca csr
-    community.crypto.openssl_csr:
-      path: /etc/ssl/kubernetes/ca.csr
-      privatekey_path: /etc/ssl/kubernetes/ca.key
-      common_name: kubernetes-ca
-      basic_constraints: "CA:TRUE"
-      basic_constraints_critical: true
-      key_usage_critical: true
-      key_usage:
-        - digitalSignature
-        - keyEncipherment
-        - keyCertSign
-    delegate_to: localhost
-    run_once: true
+- name: Generate an kubernetes ca csr
+  community.crypto.openssl_csr:
+    path: /etc/ssl/kubernetes/ca.csr
+    privatekey_path: /etc/ssl/kubernetes/ca.key
+    common_name: kubernetes-ca
+    basic_constraints: "CA:TRUE"
+    basic_constraints_critical: true
+    key_usage_critical: true
+    key_usage:
+      - digitalSignature
+      - keyEncipherment
+      - keyCertSign
+  delegate_to: localhost
+  run_once: true
 
-  - name: Sign kubernetes ca certificate
-    community.crypto.x509_certificate:
-      path: /etc/ssl/kubernetes/ca.crt
-      csr_path: /etc/ssl/kubernetes/ca.csr
-      privatekey_path: /etc/ssl/kubernetes/ca.key
-      mode: 0644
-      provider: selfsigned
-    run_once: true
-    delegate_to: localhost
+- name: Sign kubernetes ca certificate
+  community.crypto.x509_certificate:
+    path: /etc/ssl/kubernetes/ca.crt
+    csr_path: /etc/ssl/kubernetes/ca.csr
+    privatekey_path: /etc/ssl/kubernetes/ca.key
+    mode: 0644
+    provider: selfsigned
+  run_once: true
+  delegate_to: localhost
 
-  # Front Proxy CA
-  - name: Generate an front proxy private key
-    community.crypto.openssl_privatekey:
-      path: /etc/ssl/kubernetes/front-proxy-ca.key
-      size: 2048
-      mode: 0600
-    delegate_to: localhost
-    run_once: true
+# Front Proxy CA
+- name: Generate an front proxy private key
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/kubernetes/front-proxy-ca.key
+    size: 2048
+    mode: 0600
+  delegate_to: localhost
+  run_once: true
 
-  - name: Generate an front proxy csr
-    community.crypto.openssl_csr:
-      path: /etc/ssl/kubernetes/front-proxy-ca.csr
-      privatekey_path: /etc/ssl/kubernetes/front-proxy-ca.key
-      common_name: front-proxy-ca
-      basic_constraints: "CA:TRUE"
-      basic_constraints_critical: true
-      key_usage_critical: true
-      key_usage:
-        - digitalSignature
-        - keyEncipherment
-        - keyCertSign
-    delegate_to: localhost
-    run_once: true
+- name: Generate an front proxy csr
+  community.crypto.openssl_csr:
+    path: /etc/ssl/kubernetes/front-proxy-ca.csr
+    privatekey_path: /etc/ssl/kubernetes/front-proxy-ca.key
+    common_name: front-proxy-ca
+    basic_constraints: "CA:TRUE"
+    basic_constraints_critical: true
+    key_usage_critical: true
+    key_usage:
+      - digitalSignature
+      - keyEncipherment
+      - keyCertSign
+  delegate_to: localhost
+  run_once: true
 
-  - name: Sign front proxy certificate
-    community.crypto.x509_certificate:
-      path: /etc/ssl/kubernetes/front-proxy-ca.crt
-      csr_path: /etc/ssl/kubernetes/front-proxy-ca.csr
-      privatekey_path: /etc/ssl/kubernetes/front-proxy-ca.key
-      mode: 0644
-      provider: selfsigned
-    run_once: true
-    delegate_to: localhost
+- name: Sign front proxy certificate
+  community.crypto.x509_certificate:
+    path: /etc/ssl/kubernetes/front-proxy-ca.crt
+    csr_path: /etc/ssl/kubernetes/front-proxy-ca.csr
+    privatekey_path: /etc/ssl/kubernetes/front-proxy-ca.key
+    mode: 0644
+    provider: selfsigned
+  run_once: true
+  delegate_to: localhost
 
-  # SA
-  - name: Generate an sa private key
-    community.crypto.openssl_privatekey:
-      path: /etc/ssl/kubernetes/sa.key
-      # curve: secp521r1
-      size: 2048
-      mode: 0600
-    delegate_to: localhost
-    run_once: true
+# SA
+- name: Generate an sa private key
+  community.crypto.openssl_privatekey:
+    path: /etc/ssl/kubernetes/sa.key
+    # curve: secp521r1
+    size: 2048
+    mode: 0600
+  delegate_to: localhost
+  run_once: true
 
-  - name: Generate an sa public key
-    community.crypto.openssl_publickey:
-      path: /etc/ssl/kubernetes/sa.pub
-      privatekey_path: /etc/ssl/kubernetes/sa.key
-    delegate_to: localhost
-    run_once: true
-  when: not PKI_URL is defined
+- name: Generate an sa public key
+  community.crypto.openssl_publickey:
+    path: /etc/ssl/kubernetes/sa.pub
+    privatekey_path: /etc/ssl/kubernetes/sa.key
+  delegate_to: localhost
+  run_once: true

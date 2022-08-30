@@ -9,7 +9,7 @@ case ${PKG} in
     ;;
 'apt')
     apt-get update
-    apt-get install python3 python3-pip sshpass curl rsync wget -y
+    apt-get install python3 python3-pip python3-testresources sshpass curl rsync wget -y
     ;;
 'apk')
     apk add --no-cache sshpass curl rsync wget
