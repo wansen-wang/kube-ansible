@@ -1,13 +1,13 @@
-# kube-ansible
+# kubeasy
 
 This project will used ansible to deployment kubernetes.
 
 Read the documentation to see how the project is used
 
-kube-ansible passed the [cncf conformance](https://github.com/cncf/k8s-conformance) test [details](test/k8s-conformance/README.md)
+`kubeasy` passed the [cncf conformance](https://github.com/cncf/k8s-conformance) test [details](test/k8s-conformance/README.md)
 
-* [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
-* [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
+* [group_vars/README.md](group_vars/README.md)
+* [inventory/README.md](inventory/README.md)
 
 ## Cloud Support
 
@@ -36,7 +36,7 @@ if you want use containerd for container runtime, make sure the `libseccomp` >= 
 * [x] Debian 10.*
 * [x] Debian 11.*
 
-## kube-ansible installs the version corresponding to the k8s component
+## kubeasy installs the version corresponding to the k8s component
 
 | Kubernetes | Etcd    | Docker  | CNI    | CoreDNS | Calico  | metrics-server | pause |
 |---|---|---|---|---|---|---|---|
@@ -61,13 +61,13 @@ The playbook depends on python3, all nodes need to install python3.
 
 #### Clone code
 
-Gitee: https://gitee.com/buxiaomo/kube-ansible.git
+Gitee: https://gitee.com/buxiaomo/kubeasy.git
 
-Gitlab: https://gitlab.com/buxiaomo/kube-ansible.git
+Gitlab: https://gitlab.com/buxiaomo/kubeasy.git
 
-Github: https://github.com/buxiaomo/kube-ansible.git
+Github: https://github.com/buxiaomo/kubeasy.git
 
-JiHulab: https://jihulab.com/buxiaomo/kube-ansible.git
+JiHulab: https://jihulab.com/buxiaomo/kubeasy.git
 ```
 # ubuntu
 apt-get update
@@ -77,8 +77,8 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone -b v1.14 https://github.com/buxiaomo/kube-ansible.git /usr/local/src/kube-ansible
-cd /usr/local/src/kube-ansible
+git clone -b v1.14 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
+cd /usr/local/src/kubeasy
 ```
 
 #### Install ansible
@@ -95,14 +95,14 @@ Please modify the parameters on group_vars directory if  you need
 make -C group_vars/
 ```
 
-* [group_vars/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/group_vars/README.md)
+* [group_vars/README.md](group_vars/README.md)
 
 #### Configuration inventory
 
 for example:
 
 ```
-# cd /usr/local/src/kube-ansible
+# cd /usr/local/src/kubeasy
 # cat inventory/hosts
 [master]
 192.168.56.10
@@ -124,7 +124,7 @@ ansible_ssh_user=root
 # ansible_sudo_pass=root
 ```
 
-For more instructions reference [inventory/README.md](https://github.com/buxiaomo/kube-ansible/blob/master/inventory/README.md)
+For more instructions reference [inventory/README.md](inventory/README.md)
 
 
 #### <span id = "download">Download the way</span>
@@ -135,17 +135,17 @@ For more instructions reference [inventory/README.md](https://github.com/buxiaom
 
 ```
 # download
-cd /usr/local/src/kube-ansible
+cd /usr/local/src/kubeasy
 pip3 install requests
 ./scripts/nexus.py download --kubernetes 1.14.10
 
 # upload
-cd /usr/local/src/kube-ansible
+cd /usr/local/src/kubeasy
 pip3 install requests
 ./scripts/nexus.py upload \
 --kubernetes 1.14.10 \
 --url http://nexus.example.com \
---repository kube-ansible \
+--repository kubeasy \
 --username admin --password admin
 ```
 
@@ -159,7 +159,7 @@ about Makefile parameter
 | Parameter  | describe  |  Default | option |
 |---|---|---|---|
 | PKI_URL | PKI Server, about pki server, you can reference [here](https://github.com/buxiaomo/pki-server) | N/A | pki server url |
-| PROJECT_NAME | Project Name  | kube-ansible  | used by pki server |
+| PROJECT_NAME | Project Name  | kubeasy  | used by pki server |
 | PROJECT_ENV | Project Env  | dev  | used by pki server|
 | DOWNLOAD_WAY | Binary download mode  | official  | official or nexus |
 | KUBE_VERSION | Kubernetes binary version  | latest | N/A |
@@ -167,7 +167,7 @@ about Makefile parameter
 | KUBE_NETWORK | Kubernetes network plugin  | calico | calico, canal, flannel |
 | REGISTRY_URL | Private registry url | N/A | N/A |
 | NEXUS_DOMAIN_NAME | Nexus domain name  | N/A | N/A |
-| NEXUS_REPOSITORY | Nexus repository name | kube-ansible | N/A |
+| NEXUS_REPOSITORY | Nexus repository name | kubeasy | N/A |
 | NEXUS_USERNAME | Nexus username  | N/A  | N/A |
 | NEXUS_PASSWORD | Nexus password  | N/A  | N/A |
 
@@ -177,7 +177,7 @@ about Makefile parameter
 #### Deploy
 
 ```
-cd /usr/local/src/kube-ansible
+cd /usr/local/src/kubeasy
 
 # download from official
 make deploy DOWNLOAD_WAY=official
@@ -185,7 +185,7 @@ make deploy DOWNLOAD_WAY=official
 # download from nexus 
 make deploy DOWNLOAD_WAY=nexus \
 NEXUS_DOMAIN_NAME=http://nexus.example.com \
-NEXUS_REPOSITORY=kube-ansible \
+NEXUS_REPOSITORY=kubeasy \
 NEXUS_USERNAME=admin \
 NEXUS_PASSWORD=admin
 ```
@@ -195,7 +195,7 @@ NEXUS_PASSWORD=admin
 #### Scale
 
 ```
-cd /usr/local/src/kube-ansible
+cd /usr/local/src/kubeasy
 
 make scale
 ```
@@ -207,14 +207,14 @@ make scale
 Download new kubernetes binaries, Reference [here](#download).
 
 ```
-cd /usr/local/src/kube-ansible
+cd /usr/local/src/kubeasy
 
 make upgrade KUBE_VERSION=1.14.10
 ```
 
 ## Known Issues 
 
-* error: Following Cgroup subsystem not mounted: [memory], see [here](https://github.com/buxiaomo/kube-ansible/issues/2)
+* error: Following Cgroup subsystem not mounted: [memory], see [here](https://github.com/buxiaomo/kubeasy/issues/2)
 
 
 ## knowledge
