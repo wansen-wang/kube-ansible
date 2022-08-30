@@ -342,7 +342,7 @@
 
 - name: Create backup kubernetes etcd data in cron
   ansible.builtin.cron:
-    name: "backup kubernetes etcd data by kube-ansible"
+    name: "backup kubernetes etcd data by kubeasy"
     minute: "0"
     hour: "2"
     job: "/usr/local/bin/etcd-backup.sh"

@@ -197,7 +197,7 @@
 
 # - name: Create check kubernetes node status in cron
 #   ansible.builtin.cron:
-#     name: "check kubernetes node status by kube-ansible"
+#     name: "check kubernetes node status by kubeasy"
 #     minute: "*"
 #     hour: "*"
 #     job: "/usr/local/bin/check-node.sh"
