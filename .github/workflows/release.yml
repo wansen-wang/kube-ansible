@@ -16,11 +16,11 @@ jobs:
         run: |
           git fetch
           export GIT_TAG=${{ github.ref_name }}
-          tar -zcf /tmp/kube-ansible-online.tar.gz ../kube-ansible
+          tar -zcf /tmp/kubeasy-online.tar.gz ../kubeasy
           ./scripts/nexus.py download --quiet --kubernetes ${GIT_TAG:1}
           sudo ./scripts/make-offline-registry.sh
           rm -rf ./scripts/__pycache__
-          tar -zcf /tmp/kube-ansible-offline.tar.gz ../kube-ansible
+          tar -zcf /tmp/kubeasy-offline.tar.gz ../kubeasy
 
       - name: Create Release
         id: create_release
@@ -33,22 +33,22 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset(kube-ansible-online)
+      - name: Upload Release Asset(kubeasy-online)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/kube-ansible-online.tar.gz
-          asset_name: kube-ansible-online.tar.gz
+          asset_path: /tmp/kubeasy-online.tar.gz
+          asset_name: kubeasy-online.tar.gz
           asset_content_type: application/gzip
 
-      - name: Upload Release Asset(kube-ansible-offline)
+      - name: Upload Release Asset(kubeasy-offline)
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /tmp/kube-ansible-offline.tar.gz
-          asset_name: kube-ansible-offline.tar.gz
+          asset_path: /tmp/kubeasy-offline.tar.gz
+          asset_name: kubeasy-offline.tar.gz
           asset_content_type: application/gzip
