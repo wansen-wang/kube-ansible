@@ -29,7 +29,7 @@ all node please install python3.
 if you want use containerd for container runtime, make sure the `libseccomp` >= 2.4
 
 * [x] CentOS 7.* (not support containerd)
-* [x] CentOS 8.*
+* [x] CentOS 8.* (not support containerd)
 * [x] Ubuntu 16.*
 * [x] Ubuntu 18.*
 * [x] Ubuntu 20.*
