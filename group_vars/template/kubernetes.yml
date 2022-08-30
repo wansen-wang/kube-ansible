@@ -161,6 +161,9 @@ scheduler:
 # kubelet config
 kubelet:
   extraArgs:
+    - "--protect-kernel-defaults=true"
+    - "--anonymous-auth=false"
+    - "--authorization-mode=Webhook"
     - "--allowed-unsafe-sysctls=net.*"
     - "--network-plugin=cni"
   log:
