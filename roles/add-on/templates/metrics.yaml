@@ -144,7 +144,7 @@ spec:
             topologyKey: kubernetes.io/hostname
       containers:
         - name: metrics-server
-          image: {{ REGISTRY_URL | default('https://docker.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://docker.io') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://docker.io') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://docker.io') | urlsplit('path') }}{% endif %}/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}
+          image: {{ REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('path') }}{% endif %}/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}
           imagePullPolicy: IfNotPresent
           args:
             - --cert-dir=/tmp
