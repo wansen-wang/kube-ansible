@@ -34,7 +34,7 @@ NEXUS_USERNAME:=
 NEXUS_PASSWORD:=
 
 # PKI server
-# PKI_URL:=http://127.0.0.1:8080/v1/pki/project
+# PKI_URL:=http://192.168.119.20:8000/v1/pki/project
 PKI_URL:=
 
 # e2e test software version
