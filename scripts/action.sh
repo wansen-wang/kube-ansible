@@ -57,7 +57,7 @@ case $1 in
   fi
   sleep 3
   start=$(date +%s)
-  ansible-playbook -i ./inventory/hosts ./deploy.yml -e KUBE_ACTION="deploy" ${ANSIBLE_ENV}
+  ansible-playbook -i ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv ./deploy.yml -e KUBE_ACTION="deploy" ${ANSIBLE_ENV}
   if [ $? -eq 0 ];then
     end=$(date +%s)
     echo -e "\033[32mDeploy kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get po -A' to check the pod status.\033[0m"
@@ -66,25 +66,25 @@ case $1 in
 "scale")
   read -p "Enter Host, Multiple hosts are separated by Spaces: " SCALE_HOST_LIST_VER
   for host in ${SCALE_HOST_LIST_VER}; do
-    sed -n '/^\[worker/,/^\[kubernetes/p' ./inventory/hosts | grep -E "^$host$|^$host" &> /dev/null && { echo -e "\033[31mNode ${host} already existed in ./inventory/hosts\033[0m"; exit 2; }
+    sed -n '/^\[worker/,/^\[kubernetes/p' ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv | grep -E "^$host$|^$host" &> /dev/null && { echo -e "\033[31mNode ${host} already existed in ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv\033[0m"; exit 2; }
   done
   start=$(date +%s)
   for host in ${SCALE_HOST_LIST_VER}; do
-    sed -i "/\[worker\]/a ${host}" ./inventory/hosts
+    sed -i "/\[worker\]/a ${host}" ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv
   done
-  ansible-playbook -i ./inventory/hosts ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') -e KUBE_ACTION="scale" ${ANSIBLE_ENV}
+  ansible-playbook -i ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv ./scale.yml --limit $(echo ${SCALE_HOST_LIST_VER} | sed 's/ /,/g') -e KUBE_ACTION="scale" ${ANSIBLE_ENV}
   if [ $? -eq 0 ];then
     end=$(date +%s)
     echo -e "\033[32mScale kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get no -o wide' to check the node status.\033[0m"
   else
     for host in ${SCALE_HOST_LIST_VER}; do
-      sed -i "/^${host}/d" ./inventory/hosts
+      sed -i "/^${host}/d" ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv
     done
   fi
   ;;
 "upgrade")
   start=$(date +%s)
-  ansible-playbook -i ./inventory/hosts ./upgrade.yml -e KUBE_ACTION="upgrade" ${ANSIBLE_ENV}
+  ansible-playbook -i ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv ./upgrade.yml -e KUBE_ACTION="upgrade" ${ANSIBLE_ENV}
   echo -e "\033[32mUpgrade kubernetes success, execute commands is $(( end - start )) seconds, please run 'kubectl get no -o wide' to check the node version status.\033[0m"
   ;;
 *) ;;

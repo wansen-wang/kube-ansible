@@ -47,7 +47,7 @@ runtime:
 
 deploy: 
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )
-	@[ -f ./inventory/hosts ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
+	@[ -f ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv ] || ( echo -e "\033[31mPlease Create asset information...\033[0m" && exit 1 )
 	@PROJECT_NAME=$(PROJECT_NAME) \
 		PROJECT_ENV=$(PROJECT_ENV) \
 		DOWNLOAD_WAY=$(DOWNLOAD_WAY) \
@@ -137,7 +137,7 @@ local: clean
 	@mkdir -p .ssh
 	@ssh-keygen -t RSA -N '' -f .ssh/id_rsa
 	@cd group_vars && make
-	@[ -f ./inventory/hosts ] || cp ./inventory/template/single-master.template ./inventory/hosts
+	@[ -f ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv ] || cp ./inventory/template/single-master.template ./inventory/${PROJECT_NAME}-${PROJECT_ENV}.inv
 	@vagrant up
 	@vagrant ssh master -c 'cd /vagrant/ && sudo make runtime'
 	@vagrant ssh master -c 'cd /vagrant/ && sudo make deploy KUBE_RUNTIME=docker KUBE_NETWORK=canal'
