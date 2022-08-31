@@ -4,12 +4,9 @@
 __pycache__
 scripts/src/*
 test.md
-tests/k8s-conformance
 scripts/binaries
 roles/apps/files/*.yaml
-
-inventory/hosts
-inventory/hosts.*
+inventory/*.ini
 group_vars/all.yml
 group_vars/kubernetes.yml
 
