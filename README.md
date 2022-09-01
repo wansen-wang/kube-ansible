@@ -103,7 +103,7 @@ for example:
 
 ```
 # cd /usr/local/src/kubeasy
-# cat inventory/hosts
+# cat inventory/${PROJECT_NAME}-${PROJECT_ENV}.ini
 [master]
 192.168.56.10
 
