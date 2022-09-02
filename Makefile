@@ -128,7 +128,7 @@ offline:
 	@echo -e "\033[32mthen setting REGISTRY_URL, NEXUS_* on make command\033[0m"
 
 check:
-	@cd ./test && ./check-cluster.sh
+	@./tests/check-cluster.sh
 
 help:
 	@./scripts/help.sh
