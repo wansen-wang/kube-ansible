@@ -17,6 +17,7 @@ Documentation=https://github.com/kubernetes/kubernetes
 ExecStart=/usr/local/bin/kube-apiserver \
   --bind-address={{ (inventory_hostname | ip == 4) | ternary('0.0.0.0', '::') }} \
   --advertise-address={{ inventory_hostname }} \
+  --enable-aggregator-routing=true \
   --allow-privileged=true \
   --client-ca-file=/etc/kubernetes/pki/ca.crt \
   --enable-bootstrap-token-auth \
