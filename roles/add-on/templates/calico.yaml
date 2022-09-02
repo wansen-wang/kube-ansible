@@ -31,7 +31,7 @@ data:
           "mtu": __CNI_MTU__,
           "ipam": {
               "type": "calico-ipam",
-{% if networking.podSubnet.split(',') | length == 2 and networking.serviceSubnet.split(',') | length == 2 %}
+{% if (networking.podSubnet.split(',') | length == 2) and (networking.serviceSubnet.split(',') | length == 2) %}
               "assign_ipv4": "true",
               "assign_ipv6": "true"
 {% else %}
