@@ -26,8 +26,8 @@
     src: "{{ item.src }}"
     dest: "/etc/kubernetes/apps/{{ item.dest }}"
   with_items:
-    - { "src": "metrics.yaml.j2", "dst": "metrics.yaml" }
-    - { "src": "coredns.yaml.j2", "dst": "coredns.yaml" }
+    - { "src": "metrics.yaml.j2", "dest": "metrics.yaml" }
+    - { "src": "coredns.yaml.j2", "dest": "coredns.yaml" }
 
 - name: Apply manifest to the cluster
   kubernetes.core.k8s:
