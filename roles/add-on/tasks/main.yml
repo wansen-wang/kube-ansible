@@ -8,9 +8,9 @@
 
 - name: Distribution cni to the cluster
   ansible.builtin.template:
-    src: "{{ KUBE_NETWORK | default('flannel')}}.yaml"
+    src: "{{ KUBE_NETWORK | default('flannel')}}.yaml.j2"
     dest: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('flannel')}}.yaml"
-  when: 
+  when:
     - KUBE_NETWORK != 'none'
 
 - name: Apply cni to the cluster
@@ -18,16 +18,16 @@
     state: present
     src: "/etc/kubernetes/apps/{{ KUBE_NETWORK | default('flannel')}}.yaml"
   run_once: true
-  when: 
+  when:
     - KUBE_NETWORK != 'none'
 
 - name: Distribution manifest to the cluster
   ansible.builtin.template:
-    src: "{{ item }}"
-    dest: "/etc/kubernetes/apps/{{ item }}"
+    src: "{{ item.src }}"
+    dest: "/etc/kubernetes/apps/{{ item.dest }}"
   with_items:
-    - "metrics.yaml"
-    - "coredns.yaml"
+    - { "src": "metrics.yaml.j2", "dst": "metrics.yaml" }
+    - { "src": "coredns.yaml.j2", "dst": "coredns.yaml" }
 
 - name: Apply manifest to the cluster
   kubernetes.core.k8s:
