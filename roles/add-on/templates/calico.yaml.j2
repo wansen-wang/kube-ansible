@@ -35,13 +35,13 @@ data:
               "assign_ipv4": "true",
               "assign_ipv6": "true"
 {% else %}
-{% if inventory_hostname | ip == 4 %}
+  {%- if inventory_hostname | ip == 4 %}
               "assign_ipv4": "true",
               "assign_ipv6": "false"
-{% elif inventory_hostname | ip == 6 %}
+  {%- elif inventory_hostname | ip == 6 %}
               "assign_ipv4": "false",
               "assign_ipv6": "true"
-{% endif %}
+  {%- endif %}
 {% endif %}
           },
           "policy": {
