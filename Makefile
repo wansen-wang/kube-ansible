@@ -43,7 +43,7 @@ SONOBUOY_VERSION:=0.16.5
 # Install ansible on depoy server
 runtime:
 	@echo -e "\033[32mDeploy ansible...\033[0m"
-	@scripts/runtime.sh
+	@./scripts/runtime.sh
 
 deploy: 
 	@[ -f group_vars/all.yml ] || ( echo -e "\033[31mPlease Create group vars...\033[0m" && exit 1 )

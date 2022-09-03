@@ -35,13 +35,13 @@ data:
               "assign_ipv4": "true",
               "assign_ipv6": "true"
 {% else %}
-  {% if inventory_hostname | ip == 4 %}
+{% if inventory_hostname | ip == 4 %}
               "assign_ipv4": "true",
               "assign_ipv6": "false"
-  {% elif inventory_hostname | ip == 6 %}
+{% elif inventory_hostname | ip == 6 %}
               "assign_ipv4": "false",
               "assign_ipv6": "true"
-  {% endif %}
+{% endif %}
 {% endif %}
           },
           "policy": {
@@ -672,19 +672,19 @@ spec:
             # The default IPv4 pool to create on startup if none exists. Pod IPs will be
             # chosen from this range. Changing this value after installation will have
             # no effect. This should fall within `--cluster-cidr`.
-  {% if networking.podSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) | ip == 4 %}
+{% if networking.podSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) | ip == 4 %}
             - name: CALICO_IPV4POOL_CIDR
               value: "{{ networking.podSubnet.split(',')[0] }}"
             - name: CALICO_IPV6POOL_CIDR
               value: "{{ networking.podSubnet.split(',')[1] }}"
-  {% else %}
-            - name: CALICO_IPV4POOL_CIDR
-              value: "{{ networking.podSubnet.split(',')[1] }}"
-            - name: CALICO_IPV6POOL_CIDR
-              value: "{{ networking.podSubnet.split(',')[0] }}"
-  {% endif %}
 {% else %}
-  {% if inventory_hostname | ip == 6 %}
+            - name: CALICO_IPV4POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[1] }}"
+            - name: CALICO_IPV6POOL_CIDR
+              value: "{{ networking.podSubnet.split(',')[0] }}"
+{% endif %}
+{% else %}
+{% if inventory_hostname | ip == 6 %}
             # Auto-detect the BGP IP address.
             - name: IP
               value: "none"
@@ -697,8 +697,8 @@ spec:
               value: "{{ networking.podSubnet | default('2402:db8:42:d700::/64') }}"
             - name: CALICO_ROUTER_ID
               value: "hash"
-  {% endif %}
-  {% if inventory_hostname | ip == 4 %}
+{% endif %}
+{% if inventory_hostname | ip == 4 %}
             # Auto-detect the BGP IP address.
             - name: IP
               value: "autodetect"
@@ -710,7 +710,7 @@ spec:
             # no effect. This should fall within `--cluster-cidr`.
             - name: CALICO_IPV4POOL_CIDR
               value: "{{ networking.podSubnet | default('10.244.0.0/16') }}"
-  {% endif %}
+{% endif %}
 {% endif %}
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
