@@ -10,6 +10,12 @@
 master
 worker
 
+# ha config
+# slb is software load balancing, will install harpoxy and keepalived on master node
+# clb is cloud load balancing, will use cloud load balancing
+# [kubernetes:vars]
+# ha={"type": "slb", "vip": "240e:369:7a65:d00:250:56ff:fe82:ddd8", "mask": 64 }
+
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
 ansible_ssh_port=22

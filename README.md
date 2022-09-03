@@ -105,15 +105,21 @@ for example:
 # cd /usr/local/src/kubeasy
 # cat inventory/${PROJECT_NAME}-${PROJECT_ENV}.ini
 [master]
-192.168.56.10
+192.168.56.11
 
 [worker]
-192.168.56.11
 192.168.56.12
+192.168.56.13
 
 [kubernetes:children]
 master
 worker
+
+# ha config
+# slb is software load balancing, will install harpoxy and keepalived on master node
+# clb is cloud load balancing, will use cloud load balancing
+# [kubernetes:vars]
+# ha={"type": "slb", "vip": "192.168.56.10", "mask": 24 }
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3

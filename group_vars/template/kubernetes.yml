@@ -86,15 +86,6 @@ etcd:
     - "--snapshot-count=10000"
     - "--cipher-suites=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_256_GCM_SHA384"
 
-# ha config
-# none not use lb for apiserver
-# slb is software load balancing, will install harpoxy and keepalived on master node
-# clb is cloud load balancing, will use cloud load balancing
-# ha:
-#   type: slb
-#   vip: 172.16.6.10
-#   mask: 16
-
 # loadBalancing is 4 layer forwarding to ingress by haproxy, only used in slb
 # loadBalancing:
 #   http:
