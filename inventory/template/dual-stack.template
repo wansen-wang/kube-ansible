@@ -1,18 +1,18 @@
 [master]
-172.16.102.11 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:c2be
+172.16.4.11 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:c2be
 
 [worker]
-172.16.102.12 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:bdb8
+172.16.4.12 ipv6=fdcd:d1e9:f503:0:250:56ff:fe82:bdb8
 
 [kubernetes:children]
 master
 worker
 
-# ha config
-# slb is software load balancing, will install harpoxy and keepalived on master node
-# clb is cloud load balancing, will use cloud load balancing
-# [kubernetes:vars]
-# ha={"type": "slb", "vip": "172.16.6.10", "mask": 16 }
+; ha config
+; slb is software load balancing, will install harpoxy and keepalived on master node
+; clb is cloud load balancing, will use cloud load balancing
+; [kubernetes:vars]
+; ha={"type": "slb", "vip": "172.16.4.10", "mask": 16 }
 
 [all:vars]
 ansible_python_interpreter=/usr/bin/python3
