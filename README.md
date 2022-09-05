@@ -77,7 +77,7 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone -b v1.15 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
+git clone -b v1.16 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
 cd /usr/local/src/kubeasy
 ```
 
