@@ -189,13 +189,18 @@ def uploadToNexus(arg):
     basePath = basePath + "/src/" + arg.kubernetes
 
     nexus = Nexus(arg.url, arg.repository, arg.username, arg.password)
-    if not nexus.Auth():
-        print("Username or Password is error!")
-        sys.exit(2)
-    print("Upload package to nexus...")
-    with open("%s/%s.json" % (basePath, arg.kubernetes), "r") as f:
-        for item in json.load(f):
-            nexus.Upload(src=item.get('src'), directory=item.get('dest'))
+    if arg.username is not None or arg.password is not None:
+        if not nexus.Auth():
+            print("Username or Password is error!")
+            sys.exit(2)
+
+    try:
+        with open("%s/%s.json" % (basePath, arg.kubernetes), "r") as f:
+            print("Upload package to nexus...")
+            for item in json.load(f):
+                nexus.Upload(src=item.get('src'), directory=item.get('dest'))
+    except FileNotFoundError:
+        print("please use download commands to download pachage.")
     sys.exit(0)
 
 
@@ -215,8 +220,8 @@ if __name__ == "__main__":
     upload.add_argument('--kubernetes', metavar='string', required=True, help='kubernetes version')
     upload.add_argument('--url', metavar='string', help='nexus url', required=True)
     upload.add_argument('--repository', metavar='string', help='nexus repository name', required=True)
-    upload.add_argument('--username', default=None, metavar='string', help='nexus username', required=True)
-    upload.add_argument('--password', default=None, metavar='string', help='nexus password', required=True)
+    upload.add_argument('--username', default=None, metavar='string', help='nexus username')
+    upload.add_argument('--password', default=None, metavar='string', help='nexus password')
     upload.set_defaults(func=uploadToNexus)
 
     args = parser.parse_args()
