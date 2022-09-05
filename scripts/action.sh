@@ -32,17 +32,20 @@ if [ ${PKI_URL} ]; then
 fi
 
 if [ ${DOWNLOAD_WAY} == "nexus" ]; then
-  if [[ ${NEXUS_USERNAME} == "" || ${NEXUS_PASSWORD} == "" || ${NEXUS_DOMAIN_NAME} == "" || ${NEXUS_REPOSITORY} == "" ]]; then
-    echo -e "\033[31mNexus parameter error, please set NEXUS_HTTP_USERNAME, NEXUS_HTTP_PASSWORD, NEXUS_DOMAIN_NAME, NEXUS_REPOSITORY! \033[0m "
+  if [[ ${NEXUS_DOMAIN_NAME} == "" || ${NEXUS_REPOSITORY} == "" ]]; then
+    echo -e "\033[31mNexus parameter error, please set NEXUS_DOMAIN_NAME, NEXUS_REPOSITORY! \033[0m "
     exit 1
   else
     echo '-------------------------------------------------------------------------------'
     echo -e "Nexus Url: \t\t\t\033[32m${NEXUS_DOMAIN_NAME}\033[0m"
     echo -e "Nexus repository: \t\t\033[32m${NEXUS_REPOSITORY}\033[0m"
-    echo -e "Nexus username: \t\t\033[32m${NEXUS_USERNAME}\033[0m"
-    echo -e "Nexus password: \t\t\033[32m******\033[0m"
+    ANSIBLE_ENV="${ANSIBLE_ENV} -e NEXUS_DOMAIN_NAME=${NEXUS_DOMAIN_NAME} -e NEXUS_REPOSITORY=${NEXUS_REPOSITORY}"
+    if [[ ${NEXUS_USERNAME} != "" || ${NEXUS_PASSWORD} != "" ]]; then
+      echo -e "Nexus username: \t\t\033[32m${NEXUS_USERNAME}\033[0m"
+      echo -e "Nexus password: \t\t\033[32m******\033[0m"
+      ANSIBLE_ENV="${ANSIBLE_ENV} -e NEXUS_USERNAME=${NEXUS_USERNAME} -e NEXUS_PASSWORD=${NEXUS_PASSWORD}"
+    fi
     echo '-------------------------------------------------------------------------------'
-    ANSIBLE_ENV="${ANSIBLE_ENV} -e NEXUS_DOMAIN_NAME=${NEXUS_DOMAIN_NAME} -e NEXUS_REPOSITORY=${NEXUS_REPOSITORY} -e NEXUS_USERNAME=${NEXUS_USERNAME} -e NEXUS_PASSWORD=${NEXUS_PASSWORD}"
   fi
 fi
 case $1 in
