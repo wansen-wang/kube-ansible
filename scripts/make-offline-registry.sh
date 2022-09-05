@@ -20,48 +20,60 @@ registry:2.8.1
 
 REGISTRY_URL="127.0.0.1:5000/infra"
 
+# calico
+# calico/cni:v3.12.3
+# calico/cni:v3.12.3
 docker pull calico/cni:v3.12.3
 docker tag calico/cni:v3.12.3 ${REGISTRY_URL}/calico/cni:v3.12.3
 docker push ${REGISTRY_URL}/calico/cni:v3.12.3
 
+# calico/pod2daemon-flexvol:v3.12.3
 docker pull calico/pod2daemon-flexvol:v3.12.3
 docker tag calico/pod2daemon-flexvol:v3.12.3 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.12.3
 docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.12.3
 
+# calico/node:v3.12.3
 docker pull calico/node:v3.12.3
 docker tag calico/node:v3.12.3 ${REGISTRY_URL}/calico/node:v3.12.3
 docker push ${REGISTRY_URL}/calico/node:v3.12.3
 
-docker pull quay.io/coreos/flannel:v0.11.0
-docker tag quay.io/coreos/flannel:v0.11.0 ${REGISTRY_URL}/coreos/flannel:v0.11.0
-docker push ${REGISTRY_URL}/coreos/flannel:v0.11.0
-
+# calico/kube-controllers:v3.12.3
 docker pull calico/kube-controllers:v3.12.3
 docker tag calico/kube-controllers:v3.12.3 ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
 docker push ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
 
+# canal
+# quay.io/coreos/flannel:v0.11.0
+docker pull quay.io/coreos/flannel:v0.11.0
+docker tag quay.io/coreos/flannel:v0.11.0 ${REGISTRY_URL}/coreos/flannel:v0.11.0
+docker push ${REGISTRY_URL}/coreos/flannel:v0.11.0
+
+
+# coredns
 docker pull coredns/coredns:1.3.1
 docker tag coredns/coredns:1.3.1 ${REGISTRY_URL}/coredns/coredns:1.3.1
 docker push ${REGISTRY_URL}/coredns/coredns:1.3.1
 
-
+# flannel
+# rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0
 docker pull rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0
 docker tag rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0 ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0
 docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0
 
-
+# rancher/mirrored-flannelcni-flannel:v0.19.0
 docker pull rancher/mirrored-flannelcni-flannel:v0.19.0
 docker tag rancher/mirrored-flannelcni-flannel:v0.19.0 ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 
+# metrics-server
 docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
 docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
 docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
 
+# pause
 docker pull registry.aliyuncs.com/google_containers/pause:3.1
 docker tag registry.aliyuncs.com/google_containers/pause:3.1 ${REGISTRY_URL}/google_containers/pause:3.1
 docker push ${REGISTRY_URL}/google_containers/pause:3.1
-
 
 mkdir -p ${SHELL_FOLDER}/src/images
 docker pull registry:2.8.1
@@ -70,5 +82,5 @@ docker save registry:2.8.1 | gzip > ${SHELL_FOLDER}/src/images/registry.tar.gz
 docker pull docker.io/buxiaomo/staticfile:1.0
 docker save docker.io/buxiaomo/staticfile:1.0 | gzip > ${SHELL_FOLDER}/src/images/staticfile.tar.gz
 
-mkdir -p ${SHELL_FOLDER}/src/pip
-pip3 download "ansible>=4.10.0" IPy requests kubernetes openshift jmespath netaddr packaging --dest ${SHELL_FOLDER}/src/pip
+# mkdir -p ${SHELL_FOLDER}/src/pip
+# pip3 download "ansible>=4.10.0" IPy requests kubernetes openshift jmespath netaddr packaging --dest ${SHELL_FOLDER}/src/pip

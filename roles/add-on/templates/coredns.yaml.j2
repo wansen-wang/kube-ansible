@@ -179,7 +179,7 @@ spec:
     k8s-app: kube-dns
 {% if (networking.podSubnet.split(',') | length == 2) and (networking.serviceSubnet.split(',') | length == 2) %}
   ipFamilyPolicy: PreferDualStack
-  {%- if networking.serviceSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) | ip == 4 %}
+{% if networking.serviceSubnet.split(',')[0] | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) | ip == 4 %}
   ipFamilies:
     - IPv4
     - IPv6
@@ -187,7 +187,7 @@ spec:
   clusterIPs:
   - {{ networking.serviceSubnet.split(',')[0] | ansible.netcommon.next_nth_usable(2) }}
   - {{ networking.serviceSubnet.split(',')[1] | ansible.netcommon.next_nth_usable(2) }}
-  {%- else %}
+{% else %}
   ipFamilies:
     - IPv6
     - IPv4
@@ -195,7 +195,7 @@ spec:
   clusterIPs:
   - {{ networking.serviceSubnet.split(',')[1] | ansible.netcommon.next_nth_usable(2) }}
   - {{ networking.serviceSubnet.split(',')[0] | ansible.netcommon.next_nth_usable(2) }}
-  {%- endif %}
+{% endif %}
 {% else %}
   clusterIP: {{ networking.serviceSubnet | default('10.96.0.0/12') | ansible.netcommon.next_nth_usable(2) }}
 {% endif %}
