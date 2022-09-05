@@ -21,26 +21,26 @@ registry:2.8.1
 REGISTRY_URL="127.0.0.1:5000/infra"
 
 # calico
-# calico/cni:v3.12.3
-# calico/cni:v3.12.3
-docker pull calico/cni:v3.12.3
-docker tag calico/cni:v3.12.3 ${REGISTRY_URL}/calico/cni:v3.12.3
-docker push ${REGISTRY_URL}/calico/cni:v3.12.3
+# calico/cni:v3.13.5
+# calico/cni:v3.13.5
+docker pull calico/cni:v3.13.5
+docker tag calico/cni:v3.13.5 ${REGISTRY_URL}/calico/cni:v3.13.5
+docker push ${REGISTRY_URL}/calico/cni:v3.13.5
 
-# calico/pod2daemon-flexvol:v3.12.3
-docker pull calico/pod2daemon-flexvol:v3.12.3
-docker tag calico/pod2daemon-flexvol:v3.12.3 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.12.3
-docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.12.3
+# calico/pod2daemon-flexvol:v3.13.5
+docker pull calico/pod2daemon-flexvol:v3.13.5
+docker tag calico/pod2daemon-flexvol:v3.13.5 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.13.5
+docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.13.5
 
-# calico/node:v3.12.3
-docker pull calico/node:v3.12.3
-docker tag calico/node:v3.12.3 ${REGISTRY_URL}/calico/node:v3.12.3
-docker push ${REGISTRY_URL}/calico/node:v3.12.3
+# calico/node:v3.13.5
+docker pull calico/node:v3.13.5
+docker tag calico/node:v3.13.5 ${REGISTRY_URL}/calico/node:v3.13.5
+docker push ${REGISTRY_URL}/calico/node:v3.13.5
 
-# calico/kube-controllers:v3.12.3
-docker pull calico/kube-controllers:v3.12.3
-docker tag calico/kube-controllers:v3.12.3 ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
-docker push ${REGISTRY_URL}/calico/kube-controllers:v3.12.3
+# calico/kube-controllers:v3.13.5
+docker pull calico/kube-controllers:v3.13.5
+docker tag calico/kube-controllers:v3.13.5 ${REGISTRY_URL}/calico/kube-controllers:v3.13.5
+docker push ${REGISTRY_URL}/calico/kube-controllers:v3.13.5
 
 # canal
 # quay.io/coreos/flannel:v0.11.0
