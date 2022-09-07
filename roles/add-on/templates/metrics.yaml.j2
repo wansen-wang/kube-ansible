@@ -36,11 +36,14 @@ rules:
   - apiGroups:
       - ""
     resources:
+      - nodes/metrics
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
       - pods
       - nodes
-      - nodes/stats
-      - namespaces
-      - configmaps
     verbs:
       - get
       - list
@@ -122,26 +125,21 @@ spec:
       k8s-app: metrics-server
   strategy:
     rollingUpdate:
-      maxUnavailable: 0
+      maxUnavailable: 1
   template:
     metadata:
       labels:
         k8s-app: metrics-server
     spec:
-      tolerations:
-        - key: CriticalAddonsOnly
-          operator: Exists
-        - effect: NoSchedule
-          key: node-role.kubernetes.io/master
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchLabels:
-                k8s-app: metrics-server
-            namespaces:
-            - kube-system
-            topologyKey: kubernetes.io/hostname
+            - labelSelector:
+                matchLabels:
+                  k8s-app: metrics-server
+              namespaces:
+                - kube-system
+              topologyKey: kubernetes.io/hostname
       containers:
         - name: metrics-server
           image: {{ REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('hostname') }}{% if REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('port') is not none %}:{{REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('port')}}{% endif %}{% if REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('path') is not none %}{{ REGISTRY_URL | default('https://k8s.gcr.io') | urlsplit('path') }}{% endif %}/metrics-server/metrics-server:v{{ KUBE_VERSION | component_version | community.general.json_query("plugin.metrics") }}
@@ -177,6 +175,7 @@ spec:
               cpu: 100m
               memory: 200Mi
           securityContext:
+            allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
             runAsNonRoot: true
             runAsUser: 1000
@@ -190,6 +189,17 @@ spec:
       volumes:
         - emptyDir: {}
           name: tmp-dir
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: metrics-server
+  namespace: kube-system
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      k8s-app: metrics-server
 ---
 apiVersion: apiregistration.k8s.io/v1
 kind: APIService

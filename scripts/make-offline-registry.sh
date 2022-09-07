@@ -21,32 +21,32 @@ registry:2.8.1
 REGISTRY_URL="127.0.0.1:5000/infra"
 
 # calico
-# calico/cni:v3.20.6
-# calico/cni:v3.20.6
-docker pull calico/cni:v3.20.6
-docker tag calico/cni:v3.20.6 ${REGISTRY_URL}/calico/cni:v3.20.6
-docker push ${REGISTRY_URL}/calico/cni:v3.20.6
+# calico/cni:v3.21.6
+# calico/cni:v3.21.6
+docker pull calico/cni:v3.21.6
+docker tag calico/cni:v3.21.6 ${REGISTRY_URL}/calico/cni:v3.21.6
+docker push ${REGISTRY_URL}/calico/cni:v3.21.6
 
-# calico/pod2daemon-flexvol:v3.20.6
-docker pull calico/pod2daemon-flexvol:v3.20.6
-docker tag calico/pod2daemon-flexvol:v3.20.6 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.20.6
-docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.20.6
+# calico/pod2daemon-flexvol:v3.21.6
+docker pull calico/pod2daemon-flexvol:v3.21.6
+docker tag calico/pod2daemon-flexvol:v3.21.6 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.21.6
+docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.21.6
 
-# calico/node:v3.20.6
-docker pull calico/node:v3.20.6
-docker tag calico/node:v3.20.6 ${REGISTRY_URL}/calico/node:v3.20.6
-docker push ${REGISTRY_URL}/calico/node:v3.20.6
+# calico/node:v3.21.6
+docker pull calico/node:v3.21.6
+docker tag calico/node:v3.21.6 ${REGISTRY_URL}/calico/node:v3.21.6
+docker push ${REGISTRY_URL}/calico/node:v3.21.6
 
-# calico/kube-controllers:v3.20.6
-docker pull calico/kube-controllers:v3.20.6
-docker tag calico/kube-controllers:v3.20.6 ${REGISTRY_URL}/calico/kube-controllers:v3.20.6
-docker push ${REGISTRY_URL}/calico/kube-controllers:v3.20.6
+# calico/kube-controllers:v3.21.6
+docker pull calico/kube-controllers:v3.21.6
+docker tag calico/kube-controllers:v3.21.6 ${REGISTRY_URL}/calico/kube-controllers:v3.21.6
+docker push ${REGISTRY_URL}/calico/kube-controllers:v3.21.6
 
 # canal
-# quay.io/coreos/flannel:v0.14.0
-docker pull quay.io/coreos/flannel:v0.14.0
-docker tag quay.io/coreos/flannel:v0.14.0 ${REGISTRY_URL}/coreos/flannel:v0.14.0
-docker push ${REGISTRY_URL}/coreos/flannel:v0.14.0
+# quay.io/coreos/flannel:v0.13.0
+docker pull quay.io/coreos/flannel:v0.13.0
+docker tag quay.io/coreos/flannel:v0.13.0 ${REGISTRY_URL}/coreos/flannel:v0.13.0
+docker push ${REGISTRY_URL}/coreos/flannel:v0.13.0
 
 
 # coredns
@@ -66,9 +66,9 @@ docker tag rancher/mirrored-flannelcni-flannel:v0.19.0 ${REGISTRY_URL}/rancher/m
 docker push ${REGISTRY_URL}/rancher/mirrored-flannelcni-flannel:v0.19.0
 
 # metrics-server
-docker pull k8s.gcr.io/metrics-server/metrics-server:v0.5.2
-docker tag k8s.gcr.io/metrics-server/metrics-server:v0.5.2 ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
-docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.5.2
+docker pull k8s.gcr.io/metrics-server/metrics-server:v0.6.1
+docker tag k8s.gcr.io/metrics-server/metrics-server:v0.6.1 ${REGISTRY_URL}/metrics-server/metrics-server:v0.6.1
+docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.6.1
 
 # pause
 docker pull registry.aliyuncs.com/google_containers/pause:3.2

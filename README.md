@@ -143,13 +143,13 @@ For more instructions reference [inventory/README.md](inventory/README.md)
 # download
 cd /usr/local/src/kubeasy
 pip3 install requests
-./scripts/nexus.py download --kubernetes 1.19.16
+./scripts/nexus.py download --kubernetes 1.20.15
 
 # upload
 cd /usr/local/src/kubeasy
 pip3 install requests
 ./scripts/nexus.py upload \
---kubernetes 1.19.16 \
+--kubernetes 1.20.15 \
 --url http://nexus.example.com \
 --repository kubeasy \
 --username admin --password admin
@@ -215,7 +215,7 @@ Download new kubernetes binaries, Reference [here](#download).
 ```
 cd /usr/local/src/kubeasy
 
-make upgrade KUBE_VERSION=1.19.16
+make upgrade KUBE_VERSION=1.20.15
 ```
 
 ## Known Issues 
