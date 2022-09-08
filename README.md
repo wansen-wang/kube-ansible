@@ -48,9 +48,9 @@ if you want use containerd for container runtime, make sure the `libseccomp` >= 
 | [1.19.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md) | v3.4.13 | v19.03.9 | v0.8.6 | v1.7.0 | v3.20 | v0.5.2 | 3.2 |
 | [1.20.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md) | v3.4.13 | v19.03.9 | v0.8.7 | v1.7.0 | v3.21 | v0.6.1 | 3.2 |
 | [1.21.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md) | v3.4.13 | v20.10.17 | v0.8.7 | v1.8.0 | v3.23 | v0.6.1 | 3.4.1 |
-| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | v20.10.17 | v0.9.1 | v1.8.4 | v3.23| v0.6.1 | 3.5 |
-| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.1 | v20.10.17 | v0.9.1 | v1.8.6 | v3.23| v0.6.1 | 3.6 |
-| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3 | v20.10.17 | v0.9.1 | v1.8.6 | v3.23| v0.6.1 | 3.6 |
+| [1.22.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.22.md) | v3.5.0 | v20.10.17 | v0.9.1 | v1.8.4 | v3.24 | v0.6.1 | 3.5 |
+| [1.23.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) | v3.5.1 | v20.10.17 | v0.9.1 | v1.8.6 | v3.24 | v0.6.1 | 3.6 |
+| [1.24.x](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.24.md) | v3.5.3 | v20.10.17 | v0.9.1 | v1.8.6 | v3.24 | v0.6.1 | 3.6 |
 
 
 ## How to use
@@ -77,7 +77,7 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone -b v1.21 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
+git clone -b v1.16 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
 cd /usr/local/src/kubeasy
 ```
 
@@ -143,13 +143,13 @@ For more instructions reference [inventory/README.md](inventory/README.md)
 # download
 cd /usr/local/src/kubeasy
 pip3 install requests
-./scripts/nexus.py download --kubernetes 1.21.13
+./scripts/nexus.py download --kubernetes 1.22.13
 
 # upload
 cd /usr/local/src/kubeasy
 pip3 install requests
 ./scripts/nexus.py upload \
---kubernetes 1.21.13 \
+--kubernetes 1.22.13 \
 --url http://nexus.example.com \
 --repository kubeasy \
 --username admin --password admin
@@ -215,7 +215,7 @@ Download new kubernetes binaries, Reference [here](#download).
 ```
 cd /usr/local/src/kubeasy
 
-make upgrade KUBE_VERSION=1.21.13
+make upgrade KUBE_VERSION=1.22.13
 ```
 
 ## Known Issues 

@@ -21,26 +21,26 @@ registry:2.8.1
 REGISTRY_URL="127.0.0.1:5000/infra"
 
 # calico
-# calico/cni:v3.23.3
-# calico/cni:v3.23.3
-docker pull calico/cni:v3.23.3
-docker tag calico/cni:v3.23.3 ${REGISTRY_URL}/calico/cni:v3.23.3
-docker push ${REGISTRY_URL}/calico/cni:v3.23.3
+# calico/cni:v3.24.1
+# calico/cni:v3.24.1
+docker pull calico/cni:v3.24.1
+docker tag calico/cni:v3.24.1 ${REGISTRY_URL}/calico/cni:v3.24.1
+docker push ${REGISTRY_URL}/calico/cni:v3.24.1
 
-# calico/pod2daemon-flexvol:v3.23.3
-docker pull calico/pod2daemon-flexvol:v3.23.3
-docker tag calico/pod2daemon-flexvol:v3.23.3 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.23.3
-docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.23.3
+# calico/pod2daemon-flexvol:v3.24.1
+docker pull calico/pod2daemon-flexvol:v3.24.1
+docker tag calico/pod2daemon-flexvol:v3.24.1 ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.24.1
+docker push ${REGISTRY_URL}/calico/pod2daemon-flexvol:v3.24.1
 
-# calico/node:v3.23.3
-docker pull calico/node:v3.23.3
-docker tag calico/node:v3.23.3 ${REGISTRY_URL}/calico/node:v3.23.3
-docker push ${REGISTRY_URL}/calico/node:v3.23.3
+# calico/node:v3.24.1
+docker pull calico/node:v3.24.1
+docker tag calico/node:v3.24.1 ${REGISTRY_URL}/calico/node:v3.24.1
+docker push ${REGISTRY_URL}/calico/node:v3.24.1
 
-# calico/kube-controllers:v3.23.3
-docker pull calico/kube-controllers:v3.23.3
-docker tag calico/kube-controllers:v3.23.3 ${REGISTRY_URL}/calico/kube-controllers:v3.23.3
-docker push ${REGISTRY_URL}/calico/kube-controllers:v3.23.3
+# calico/kube-controllers:v3.24.1
+docker pull calico/kube-controllers:v3.24.1
+docker tag calico/kube-controllers:v3.24.1 ${REGISTRY_URL}/calico/kube-controllers:v3.24.1
+docker push ${REGISTRY_URL}/calico/kube-controllers:v3.24.1
 
 # canal
 # quay.io/coreos/flannel:v0.15.1
@@ -48,11 +48,19 @@ docker pull quay.io/coreos/flannel:v0.15.1
 docker tag quay.io/coreos/flannel:v0.15.1 ${REGISTRY_URL}/coreos/flannel:v0.15.1
 docker push ${REGISTRY_URL}/coreos/flannel:v0.15.1
 
+# cilium
+docker pull quay.io/cilium/operator-generic:v1.12.1
+docker tag quay.io/cilium/operator-generic:v1.12.1 ${REGISTRY_URL}/cilium/operator-generic:v1.12.1
+docker push ${REGISTRY_URL}/cilium/operator-generic:v1.12.1
+
+docker pull quay.io/cilium/cilium:v1.12.1
+docker tag quay.io/cilium/cilium:v1.12.1 ${REGISTRY_URL}/cilium/cilium:v1.12.1
+docker push ${REGISTRY_URL}/cilium/cilium:v1.12.1
 
 # coredns
-docker pull coredns/coredns:1.7.0
-docker tag coredns/coredns:1.7.0 ${REGISTRY_URL}/coredns/coredns:1.7.0
-docker push ${REGISTRY_URL}/coredns/coredns:1.7.0
+docker pull coredns/coredns:1.8.4
+docker tag coredns/coredns:1.8.4 ${REGISTRY_URL}/coredns/coredns:1.8.4
+docker push ${REGISTRY_URL}/coredns/coredns:1.8.4
 
 # flannel
 # rancher/mirrored-flannelcni-flannel-cni-plugin:v1.1.0
@@ -71,9 +79,9 @@ docker tag k8s.gcr.io/metrics-server/metrics-server:v0.6.1 ${REGISTRY_URL}/metri
 docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.6.1
 
 # pause
-docker pull registry.aliyuncs.com/google_containers/pause:3.2
-docker tag registry.aliyuncs.com/google_containers/pause:3.2 ${REGISTRY_URL}/google_containers/pause:3.2
-docker push ${REGISTRY_URL}/google_containers/pause:3.2
+docker pull registry.aliyuncs.com/google_containers/pause:3.5
+docker tag registry.aliyuncs.com/google_containers/pause:3.5 ${REGISTRY_URL}/google_containers/pause:3.5
+docker push ${REGISTRY_URL}/google_containers/pause:3.5
 
 mkdir -p ${SHELL_FOLDER}/src/images
 docker pull registry:2.8.1
