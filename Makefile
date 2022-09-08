@@ -8,10 +8,10 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # kubernetes version
-KUBE_VERSION:=1.23.10
+KUBE_VERSION:=1.24.4
 # kubernetes container runtime
 # docker, containerd
-KUBE_RUNTIME:=docker
+KUBE_RUNTIME:=containerd
 # kubernetes network plugin,
 # flannel, calico, canal
 KUBE_NETWORK:=flannel
