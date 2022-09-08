@@ -79,9 +79,9 @@ docker tag k8s.gcr.io/metrics-server/metrics-server:v0.6.1 ${REGISTRY_URL}/metri
 docker push ${REGISTRY_URL}/metrics-server/metrics-server:v0.6.1
 
 # pause
-docker pull registry.aliyuncs.com/google_containers/pause:3.5
-docker tag registry.aliyuncs.com/google_containers/pause:3.5 ${REGISTRY_URL}/google_containers/pause:3.5
-docker push ${REGISTRY_URL}/google_containers/pause:3.5
+docker pull registry.aliyuncs.com/google_containers/pause:3.6
+docker tag registry.aliyuncs.com/google_containers/pause:3.6 ${REGISTRY_URL}/google_containers/pause:3.6
+docker push ${REGISTRY_URL}/google_containers/pause:3.6
 
 mkdir -p ${SHELL_FOLDER}/src/images
 docker pull registry:2.8.1

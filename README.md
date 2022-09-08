@@ -77,7 +77,7 @@ apt-get install git make -y
 yum install git make vim -y
 
 # clone code
-git clone -b v1.22 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
+git clone -b v1.23 https://github.com/buxiaomo/kubeasy.git /usr/local/src/kubeasy
 cd /usr/local/src/kubeasy
 ```
 
@@ -143,13 +143,13 @@ For more instructions reference [inventory/README.md](inventory/README.md)
 # download
 cd /usr/local/src/kubeasy
 pip3 install requests
-./scripts/nexus.py download --kubernetes 1.22.13
+./scripts/nexus.py download --kubernetes 1.23.10
 
 # upload
 cd /usr/local/src/kubeasy
 pip3 install requests
 ./scripts/nexus.py upload \
---kubernetes 1.22.13 \
+--kubernetes 1.23.10 \
 --url http://nexus.example.com \
 --repository kubeasy \
 --username admin --password admin
@@ -215,7 +215,7 @@ Download new kubernetes binaries, Reference [here](#download).
 ```
 cd /usr/local/src/kubeasy
 
-make upgrade KUBE_VERSION=1.22.13
+make upgrade KUBE_VERSION=1.23.10
 ```
 
 ## Known Issues 
