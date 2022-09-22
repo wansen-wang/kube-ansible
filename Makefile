@@ -8,7 +8,7 @@ PROJECT_ENV:=dev
 DOWNLOAD_WAY:=official
 
 # kubernetes version
-KUBE_VERSION:=1.23.11
+KUBE_VERSION:=1.23.12
 # kubernetes container runtime
 # docker, containerd
 KUBE_RUNTIME:=docker
